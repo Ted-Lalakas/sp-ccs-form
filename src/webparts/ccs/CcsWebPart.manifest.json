@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "351d0d2d-0b4b-41fc-ac73-a65f891f257a",
+  "alias": "CcsWebPart",
+  "componentType": "WebPart",
+
+  "version": "*",
+  "manifestVersion": 2,
+
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart"],
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "group": { "default": "Other" },
+    "title": { "default": "CCS After Hours Activity Form" },
+    "description": { "default": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance. The database provides a layer to register events to inform evidence based decision making, it enables monitoring to ensure staff safety and management, can be referenced to illustrate time and effort, and provides historical information." },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance. The database provides a layer to register events to inform evidence based decision making, it enables monitoring to ensure staff safety and management, can be referenced to illustrate time and effort, and provides historical information."
+    }
+  }]
+}
