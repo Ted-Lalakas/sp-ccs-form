@@ -3,6 +3,11 @@ import styles from './Ccs.module.scss';
 import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
+import { DefaultButton, Stack, arraysEqual } from 'office-ui-fabric-react';
+import InputField from './TextField/InputField';
+import DropdownMain from './DropDown/DropDown';
+import { getRegionArrayData } from './CcsArrayFunc';
+
 export default class Ccs extends React.Component<any, any, any> {
   constructor(props:any) {
     super(props);
@@ -11,18 +16,18 @@ export default class Ccs extends React.Component<any, any, any> {
     console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
     console.log("-------------------------------------------------------------------------");
 
-    // Get the first element and pass it some extra values
-    const firstQuestion = this.props.arrayToUse.filter( n => n.questionId == 1 );
-    firstQuestion.endText = "";
-    firstQuestion.selectedKey = "";
+
+    const teds = getRegionArrayData(this.props.arrayToUse);
+    console.log(teds);
+
 
     // Pass a new Object to state and spread the first question
     this.state = {
-      tabsDisplay: [ ...firstQuestion ]
+      inputValue1: "",
+      regionValue: "",
+      dropDownValue1: ""
     };
 
-    //Bind "this" to the function so that it can use this.state
-    // this._onChange = this._onChange.bind(this);
   }
 
   // For testing purposes. Can be removed.
@@ -38,6 +43,22 @@ export default class Ccs extends React.Component<any, any, any> {
     console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
     console.log("-------------------------------------------------------------------------");
   }
+
+  public changeNestedInputHander = (value) => {
+    // console.log(newValue);
+    this.setState({ inputValue1: value });
+  }
+
+  public changeRegionHander = (value) => {
+    // console.log(value);
+    this.setState({ regionValue: value });
+  }
+
+  public changeDropDownHander = (value) => {
+    // console.log(value);
+    this.setState({ dropDownValue1: value });
+  }
+
 
 
   public render(): React.ReactElement<ICcsProps> {
@@ -55,7 +76,30 @@ export default class Ccs extends React.Component<any, any, any> {
         <div className={ styles.container }>
           <div className={ styles.row2 }>
             <div className={ styles.column }>
-              Test Content
+
+              <Stack tokens={{ childrenGap: 15 }}>
+                <InputField changeHandler={this.changeNestedInputHander} />
+                {/* <h3>{this.state.inputValue2}</h3> */}
+              </Stack>
+
+              <DropdownMain 
+                placeholderText="Region Details"
+                disabledValue={false} 
+                changeHandler={this.changeRegionHander} 
+              />
+
+              <DropdownMain 
+                placeholderText="Sub Region"
+                disabledValue={!this.state.regionValue ? true : false} 
+                changeHandler={this.changeDropDownHander} 
+              />
+
+              {/* <DropdownMain 
+                placeholderText="Sub Region"
+                disabledValue={!this.state.regionValue ? true : false} 
+                changeHandler={this.changeDropDownHander} 
+              /> */}
+
             </div>
           </div>
         </div>

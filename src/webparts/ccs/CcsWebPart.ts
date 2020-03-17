@@ -11,7 +11,7 @@ import * as strings from 'CcsWebPartStrings';
 import Ccs from './components/Ccs';
 import { ICcsProps } from './components/ICcsProps';
 
-import { mockArray } from './data/QuestionData';
+import { mockArray } from './data/QuestionData1';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 
@@ -27,7 +27,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
   }
 
   private _getListItems(): Promise<any[]> {
-    return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + "/_api/web/lists/getByTitle('procurementNavigator')/items?$select=Id,Title,questionId,questionText,choiceA,choiceB,choiceC,choiceTextA,choiceTextB,choiceTextC,endTextA,endTextB,endTextC", SPHttpClient.configurations.v1)
+    return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + "/_api/web/lists/getByTitle('CCS After Hours Form Data')/items?$select=Title,Option_x0020_Value,Type_x0020_of_x0020_Data", SPHttpClient.configurations.v1)
       .then((response: SPHttpClientResponse) => {
         return response.json();
       })
@@ -44,10 +44,10 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     } else {
       //TEDS TO BE WORKED ON
       // If online then grab the list and .THEN once that is done render the component to the DOM.
-      // console.log("ONLINE");
-      // this._getListItems().then(response => {      
-      //   this.checkConditionPassToRender(response);
-      // });
+      console.log("ONLINE");
+      this._getListItems().then(response => {      
+        this.checkConditionPassToRender(response);
+      });
     }
   }
 
