@@ -80,6 +80,10 @@
     }
   }
 
+  .stackWrapper {
+    margin-bottom: 20px;
+  }
+
   .formDisplayData {
     background-color: white;
     padding: 1em;
@@ -95,5 +99,23 @@
         border-bottom: 1px solid #000;
       }
     }
+  }
+
+  .submitButtonOn {
+    margin-left: -8px;
+    color: #FFF;
+    background-color: #005a9e;
+
+    &:hover,
+    &:active,
+    &:focus { background-color: #036ab9; }
+  }
+
+  .submitButtonOff {
+    margin-left: -8px;
+  }
+
+  .reviewToggle {
+    text-align: right;
   }
 }

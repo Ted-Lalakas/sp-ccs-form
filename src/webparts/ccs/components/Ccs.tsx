@@ -85,6 +85,20 @@ export default class Ccs extends React.Component<any, any, any> {
     this.setState({ toggleValue: !this.state.toggleValue });
   }
 
+  public fieldFilled = ():boolean => {
+    const valueReturned = !this.state.offenderName    ||
+      !this.state.offenderJAID    ||
+      !this.state.regionValue     || 
+      !this.state.subRegionValue  || 
+      !this.state.dateValue ? true : false;
+    return valueReturned;
+  }
+
+  public colorSetSubmit = (): any => {
+    const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
+    return valueStyle;
+  }
+
   public render(): React.ReactElement<ICcsProps> {
     return (
       <div className={ styles.ccs }>
@@ -101,7 +115,7 @@ export default class Ccs extends React.Component<any, any, any> {
           <div className={ styles.row2 }>
             <div className={ styles.column }>
 
-              <Stack tokens={{ childrenGap: 15 }}>
+              <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
                 <InputFieldName changeHandler={this.offenderNameHandler} />
 
                 <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} />
@@ -133,25 +147,30 @@ export default class Ccs extends React.Component<any, any, any> {
 
                 <InputFieldNotes changeHandler={this.offenderNotesHandler} />
 
-                <DefaultButton 
-                  text="Submit Data" 
-                  onClick={() => alert("Its clicked!")} 
-                  disabled={!this.state.offenderName    ||
-                            !this.state.offenderJAID    ||
-                            !this.state.regionValue     || 
-                            !this.state.subRegionValue  || 
-                            !this.state.dateValue ? true : false} 
-                />
-            
-                <div style={{ textAlign: "right" }} >
-                  <Toggle 
-                    label="Review Form Data" 
-                    checked={this.state.toggleValue}
-                    onText="Show" 
-                    offText="Hide" 
-                    onChange={this.toggleChangeHandler} 
-                  />
+
+                <div className="ms-Grid" dir="ltr">
+                  <div className="ms-Grid-row">
+                    <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                      <DefaultButton 
+                        className={ this.colorSetSubmit() }
+                        text="Submit Data" 
+                        onClick={() => alert("Its clicked!")} 
+                        disabled={this.fieldFilled()} 
+                      />
+                    </div>
+                    <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                      <Toggle 
+                        className={ styles.reviewToggle }
+                        label="Review Form Data" 
+                        checked={this.state.toggleValue}
+                        onText="Show" 
+                        offText="Hide" 
+                        onChange={this.toggleChangeHandler} 
+                    />
+                    </div>
+                  </div>
                 </div>
+
               </Stack>
 
             { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
