@@ -7,24 +7,36 @@ const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 }
 };
 
-const options: IDropdownOption[] = [
-  { key: 'Bayside', text: 'Bayside Region', itemType: DropdownMenuItemType.Header },
-  { key: 'Frankston', text: 'Frankston' },
-  { key: 'Moorabin', text: 'Moorabin' },
-  { key: 'Rosebud', text: 'Rosebud' }
-];
-
+// const options: IDropdownOption[] = [
+//   { key: 'Bayside', text: 'Bayside Region', itemType: DropdownMenuItemType.Header },
+//   { key: 'Frankston', text: 'Frankston' },
+//   { key: 'Moorabin', text: 'Moorabin' },
+//   { key: 'Rosebud', text: 'Rosebud' }
+// ];
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
-
 const DropdownMain = (props) => {
+  const formatterArr: IDropdownOption[] = [];
+  props.regionsArray.forEach( val => {
+    formatterArr.push({
+      key: val,
+      text: val
+    });
+   });
+
+  // Extra feature not sure if I want this yet 
+  // formatterArr.unshift({
+  //   key: "",
+  //   text: ""
+  // });
+
   return (
     <Stack tokens={stackTokens}>
       <Dropdown 
         placeholder="Select an option" 
         label={props.placeholderText} 
-        options={options} 
+        options={formatterArr} 
         styles={dropdownStyles}
         onChange={(ev, option) => props.changeHandler(option.text)}
         disabled={props.disabledValue}

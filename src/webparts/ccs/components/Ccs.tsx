@@ -3,10 +3,14 @@ import styles from './Ccs.module.scss';
 import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-import { DefaultButton, Stack, arraysEqual } from 'office-ui-fabric-react';
-import InputField from './TextField/InputField';
+import { Stack } from 'office-ui-fabric-react';
+import InputFieldName from './TextField/InputFieldName';
+import InputFieldJAID from './TextField/InputFieldJAID';
 import DropdownMain from './DropDown/DropDown';
-import { getRegionArrayData } from './CcsArrayFunc';
+import DropdownSub from './DropDown/DropDownSub';
+import { getRegionArrayData, getSubRegionArrayData } from './CcsArrayFunc';
+
+import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 
 export default class Ccs extends React.Component<any, any, any> {
   constructor(props:any) {
@@ -16,18 +20,15 @@ export default class Ccs extends React.Component<any, any, any> {
     console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
     console.log("-------------------------------------------------------------------------");
 
-
-    const teds = getRegionArrayData(this.props.arrayToUse);
-    console.log(teds);
-
-
-    // Pass a new Object to state and spread the first question
+    // State handles variable changes and will be used by submit to store the data
     this.state = {
-      inputValue1: "",
+      regionsArray: getRegionArrayData(this.props.arrayToUse),
+      subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
+      offenderName: "",
+      offenderJAID: "",
       regionValue: "",
-      dropDownValue1: ""
+      subRegionValue: ""
     };
-
   }
 
   // For testing purposes. Can be removed.
@@ -44,19 +45,25 @@ export default class Ccs extends React.Component<any, any, any> {
     console.log("-------------------------------------------------------------------------");
   }
 
-  public changeNestedInputHander = (value) => {
-    // console.log(newValue);
-    this.setState({ inputValue1: value });
+  public offenderNameHander = (value) => {
+    this.setState({ offenderName: value });
+  }
+
+  public offenderJAIDHander = (value) => {
+    this.setState({ offenderJAID: value });
+  }
+
+  public checkDateHandler = (value) => {
+    this.setState({ offenderName: value });
   }
 
   public changeRegionHander = (value) => {
-    // console.log(value);
     this.setState({ regionValue: value });
+    this.setState({ subRegionValue: "" });
   }
 
   public changeDropDownHander = (value) => {
-    // console.log(value);
-    this.setState({ dropDownValue1: value });
+    this.setState({ subRegionValue: value });
   }
 
 
@@ -78,27 +85,31 @@ export default class Ccs extends React.Component<any, any, any> {
             <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }}>
-                <InputField changeHandler={this.changeNestedInputHander} />
-                {/* <h3>{this.state.inputValue2}</h3> */}
-              </Stack>
+                <InputFieldName changeHandler={this.offenderNameHander} />
+
+                <InputFieldJAID changeHandler={this.offenderJAIDHander} />
+
+                <DatePicker 
+                  ariaLabel="Date of incident" 
+                  label="Date of incident"
+                  onSelectDate={this.checkDateHandler}
+                />
 
               <DropdownMain 
                 placeholderText="Region Details"
                 disabledValue={false} 
-                changeHandler={this.changeRegionHander} 
+                changeHandler={this.changeRegionHander}
+                regionsArray={this.state.regionsArray} 
               />
 
-              <DropdownMain 
+              <DropdownSub 
                 placeholderText="Sub Region"
                 disabledValue={!this.state.regionValue ? true : false} 
                 changeHandler={this.changeDropDownHander} 
+                regionsArray={this.state.subRegionArray} 
+                regionValue={this.state.regionValue}
               />
-
-              {/* <DropdownMain 
-                placeholderText="Sub Region"
-                disabledValue={!this.state.regionValue ? true : false} 
-                changeHandler={this.changeDropDownHander} 
-              /> */}
+            </Stack>
 
             </div>
           </div>
