@@ -7,7 +7,7 @@ const InputFieldJAID = (props) => {
       <TextField
         label="Offender JAID"
         onChange={(ev, newValue) => props.changeHandler(newValue)}
-        styles={{ fieldGroup: { width: 300 } }}
+        // styles={{ fieldGroup: { width: 300 } }}
       />
     </React.Fragment>
   );

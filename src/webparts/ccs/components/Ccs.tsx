@@ -6,11 +6,14 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { Stack } from 'office-ui-fabric-react';
 import InputFieldName from './TextField/InputFieldName';
 import InputFieldJAID from './TextField/InputFieldJAID';
+import InputFieldNotes from './TextField/InputFieldNotes';
 import DropdownMain from './DropDown/DropDown';
 import DropdownSub from './DropDown/DropDownSub';
 import { getRegionArrayData, getSubRegionArrayData } from './CcsArrayFunc';
 
 import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
+import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
+import { DefaultButton } from 'office-ui-fabric-react';
 
 export default class Ccs extends React.Component<any, any, any> {
   constructor(props:any) {
@@ -26,8 +29,12 @@ export default class Ccs extends React.Component<any, any, any> {
       subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
       offenderName: "",
       offenderJAID: "",
+      dateValue: "",
+      dateValue2: null,
       regionValue: "",
-      subRegionValue: ""
+      subRegionValue: "",
+      offenderNotes: "",
+      toggleValue: false
     };
   }
 
@@ -45,28 +52,55 @@ export default class Ccs extends React.Component<any, any, any> {
     console.log("-------------------------------------------------------------------------");
   }
 
-  public offenderNameHander = (value) => {
+  public offenderNameHandler = (value) => {
     this.setState({ offenderName: value });
   }
 
-  public offenderJAIDHander = (value) => {
+  public offenderJAIDHandler = (value) => {
     this.setState({ offenderJAID: value });
   }
 
-  public checkDateHandler = (value) => {
-    this.setState({ offenderName: value });
+  public offenderNotesHandler = (value) => {
+    this.setState({ offenderNotes: value });
   }
 
-  public changeRegionHander = (value) => {
+  private _onFormatDate = (date: Date): string => {
+    // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
+    const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+    this.setState({ dateValue: dateTest });
+    this.setState({ dateValue2: date });
+    return dateTest;
+  }
+
+  public changeRegionHandler = (value) => {
     this.setState({ regionValue: value });
     this.setState({ subRegionValue: "" });
   }
 
-  public changeDropDownHander = (value) => {
+  public changeDropDownHandler = (value) => {
     this.setState({ subRegionValue: value });
   }
 
+  public toggleChangeHandler = () => {
+    this.setState({ toggleValue: !this.state.toggleValue });
+  }
 
+  // public submitHandler = () => {
+  //   if (
+  //     this.state.offenderName &&
+  //     this.state.offenderJAID &&
+  //     this.state.regionValue &&
+  //     this.state.subRegionValue
+  //   ) {
+  //     // this.setState({submitValue: true});
+  //     // console.log("YES");
+  //     return true;
+  //   } else {
+  //     // this.setState({submitValue: false});
+  //     // console.log("NO!");
+  //     return false;
+  //   }
+  // }
 
   public render(): React.ReactElement<ICcsProps> {
     return (
@@ -85,31 +119,102 @@ export default class Ccs extends React.Component<any, any, any> {
             <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }}>
-                <InputFieldName changeHandler={this.offenderNameHander} />
+                <InputFieldName changeHandler={this.offenderNameHandler} />
 
-                <InputFieldJAID changeHandler={this.offenderJAIDHander} />
+                <InputFieldJAID changeHandler={this.offenderJAIDHandler} />
 
                 <DatePicker 
                   ariaLabel="Date of incident" 
                   label="Date of incident"
-                  onSelectDate={this.checkDateHandler}
+                  placeholder="Click on the field to select a date"
+                  onSelectDate={this._onFormatDate}
+                  value={this.state.dateValue2!}
+                  allowTextInput={false}
                 />
 
-              <DropdownMain 
-                placeholderText="Region Details"
-                disabledValue={false} 
-                changeHandler={this.changeRegionHander}
-                regionsArray={this.state.regionsArray} 
-              />
+                <DropdownMain 
+                  placeholderText="Region Details"
+                  disabledValue={false} 
+                  changeHandler={this.changeRegionHandler}
+                  regionsArray={this.state.regionsArray} 
+                />
 
-              <DropdownSub 
-                placeholderText="Sub Region"
-                disabledValue={!this.state.regionValue ? true : false} 
-                changeHandler={this.changeDropDownHander} 
-                regionsArray={this.state.subRegionArray} 
-                regionValue={this.state.regionValue}
-              />
-            </Stack>
+                <DropdownSub 
+                  placeholderText="Sub Region"
+                  disabledValue={!this.state.regionValue ? true : false} 
+                  changeHandler={this.changeDropDownHandler} 
+                  regionsArray={this.state.subRegionArray} 
+                  regionValue={this.state.regionValue}
+                />
+
+                <InputFieldNotes changeHandler={this.offenderNotesHandler} />
+
+                <DefaultButton 
+                  text="Submit Data" 
+                  // onClick={_alertClicked} 
+                  disabled={!this.state.offenderName    ||
+                            !this.state.offenderJAID    ||
+                            !this.state.regionValue     || 
+                            !this.state.subRegionValue  || 
+                            !this.state.dateValue ? true : false} 
+                />
+            
+                <div style={{ textAlign: "right" }} >
+                  <Toggle 
+                    label="Review Form Data" 
+                    checked={this.state.toggleValue}
+                    onText="Show" 
+                    offText="Hide" 
+                    onChange={this.toggleChangeHandler} 
+                  />
+                </div>
+              </Stack>
+
+            { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
+            <div className={ styles.formDisplayData }>              
+              { this.state.offenderName ? 
+                <div className={ styles.formDataWrap }>
+                  <label>Offender Name</label>
+                  <p>{this.state.offenderName}</p>
+                </div>
+              : null }
+
+              { this.state.offenderJAID ? 
+                <div className={ styles.formDataWrap }>
+                  <label>Offender JAID</label>
+                  <p>{this.state.offenderJAID}</p>
+                </div>
+              : null }
+
+              { this.state.dateValue ?
+                <div className={ styles.formDataWrap }>
+                  <label>Date of incident</label>
+                  <p>{this.state.dateValue}</p>
+                </div>
+              : null }
+
+              { this.state.regionValue ? 
+                <div className={ styles.formDataWrap }>
+                  <label>Region</label>
+                  <p>{this.state.regionValue}</p>
+                </div>
+              : null }
+
+              { this.state.subRegionValue ? 
+                <div className={ styles.formDataWrap }>
+                  <label>Sub Region</label>
+                  <p>{this.state.subRegionValue}</p>
+                </div>
+              : null }
+
+              { this.state.offenderNotes ? 
+                <div className={ styles.formDataWrap }> 
+                  <label>Notes</label>
+                  <p>{this.state.offenderNotes}</p>
+                </div>
+              : null }
+            </div>  
+            : null }
 
             </div>
           </div>

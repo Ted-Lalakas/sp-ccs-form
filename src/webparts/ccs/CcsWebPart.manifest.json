@@ -14,10 +14,10 @@
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
     "group": { "default": "Other" },
     "title": { "default": "CCS After Hours Activity Form" },
-    "description": { "default": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance. The database provides a layer to register events to inform evidence based decision making, it enables monitoring to ensure staff safety and management, can be referenced to illustrate time and effort, and provides historical information." },
+    "description": { "default": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance. The database provides a layer to register events to inform evidence based decision making, it enables monitoring to ensure staff safety and management, can be referenced to illustrate time and effort, and provides historical information."
+      "description": "The CCS After Hours Activity Form provides the means to record relevant details on incidents within scope of a Duty Director (as defined in Deputy Commissioner’s Instructions), in order to monitor offender compliance."
     }
   }]
 }

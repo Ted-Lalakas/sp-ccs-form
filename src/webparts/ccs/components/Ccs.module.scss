@@ -79,4 +79,21 @@
       display: inline-block;
     }
   }
+
+  .formDisplayData {
+    background-color: white;
+    padding: 1em;
+
+    .formDataWrap {
+      margin-bottom: 3em;
+
+      label {
+        color: #000;
+        font-size: 120%;
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid #000;
+      }
+    }
+  }
 }

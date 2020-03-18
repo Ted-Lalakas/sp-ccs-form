@@ -11,7 +11,7 @@ import * as strings from 'CcsWebPartStrings';
 import Ccs from './components/Ccs';
 import { ICcsProps } from './components/ICcsProps';
 
-import { mockArray } from './data/QuestionData1';
+import { mockArray } from './data/QuestionData';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 

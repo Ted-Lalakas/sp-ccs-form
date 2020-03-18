@@ -2,157 +2,208 @@
 
 export const mockArray:any = [
     { 
-      Title: "This is the first question",
-      questionId: 1, 
-      questionText: "Question 1: Text",   
-      choiceA: 2,
-      choiceB: 3,
-      choiceC: 1,
-      choiceTextA: "Go to question 2",
-      choiceTextB: "Go to question 3",
-      choiceTextC: "END HERE WITH END TEXT",
-      endTextA: "",
-      endTextB: "",
-      endTextC: "SHOW ME TEXT"
+      Title: "Bayside",
+      Option_x0020_Value: "Frankston", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the second question",
-      questionId: 2, 
-      questionText: "Question 2: Text", 
-      choiceA: 3, 
-      choiceB: 3,
-      choiceC: 2,
-      choiceTextA: "Go to question 3", 
-      choiceTextB: "Also go to the next question (3)",
-      choiceTextC: "END HERE WITHOUT END TEXT",
-      endTextA: "",
-      endTextB: "",
-      endTextC: "This is the end of the series: Choice C was made"
+      Title: "Bayside",
+      Option_x0020_Value: "Moorabbin", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the third question",
-      questionId: 3, 
-      questionText: "Question 3: Text",  
-      choiceA: 3,
-      choiceB: 3,
-      choiceC: 4,
-      choiceTextA: "End text will appear for A", 
-      choiceTextB: "End text will appear for B",
-      choiceTextC: "This goes to Question 4",
-      endTextA: "This is the end of the series: Choice A was made",
-      endTextB: "This is the end of the series: Choice B was made",
-      endTextC: ""
+      Title: "Bayside",
+      Option_x0020_Value: "Rosebud", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the fourth question",
-      questionId: 4, 
-      questionText: "Question 4: Text", 
-      choiceA: 5, 
-      choiceB: 4,
-      choiceC: null,
-      choiceTextA: "Will move on to Question 5", 
-      choiceTextB: "End text will appear for B",
-      choiceTextC: "",
-      endTextA: "",
-      endTextB: "This is the end of the series: Choice B was made",
-      endTextC: ""
+      Title: "Barwon South West",
+      Option_x0020_Value: "Geelong", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the fifth question",
-      questionId: 5, 
-      questionText: "Question 5: Text",  
-      choiceA: 11, 
-      choiceB: 6,
-      choiceC: 5,
-      choiceTextA: "Will move on to Question 11",
-      choiceTextB: "Will move on to Question 6",
-      choiceTextC: "End text will appear for C",
-      endTextA: "",
-      endTextB: "",
-      endTextC: "End text for choice C"
+      Title: "Barwon South West",
+      Option_x0020_Value: "Warrnambool", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the sixth question",
-      questionId: 6, 
-      questionText: "Question 6: Text", 
-      choiceA: 7, 
-      choiceB: 6,
-      choiceC: 10,
-      choiceTextA: "Will move on to Question 7",
-      choiceTextB: "End text will appear for 6",
-      choiceTextC: "Will move on to Question 10",
-      endTextA: "",
-      endTextB: "This is the end of the series: Choice B was made",
-      endTextC: ""
+      Title: "East Metro",
+      Option_x0020_Value: "Ringwood", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the seventh question",
-      questionId: 7, 
-      questionText: "Question 7: Text",  
-      choiceA: 8,
-      choiceB: 9, 
-      choiceC: null,
-      choiceTextA: "Will move on to Question 8",
-      choiceTextB: "Will move on to Question 9",
-      choiceTextC: "",
-      endTextA: "",
-      endTextB: "",
-      endTextC: ""
+      Title: "East Metro",
+      Option_x0020_Value: "Box Hill", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the eighth question",
-      questionId: 8, 
-      questionText: "Question 8: Text", 
-      choiceA: 9, 
-      choiceB: 8,
-      choiceC: null,
-      choiceTextA: "Will move on to Question 9",
-      choiceTextB: "End text will appear for B",
-      choiceTextC: "",
-      endTextA: "",
-      endTextB: "This is the end of the series: Choice B was made",
-      endTextC: ""
+      Title: "East Metro",
+      Option_x0020_Value: "Lilydale", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the nineth question",
-      questionId: 9, 
-      questionText: "Question 9: Text", 
-      choiceA: 9, 
-      choiceB: 10,
-      choiceC: null,
-      choiceTextA: "Will end with text A", 
-      choiceTextB: "Will move on to Question 10",
-      choiceTextC: "",
-      endTextA: "End text for A",
-      endTextB: "",
-      endTextC: ""
+      Title: "Gippsland",
+      Option_x0020_Value: "Bairnsdale", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the tenth question",
-      questionId: 10, 
-      questionText: "Question 10: Text",  
-      choiceA: 11,
-      choiceB: 11, 
-      choiceC: null,
-      choiceTextA: "Will move on to Question 11",
-      choiceTextB: "Will move on to Question 11",
-      choiceTextC: "",
-      endTextA: "",
-      endTextB: "",
-      endTextC: ""
+      Title: "Gippsland",
+      Option_x0020_Value: "Korumburra", 
+      Type_x0020_of_x0020_Data: "Region Details"
     },
     { 
-      Title: "This is the eleventh question",
-      questionId: 11, 
-      questionText: "Question 11: Text",  
-      choiceA: 11, 
-      choiceB: 11,
-      choiceC: 11,
-      choiceTextA: "End text will appear for A",
-      choiceTextB: "End text will appear for B",
-      choiceTextC: "End text will appear for C",
-      endTextA: "This is the end of the series: Choice A was made",
-      endTextB: "This is the end of the series: Choice B was made",
-      endTextC: "This is the end of the series: Choice C was made"
+      Title: "Gippsland",
+      Option_x0020_Value: "Morwell", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Gippsland",
+      Option_x0020_Value: "Sale", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Gippsland",
+      Option_x0020_Value: "Warragul", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Gippsland",
+      Option_x0020_Value: "Wonthaggi", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Gippsland",
+      Option_x0020_Value: "Wulgnunggo Ngalu", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Grampians",
+      Option_x0020_Value: "Ballarat", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Grampians",
+      Option_x0020_Value: "Emu Creek", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Grampians",
+      Option_x0020_Value: "Horsham", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Hume",
+      Option_x0020_Value: "Seymour", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Hume",
+      Option_x0020_Value: "Shepparton", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Hume",
+      Option_x0020_Value: "Wangaratta", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Hume",
+      Option_x0020_Value: "Wodonga", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Loddon Mallee",
+      Option_x0020_Value: "Bendigo", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Loddon Mallee",
+      Option_x0020_Value: "Echuca", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Loddon Mallee",
+      Option_x0020_Value: "Kerang", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Loddon Mallee",
+      Option_x0020_Value: "Mildura", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "Loddon Mallee",
+      Option_x0020_Value: "Swan Hill", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North Metro",
+      Option_x0020_Value: "Broadmeadows", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North Metro",
+      Option_x0020_Value: "Coolaroo", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North Metro",
+      Option_x0020_Value: "Melbourne", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North East Metro",
+      Option_x0020_Value: "Reservoir", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North East Metro",
+      Option_x0020_Value: "South Morang", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North East Metro",
+      Option_x0020_Value: "Heidelberg", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "North East Metro",
+      Option_x0020_Value: "Thomastown", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "South Metro",
+      Option_x0020_Value: "Cranbourne", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "South Metro",
+      Option_x0020_Value: "Dandenong", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "South Metro",
+      Option_x0020_Value: "Pakenham", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "West Metro",
+      Option_x0020_Value: "Derrimut", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "West Metro",
+      Option_x0020_Value: "Melton", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "West Metro",
+      Option_x0020_Value: "Sunshine", 
+      Type_x0020_of_x0020_Data: "Region Details"
+    },
+    { 
+      Title: "West Metro",
+      Option_x0020_Value: "Werribee", 
+      Type_x0020_of_x0020_Data: "Region Details"
     }
   ];

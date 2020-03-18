@@ -4,7 +4,7 @@ import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from
 
 
 const dropdownStyles: Partial<IDropdownStyles> = {
-  dropdown: { width: 300 }
+  // dropdown: { width: 300 }
 };
 
 // const options: IDropdownOption[] = [
