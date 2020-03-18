@@ -85,23 +85,6 @@ export default class Ccs extends React.Component<any, any, any> {
     this.setState({ toggleValue: !this.state.toggleValue });
   }
 
-  // public submitHandler = () => {
-  //   if (
-  //     this.state.offenderName &&
-  //     this.state.offenderJAID &&
-  //     this.state.regionValue &&
-  //     this.state.subRegionValue
-  //   ) {
-  //     // this.setState({submitValue: true});
-  //     // console.log("YES");
-  //     return true;
-  //   } else {
-  //     // this.setState({submitValue: false});
-  //     // console.log("NO!");
-  //     return false;
-  //   }
-  // }
-
   public render(): React.ReactElement<ICcsProps> {
     return (
       <div className={ styles.ccs }>
@@ -121,7 +104,7 @@ export default class Ccs extends React.Component<any, any, any> {
               <Stack tokens={{ childrenGap: 15 }}>
                 <InputFieldName changeHandler={this.offenderNameHandler} />
 
-                <InputFieldJAID changeHandler={this.offenderJAIDHandler} />
+                <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} />
 
                 <DatePicker 
                   ariaLabel="Date of incident" 
