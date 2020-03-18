@@ -34,6 +34,7 @@ const DropdownMain = (props) => {
   return (
     <Stack tokens={stackTokens}>
       <Dropdown 
+        required
         placeholder="Select an option" 
         label={props.placeholderText} 
         options={formatterArr} 

@@ -113,6 +113,7 @@ export default class Ccs extends React.Component<any, any, any> {
                   onSelectDate={this._onFormatDate}
                   value={this.state.dateValue2!}
                   allowTextInput={false}
+                  isRequired={true}
                 />
 
                 <DropdownMain 
@@ -134,7 +135,7 @@ export default class Ccs extends React.Component<any, any, any> {
 
                 <DefaultButton 
                   text="Submit Data" 
-                  // onClick={_alertClicked} 
+                  onClick={() => alert("Its clicked!")} 
                   disabled={!this.state.offenderName    ||
                             !this.state.offenderJAID    ||
                             !this.state.regionValue     || 

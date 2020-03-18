@@ -5,6 +5,7 @@ const InputFieldName = (props) => {
   return (
     <React.Fragment>
       <TextField
+        required
         label="Offender Name"
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         // styles={{ fieldGroup: { width: 300 } }}
