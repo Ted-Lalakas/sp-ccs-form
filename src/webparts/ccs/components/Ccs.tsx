@@ -4,100 +4,102 @@ import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './TextField/InputFieldName';
-import InputFieldJAID from './TextField/InputFieldJAID';
-import InputFieldNotes from './TextField/InputFieldNotes';
-import DropdownMain from './DropDown/DropDown';
-import DropdownSub from './DropDown/DropDownSub';
-import { getRegionArrayData, getSubRegionArrayData } from './CcsArrayFunc';
+import InputFieldName from './FormElements/TextField/InputFieldName';
+import InputFieldJAID from './FormElements/TextField/InputFieldJAID';
+import InputFieldNotes from './FormElements/TextField/InputFieldNotes';
+import DropdownMain from './FormElements/DropDown/DropDown';
+import DropdownSub from './FormElements/DropDown/DropDownSub';
+import { getRegionArrayData, getSubRegionArrayData } from './FormElements/DropDown/CcsArrayFunc';
 
 import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
-export default class Ccs extends React.Component<any, any, any> {
-  constructor(props:any) {
-    super(props);
+import Form from './FormElements/Form';
 
-    console.log("-------------------------------------------------------------------------");
-    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    console.log("-------------------------------------------------------------------------");
+export default class Ccs extends React.Component<ICcsProps, {}> {
+  // constructor(props:any) {
+  //   super(props);
 
-    // State handles variable changes and will be used by submit to store the data
-    this.state = {
-      regionsArray: getRegionArrayData(this.props.arrayToUse),
-      subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
-      offenderName: "",
-      offenderJAID: "",
-      dateValue: "",
-      dateValue2: null,
-      regionValue: "",
-      subRegionValue: "",
-      offenderNotes: "",
-      toggleValue: false
-    };
-  }
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+  //   console.log("-------------------------------------------------------------------------");
 
-  // For testing purposes. Can be removed.
-  public componentDidMount() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidMount',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  //   // State handles variable changes and will be used by submit to store the data
+  //   this.state = {
+  //     regionsArray: getRegionArrayData(this.props.arrayToUse),
+  //     subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
+  //     offenderName: "",
+  //     offenderJAID: "",
+  //     dateValue: "",
+  //     dateValue2: null,
+  //     regionValue: "",
+  //     subRegionValue: "",
+  //     offenderNotes: "",
+  //     toggleValue: false
+  //   };
+  // }
 
-  // For testing purposes. Can be removed.
-  public componentDidUpdate() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // // For testing purposes. Can be removed.
+  // public componentDidMount() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[ProcurementNavigator.tsx] componentDidMount',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
-  public offenderNameHandler = (value) => {
-    this.setState({ offenderName: value });
-  }
+  // // For testing purposes. Can be removed.
+  // public componentDidUpdate() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
-  public offenderJAIDHandler = (value) => {
-    this.setState({ offenderJAID: value });
-  }
+  // public offenderNameHandler = (value) => {
+  //   this.setState({ offenderName: value });
+  // }
 
-  public offenderNotesHandler = (value) => {
-    this.setState({ offenderNotes: value });
-  }
+  // public offenderJAIDHandler = (value) => {
+  //   this.setState({ offenderJAID: value });
+  // }
 
-  private _onFormatDate = (date: Date): string => {
-    // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
-    const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-    this.setState({ dateValue: dateTest });
-    this.setState({ dateValue2: date });
-    return dateTest;
-  }
+  // public offenderNotesHandler = (value) => {
+  //   this.setState({ offenderNotes: value });
+  // }
 
-  public changeRegionHandler = (value) => {
-    this.setState({ regionValue: value });
-    this.setState({ subRegionValue: "" });
-  }
+  // private _onFormatDate = (date: Date): string => {
+  //   // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
+  //   const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+  //   this.setState({ dateValue: dateTest });
+  //   this.setState({ dateValue2: date });
+  //   return dateTest;
+  // }
 
-  public changeDropDownHandler = (value) => {
-    this.setState({ subRegionValue: value });
-  }
+  // public changeRegionHandler = (value) => {
+  //   this.setState({ regionValue: value });
+  //   this.setState({ subRegionValue: "" });
+  // }
 
-  public toggleChangeHandler = () => {
-    this.setState({ toggleValue: !this.state.toggleValue });
-  }
+  // public changeDropDownHandler = (value) => {
+  //   this.setState({ subRegionValue: value });
+  // }
 
-  public fieldFilled = ():boolean => {
-    const valueReturned = !this.state.offenderName    ||
-      !this.state.offenderJAID    ||
-      !this.state.regionValue     || 
-      !this.state.subRegionValue  || 
-      !this.state.dateValue ? true : false;
-    return valueReturned;
-  }
+  // public toggleChangeHandler = () => {
+  //   this.setState({ toggleValue: !this.state.toggleValue });
+  // }
 
-  public colorSetSubmit = (): any => {
-    const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
-    return valueStyle;
-  }
+  // public fieldFilled = ():boolean => {
+  //   const valueReturned = !this.state.offenderName    ||
+  //     !this.state.offenderJAID    ||
+  //     !this.state.regionValue     || 
+  //     !this.state.subRegionValue  || 
+  //     !this.state.dateValue ? true : false;
+  //   return valueReturned;
+  // }
+
+  // public colorSetSubmit = (): any => {
+  //   const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
+  //   return valueStyle;
+  // }
 
   public render(): React.ReactElement<ICcsProps> {
     return (
@@ -107,11 +109,12 @@ export default class Ccs extends React.Component<any, any, any> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
+              <Form { ...this.props } />
             </div>
           </div>
         </div>
 
-        <div className={ styles.container }>
+        {/* <div className={ styles.container }>
           <div className={ styles.row2 }>
             <div className={ styles.column }>
 
@@ -221,8 +224,8 @@ export default class Ccs extends React.Component<any, any, any> {
 
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+      </div> 
     );
   }
 }

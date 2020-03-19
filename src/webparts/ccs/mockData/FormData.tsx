@@ -1,5 +1,3 @@
-// import {questionData } from './QuestionsType';
-
 export const mockArray:any = [
     { 
       Title: "Bayside",
