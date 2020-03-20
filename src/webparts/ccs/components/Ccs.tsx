@@ -47,9 +47,9 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   console.log("-------------------------------------------------------------------------");
   // }
 
-  private userDetails:{} = JSON.stringify(this.props.context.pageContext);
-  private userName:{} = JSON.stringify(this.props.context.pageContext.user);
-  private userEmail = JSON.stringify(this.props.context.pageContext.user);
+  // Grab the Users (that is logged in) name and email data
+  private userName:{} = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
+  private userEmail:{} = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
 
   // // For testing purposes. Can be removed.
   // public componentDidUpdate() {
