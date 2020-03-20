@@ -13,7 +13,7 @@ const loadUserDetails = async(context:any):Promise<void> => {
 		} catch (error) {  
 			console.log("Error in spLoggedInUserDetails : " + error);  
 		} 
-	} 
+	}; 
   
 	try{  
 		const userDetails = await spLoggedInUserDetails(context);  
@@ -24,7 +24,7 @@ const loadUserDetails = async(context:any):Promise<void> => {
 		// console.log("Error in loadUserDetails : ", error);  
 		console.log("Error in loadUserDetails, Using default values this time"); 
 	} 
-}
+};
 export default loadUserDetails;
 
 

@@ -15,7 +15,6 @@ import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
-import GetUserData from './GetUserData/GetUserData';
 import Form from './Form/Form';
 
 export default class Ccs extends React.Component<ICcsProps> {
@@ -40,11 +39,6 @@ export default class Ccs extends React.Component<ICcsProps> {
   //     toggleValue: false
   //   };
   // }
-
-  public state = {
-		userName: null,       
-		userEmail: null
-  };
   
   // // For testing purposes. Can be removed.
   // public componentDidMount() {
@@ -107,14 +101,6 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   return valueStyle;
   // }
 
-
-  public getUserHandler = (user:string, email:string) => {
-    this.setState({    
-      userName: user,        
-      userEmail: email            
-    }); 
-  }
-
   public render(): React.ReactElement<ICcsProps> {
     return (
       <div className={ styles.ccs }>
@@ -123,8 +109,7 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-              <GetUserData context={this.props.context} dataHandler={this.getUserHandler} />
-              <Form { ...this.props } userName={this.state.userName} userEmail={this.state.userEmail} />
+              <Form { ...this.props } />
             </div>
           </div>
         </div>

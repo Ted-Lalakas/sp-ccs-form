@@ -17,7 +17,7 @@ const spLoggedInUserDetails = async(ctx:any): Promise<any> => {
 	} catch (error) {  
 		console.log("Error in spLoggedInUserDetails : " + error);  
 	}      
-} 
+};
 
 const loadUserDetails = async(context:any, getUser:(user:string, email:string) => void, title:string, email:string):Promise<void> => {  
 	try{  
@@ -28,7 +28,7 @@ const loadUserDetails = async(context:any, getUser:(user:string, email:string) =
 		// console.log("Error in loadUserDetails : ", error);  
 		console.log("Error in loadUserDetails, Using default values this time");  
 	}  
-}  
+};  
 
 const GetUserData = (props:IGetUserDataProps) => {
 	loadUserDetails(props.context, props.dataHandler, titleDefault, emailDefault);	
