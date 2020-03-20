@@ -8,6 +8,7 @@
   "manifestVersion": 2,
 
   "requiresCustomScript": false,
+  "supportsFullBleed": true,
   "supportedHosts": ["SharePointWebPart"],
 
   "preconfiguredEntries": [{
@@ -17,7 +18,8 @@
     "description": { "default": "Provides the means to record relevant details in order to monitor offender compliance." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "Provides the means to record relevant details in order to monitor offender compliance."
+      "description": "Description only",
+      "Title1": "JAID Number"
     }
   }]
 }

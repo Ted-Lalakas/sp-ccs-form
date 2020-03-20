@@ -16,6 +16,7 @@ import { mockArray } from './mockData/FormData';
 
 export interface ICcsWebPartProps {
   description: string;
+  Title1: string;
   context: any;
 }
 
@@ -57,6 +58,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
       Ccs,
       {
         description: this.properties.description,
+        Title1: this.properties.Title1,
         context: this.context,
         arrayToUse: arrayPassed
       }
@@ -87,6 +89,11 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                   label: strings.DescriptionFieldLabel,
                   multiline: true,
                   resizable: true
+                }),
+                PropertyPaneTextField('Title1', {
+                  label: strings.Title1FieldLabel,
+                  multiline: false,
+                  resizable: false
                 })
               ]
             }

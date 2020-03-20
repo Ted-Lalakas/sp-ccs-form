@@ -4,20 +4,21 @@ import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './FormElements/TextField/InputFieldName';
-import InputFieldJAID from './FormElements/TextField/InputFieldJAID';
-import InputFieldNotes from './FormElements/TextField/InputFieldNotes';
-import DropdownMain from './FormElements/DropDown/DropDown';
-import DropdownSub from './FormElements/DropDown/DropDownSub';
-import { getRegionArrayData, getSubRegionArrayData } from './FormElements/DropDown/CcsArrayFunc';
+import InputFieldName from './Form/InputFieldName';
+import InputFieldJAID from './Form/InputFieldJAID';
+import InputFieldNotes from './Form/InputFieldNotes';
+import DropdownMain from './Form/RegionSelection/RegionDropDown';
+import DropdownSub from './Form/RegionSelection/SubRegionDropDown';
+import { getRegionArrayData, getSubRegionArrayData } from './Form/RegionSelection/arrayFunctions';
 
 import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
-import Form from './FormElements/Form';
+import GetUserData from './GetUserData/GetUserData';
+import Form from './Form/Form';
 
-export default class Ccs extends React.Component<ICcsProps, {}> {
+export default class Ccs extends React.Component<ICcsProps> {
   // constructor(props:any) {
   //   super(props);
 
@@ -40,19 +41,25 @@ export default class Ccs extends React.Component<ICcsProps, {}> {
   //   };
   // }
 
-  // // For testing purposes. Can be removed.
-  // public componentDidMount() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[ProcurementNavigator.tsx] componentDidMount',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  // public state = {
+	// 	Name: null,    
+	// 	UserId: null,    
+	// 	EmailId: null,
+	// };
 
-  // // For testing purposes. Can be removed.
-  // public componentDidUpdate() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  // For testing purposes. Can be removed.
+  public componentDidMount() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[ProcurementNavigator.tsx] componentDidMount',this.props);
+    console.log("-------------------------------------------------------------------------");
+  }
+
+  // For testing purposes. Can be removed.
+  public componentDidUpdate() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // public offenderNameHandler = (value) => {
   //   this.setState({ offenderName: value });
@@ -101,6 +108,34 @@ export default class Ccs extends React.Component<ICcsProps, {}> {
   //   return valueStyle;
   // }
 
+  /*Get Current Logged In User*/  
+	// public async spLoggedInUserDetails(ctx: any): Promise<any>{  
+	// 	try {  
+	// 		const web = new pnp.Web(ctx.pageContext.site.absoluteUrl);  
+	// 		return await web.currentUser.get();          
+	// 	} catch (error) {  
+	// 		console.log("Error in spLoggedInUserDetails : " + error);  
+	// 	}      
+	// } 
+
+	// private async loadUserDetails():Promise<void>{  
+  //   try{  
+  //     let userDetails = await this.spLoggedInUserDetails(this.props.context);  
+  //     this.setState({    
+  //       Name: userDetails.Title,    
+  //       UserId: userDetails.Id,    
+  //       EmailId: userDetails.Email,            
+  //     });  
+  //   }catch(error){  
+  //     console.log("Error in loadUserDetails : ", error);  
+  //   }  
+  // }  
+  
+  public getUserHandler = (user:string, email:string) => {
+    console.log(user);
+    console.log(email);
+  }
+
   public render(): React.ReactElement<ICcsProps> {
     return (
       <div className={ styles.ccs }>
@@ -110,6 +145,8 @@ export default class Ccs extends React.Component<ICcsProps, {}> {
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
               <Form { ...this.props } />
+
+              <GetUserData context={this.props.context} dataHandler={this.getUserHandler} />
             </div>
           </div>
         </div>

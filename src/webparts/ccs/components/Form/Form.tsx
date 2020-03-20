@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { IFormProps, IFormState } from './IForm';
+import { IFormProps, IFormState } from './IFormPropsState';
 
 class Form extends React.Component<IFormProps,IFormState> {
 	public state = {
-		arrayToUse: this.props.arrayToUse,
+		arrayToUse: this.props.arrayToUse
 	};
-
 
 	// For testing purposes. Can be removed.
   public componentDidMount() {
     console.log("-------------------------------------------------------------------------");
     console.log('[ProcurementNavigator.tsx] componentDidMount',this.props);
-    console.log("-------------------------------------------------------------------------");
+		console.log("-------------------------------------------------------------------------");
 	}
 
 	public componentDidUpdate() {
@@ -22,7 +21,11 @@ class Form extends React.Component<IFormProps,IFormState> {
 	
 	public render() {
 		return (
-			<div></div>
+			<div>
+				<p>{this.props.Title1}</p>
+
+				<p>{ this.context.pageContext }</p>
+			</div>
 		);
 	}
 }
