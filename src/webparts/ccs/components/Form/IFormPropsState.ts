@@ -6,6 +6,4 @@ export interface IFormProps {
   
 export interface IFormState {
   arrayToUse: any[];
-  userName: string;
-	userEmail: string;
 }

@@ -40,12 +40,16 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   };
   // }
   
-  // // For testing purposes. Can be removed.
+  // For testing purposes. Can be removed.
   // public componentDidMount() {
   //   console.log("-------------------------------------------------------------------------");
   //   console.log('[Ccs.tsx] componentDidMount',this.props);
   //   console.log("-------------------------------------------------------------------------");
   // }
+
+  private userDetails:{} = JSON.stringify(this.props.context.pageContext);
+  private userName:{} = JSON.stringify(this.props.context.pageContext.user);
+  private userEmail = JSON.stringify(this.props.context.pageContext.user);
 
   // // For testing purposes. Can be removed.
   // public componentDidUpdate() {
@@ -114,7 +118,7 @@ export default class Ccs extends React.Component<ICcsProps> {
           </div>
         </div>
 
-``        {/* <div className={ styles.container }>
+        {/* <div className={ styles.container }>
           <div className={ styles.row2 }>
             <div className={ styles.column }>
 
