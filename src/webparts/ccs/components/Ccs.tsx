@@ -41,25 +41,24 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   };
   // }
 
-  // public state = {
-	// 	Name: null,    
-	// 	UserId: null,    
-	// 	EmailId: null,
-	// };
+  public state = {
+		userName: null,       
+		userEmail: null
+  };
+  
+  // // For testing purposes. Can be removed.
+  // public componentDidMount() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidMount',this.props);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
-  // For testing purposes. Can be removed.
-  public componentDidMount() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidMount',this.props);
-    console.log("-------------------------------------------------------------------------");
-  }
-
-  // For testing purposes. Can be removed.
-  public componentDidUpdate() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // // For testing purposes. Can be removed.
+  // public componentDidUpdate() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidUpdate',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
   // public offenderNameHandler = (value) => {
   //   this.setState({ offenderName: value });
@@ -108,32 +107,12 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   return valueStyle;
   // }
 
-  /*Get Current Logged In User*/  
-	// public async spLoggedInUserDetails(ctx: any): Promise<any>{  
-	// 	try {  
-	// 		const web = new pnp.Web(ctx.pageContext.site.absoluteUrl);  
-	// 		return await web.currentUser.get();          
-	// 	} catch (error) {  
-	// 		console.log("Error in spLoggedInUserDetails : " + error);  
-	// 	}      
-	// } 
 
-	// private async loadUserDetails():Promise<void>{  
-  //   try{  
-  //     let userDetails = await this.spLoggedInUserDetails(this.props.context);  
-  //     this.setState({    
-  //       Name: userDetails.Title,    
-  //       UserId: userDetails.Id,    
-  //       EmailId: userDetails.Email,            
-  //     });  
-  //   }catch(error){  
-  //     console.log("Error in loadUserDetails : ", error);  
-  //   }  
-  // }  
-  
   public getUserHandler = (user:string, email:string) => {
-    console.log(user);
-    console.log(email);
+    this.setState({    
+      userName: user,        
+      userEmail: email            
+    }); 
   }
 
   public render(): React.ReactElement<ICcsProps> {
@@ -144,14 +123,13 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-              <Form { ...this.props } />
-
               <GetUserData context={this.props.context} dataHandler={this.getUserHandler} />
+              <Form { ...this.props } userName={this.state.userName} userEmail={this.state.userEmail} />
             </div>
           </div>
         </div>
 
-        {/* <div className={ styles.container }>
+``        {/* <div className={ styles.container }>
           <div className={ styles.row2 }>
             <div className={ styles.column }>
 
