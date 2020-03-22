@@ -48,8 +48,8 @@ export default class Ccs extends React.Component<ICcsProps> {
   // }
 
   // Grab the Users (that is logged in) name and email data
-  private userName:{} = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
-  private userEmail:{} = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
+  private userName:string = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
+  private userEmail:string = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
 
   // // For testing purposes. Can be removed.
   // public componentDidUpdate() {
@@ -113,7 +113,7 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-              <Form { ...this.props } />
+              <Form { ...this.props } userName={this.userName} userEmail={this.userEmail} />
             </div>
           </div>
         </div>

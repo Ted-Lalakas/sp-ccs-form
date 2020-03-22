@@ -6,6 +6,8 @@ class Form extends React.Component<IFormProps,IFormState> {
 		arrayToUse: this.props.arrayToUse
 	};
 
+	// Users userName, userEmail coming in as props
+
 	// // For testing purposes. Can be removed.
   // public componentDidMount() {
   //   console.log("-------------------------------------------------------------------------");
@@ -20,6 +22,7 @@ class Form extends React.Component<IFormProps,IFormState> {
 	// }
 	
 	public render() {
+
 		return (
 			<div>
 				<p>{this.props.Title1}</p>
