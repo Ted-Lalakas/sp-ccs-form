@@ -6,7 +6,7 @@ declare interface ICcsWebPartStrings {
   DutyDirectorLabel: string;
   JaidFieldLabel: string;
   RegionalOfficeLocation: string;
-  OfficeManagedFrom: string;
+  SubRegion: string;
   DateFieldLabel: string;
   TimeofCallLabel: string;
   OrderTypeLabel: string;

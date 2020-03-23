@@ -1,5 +1,5 @@
 
-export const getRegionArrayData = (fullArray) => {
+export const getRegionArrayData = (fullArray:any[]) => {
 	// Get the first element and pass it some extra values
 	const regionDetailsData = fullArray.filter( n => n.Type_x0020_of_x0020_Data == "Region Details" );
 
@@ -10,7 +10,7 @@ export const getRegionArrayData = (fullArray) => {
 	return regionUnique;
 };
 
-export const getSubRegionArrayData = (fullArray) => {
+export const getSubRegionArrayData = (fullArray:any[]) => {
 	// Get the first element and pass it some extra values
 	const regionDetailsData = fullArray.filter( n => n.Type_x0020_of_x0020_Data == "Region Details" );
 
@@ -21,9 +21,9 @@ export const getSubRegionArrayData = (fullArray) => {
 	// Creates a final (re-formatted) array of values ready for use
 	// Returns this value to be stored as a variable in the main script
 	const formattedArray = [];
-	regionUnique.forEach( val => {
-		const currentRegion = val;
-		const iterationArray = regionDetailsData.filter( n => n.Title == val );
+	regionUnique.forEach( value => {
+		const currentRegion = value;
+		const iterationArray = regionDetailsData.filter( n => n.Title == value );
 		formattedArray.push( {
 		regions: currentRegion,
 		subRegions: iterationArray}

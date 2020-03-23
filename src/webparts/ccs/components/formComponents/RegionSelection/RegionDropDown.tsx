@@ -9,7 +9,7 @@ const dropdownStyles: Partial<IDropdownStyles> = {
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
-const DropdownMain = (props) => {
+const RegionDropDown = (props) => {
   const formatterArr: IDropdownOption[] = [];
   props.regionsArray.forEach( val => {
     formatterArr.push({
@@ -28,8 +28,8 @@ const DropdownMain = (props) => {
     <Stack tokens={stackTokens}>
       <Dropdown 
         required
-        placeholder="Select an option" 
-        label={props.placeholderText} 
+        label={props.heading}
+        placeholder={props.placeholderText}  
         options={formatterArr} 
         styles={dropdownStyles}
         onChange={(ev, option) => props.changeHandler(option.text)}
@@ -39,4 +39,4 @@ const DropdownMain = (props) => {
   );
 };
 
-export default DropdownMain;
+export default RegionDropDown;

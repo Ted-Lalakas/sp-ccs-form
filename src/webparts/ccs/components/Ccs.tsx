@@ -1,70 +1,65 @@
 import * as React from 'react';
 import styles from './Ccs.module.scss';
-import { ICcsProps } from './ICcsProps';
+import { ICcsProps, ICcsState } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './formComponents/InputFieldName'
+import InputFieldName from './formComponents/InputFieldName';
 import InputFieldJAID from './formComponents/InputFieldJAID';
 import InputFieldNotes from './formComponents/InputFieldNotes';
-import DropdownMain from './formComponents/RegionSelection/RegionDropDown';
-import DropdownSub from './formComponents/RegionSelection/SubRegionDropDown';
+import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
+import SubRegionDropDown from './formComponents/RegionSelection/SubRegionDropDown';
 import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
 
 import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
-export default class Ccs extends React.Component<ICcsProps> {
-  // constructor(props:any) {
-  //   super(props);
+export default class Ccs extends React.Component<ICcsProps, ICcsState> {
+  constructor(props:any) {
+    super(props);
 
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-  //   console.log("-------------------------------------------------------------------------");
+    console.log("-------------------------------------------------------------------------");
+    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+    console.log("-------------------------------------------------------------------------");
 
-  //   // State handles variable changes and will be used by submit to store the data
-  //   this.state = {
-  //     regionsArray: getRegionArrayData(this.props.arrayToUse),
-  //     subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
-  //     offenderName: "",
-  //     offenderJAID: "",
-  //     dateValue: "",
-  //     dateValue2: null,
-  //     regionValue: "",
-  //     subRegionValue: "",
-  //     offenderNotes: "",
-  //     toggleValue: false
-  //   };
-  // }
-  
-  // For testing purposes. Can be removed.
-  // public componentDidMount() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidMount',this.props);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+    // State handles variable changes and will be used by submit to store the data
+    this.state = {
+      regionsArray: getRegionArrayData(this.props.arrayToUse),
+      subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
+      offenderJAID: "",
+      dateValue: "",
+      dateValue2: null,
+      regionValue: "",
+      subRegionValue: "",
+      offenderNotes: "",
+      toggleValue: false
+    };
+  }
 
   // Grab the Users (that is logged in) name and email data
   private userName:string = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
   private userEmail:string = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
+  
+  // For testing purposes. Can be removed.
+  public componentDidMount() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidMount',this.props);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // // For testing purposes. Can be removed.
-  // public componentDidUpdate() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidUpdate',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  public componentDidUpdate() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidUpdate',this.state);
+    console.log("-------------------------------------------------------------------------");
+  }
 
-  // public offenderNameHandler = (value) => {
-  //   this.setState({ offenderName: value });
-  // }
-
-  public offenderJAIDHandler = (value) => {
+  public offenderJAIDHandler = (value:string) => {
     this.setState({ offenderJAID: value });
   }
 
-  public offenderNotesHandler = (value) => {
+  public offenderNotesHandler = (value:string) => {
     this.setState({ offenderNotes: value });
   }
 
@@ -111,7 +106,6 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-              <h3>{this.props.heading_dutyDirector}: {this.userName}</h3>
             </div>
           </div>
         </div>
@@ -121,34 +115,39 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
-                {/* <InputFieldName changeHandler={this.offenderNameHandler} /> */}
 
-                {/* <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} /> */}
+                <InputFieldJAID 
+                  heading={this.props.heading_jaid}
+                  jaid={this.state.offenderJAID} 
+                  changeHandler={this.offenderJAIDHandler} 
+                />
 
-                {/* <DatePicker 
-                  ariaLabel="Date of incident" 
-                  label="Date of incident"
-                  placeholder="Click on the field to select a date"
+                <DatePicker 
+                  ariaLabel={this.props.heading_dateField} 
+                  label={this.props.heading_dateField}
+                  placeholder={this.props.placeholder_dateField}
                   onSelectDate={this._onFormatDate}
                   value={this.state.dateValue2!}
                   allowTextInput={false}
                   isRequired={true}
-                /> */}
+                />
 
-                {/* <DropdownMain 
-                  placeholderText="Region Details"
+                <RegionDropDown 
+                  heading={this.props.heading_regionalLocation}
+                  placeholderText={this.props.placeholder_regionalLocation}
                   disabledValue={false} 
                   changeHandler={this.changeRegionHandler}
                   regionsArray={this.state.regionsArray} 
-                /> */}
+                />
 
-                {/* <DropdownSub 
-                  placeholderText="Sub Region"
+                <SubRegionDropDown
+                  heading={this.props.heading_subRegion} 
+                  placeholderText={this.props.placeholder_subRegion}
                   disabledValue={!this.state.regionValue ? true : false} 
                   changeHandler={this.changeDropDownHandler} 
                   regionsArray={this.state.subRegionArray} 
                   regionValue={this.state.regionValue}
-                /> */}
+                />
 
                 {/* <InputFieldNotes changeHandler={this.offenderNotesHandler} /> */}
 
@@ -178,14 +177,10 @@ export default class Ccs extends React.Component<ICcsProps> {
 
               </Stack>
 
-            {/* { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
+            
+            { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
             <div className={ styles.formDisplayData }>              
-              { this.state.offenderName ? 
-                <div className={ styles.formDataWrap }>
-                  <label>Offender Name</label>
-                  <p>{this.state.offenderName}</p>
-                </div>
-              : null }
+              <h3>{this.props.heading_dutyDirector}: {this.userName}</h3>
 
               { this.state.offenderJAID ? 
                 <div className={ styles.formDataWrap }>
@@ -222,7 +217,7 @@ export default class Ccs extends React.Component<ICcsProps> {
                 </div>
               : null }
             </div>  
-            : null } */}
+            : null } 
 
             </div>
           </div>

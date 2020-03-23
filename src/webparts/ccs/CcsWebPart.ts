@@ -21,8 +21,11 @@ export interface ICcsWebPartProps {
   heading_dutyDirector: string;
   heading_jaid: string;
   heading_regionalLocation: string;
-  heading_officeManagedFrom: string;
+  placeholder_regionalLocation: string;
+  heading_subRegion: string;
+  placeholder_subRegion: string;
   heading_dateField: string;
+  placeholder_dateField: string;
   heading_timeofCall: string;
   heading_orderType: string;
   heading_callSubject: string;
@@ -77,8 +80,11 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         heading_dutyDirector: this.properties.heading_dutyDirector,
         heading_jaid: this.properties.heading_jaid,
         heading_regionalLocation: this.properties.heading_regionalLocation,
-        heading_officeManagedFrom: this.properties.heading_officeManagedFrom,
+        placeholder_regionalLocation: this.properties.placeholder_regionalLocation,
+        heading_subRegion: this.properties.heading_subRegion,
+        placeholder_subRegion: this.properties.placeholder_subRegion,
         heading_dateField: this.properties.heading_dateField,
+        placeholder_dateField: this.properties.placeholder_dateField,
         heading_timeofCall: this.properties.heading_timeofCall,
         heading_orderType: this.properties.heading_orderType,
         heading_callSubject: this.properties.heading_callSubject,
@@ -131,12 +137,15 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                 PropertyPaneTextField('heading_regionalLocation', {
                   label: strings.RegionalOfficeLocation
                 }),
-                PropertyPaneTextField('heading_officeManagedFrom', {
-                  label: strings.OfficeManagedFrom
+                PropertyPaneTextField('placeholder_regionalLocation', {}),
+                PropertyPaneTextField('heading_subRegion', {
+                  label: strings.SubRegion
                 }),
+                PropertyPaneTextField('placeholder_subRegion', {}),
                 PropertyPaneTextField('heading_dateField', {
                   label: strings.DateFieldLabel
                 }),
+                PropertyPaneTextField('placeholder_dateField', {}),                
                 PropertyPaneTextField('heading_timeofCall', {
                   label: strings.TimeofCallLabel
                 }),
