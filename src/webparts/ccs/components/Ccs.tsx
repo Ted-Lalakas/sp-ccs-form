@@ -4,18 +4,16 @@ import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './Form/InputFieldName';
-import InputFieldJAID from './Form/InputFieldJAID';
-import InputFieldNotes from './Form/InputFieldNotes';
-import DropdownMain from './Form/RegionSelection/RegionDropDown';
-import DropdownSub from './Form/RegionSelection/SubRegionDropDown';
-import { getRegionArrayData, getSubRegionArrayData } from './Form/RegionSelection/arrayFunctions';
+import InputFieldName from './formComponents/InputFieldName'
+import InputFieldJAID from './formComponents/InputFieldJAID';
+import InputFieldNotes from './formComponents/InputFieldNotes';
+import DropdownMain from './formComponents/RegionSelection/RegionDropDown';
+import DropdownSub from './formComponents/RegionSelection/SubRegionDropDown';
+import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
 
 import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
-
-import Form from './Form/Form';
 
 export default class Ccs extends React.Component<ICcsProps> {
   // constructor(props:any) {
@@ -62,30 +60,30 @@ export default class Ccs extends React.Component<ICcsProps> {
   //   this.setState({ offenderName: value });
   // }
 
-  // public offenderJAIDHandler = (value) => {
-  //   this.setState({ offenderJAID: value });
-  // }
+  public offenderJAIDHandler = (value) => {
+    this.setState({ offenderJAID: value });
+  }
 
-  // public offenderNotesHandler = (value) => {
-  //   this.setState({ offenderNotes: value });
-  // }
+  public offenderNotesHandler = (value) => {
+    this.setState({ offenderNotes: value });
+  }
 
-  // private _onFormatDate = (date: Date): string => {
-  //   // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
-  //   const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-  //   this.setState({ dateValue: dateTest });
-  //   this.setState({ dateValue2: date });
-  //   return dateTest;
-  // }
+  private _onFormatDate = (date: Date): string => {
+    // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
+    const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+    this.setState({ dateValue: dateTest });
+    this.setState({ dateValue2: date });
+    return dateTest;
+  }
 
-  // public changeRegionHandler = (value) => {
-  //   this.setState({ regionValue: value });
-  //   this.setState({ subRegionValue: "" });
-  // }
+  public changeRegionHandler = (value) => {
+    this.setState({ regionValue: value });
+    this.setState({ subRegionValue: "" });
+  }
 
-  // public changeDropDownHandler = (value) => {
-  //   this.setState({ subRegionValue: value });
-  // }
+  public changeDropDownHandler = (value) => {
+    this.setState({ subRegionValue: value });
+  }
 
   // public toggleChangeHandler = () => {
   //   this.setState({ toggleValue: !this.state.toggleValue });
@@ -113,21 +111,21 @@ export default class Ccs extends React.Component<ICcsProps> {
             <div className={ styles.column }>
               <span className={ styles.title }>CCS After Hours Activity Form</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-              <Form { ...this.props } userName={this.userName} userEmail={this.userEmail} />
+              <h3>{this.props.heading_dutyDirector}: {this.userName}</h3>
             </div>
           </div>
         </div>
 
-        {/* <div className={ styles.container }>
+        <div className={ styles.container }>
           <div className={ styles.row2 }>
             <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
-                <InputFieldName changeHandler={this.offenderNameHandler} />
+                {/* <InputFieldName changeHandler={this.offenderNameHandler} /> */}
 
-                <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} />
+                {/* <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} /> */}
 
-                <DatePicker 
+                {/* <DatePicker 
                   ariaLabel="Date of incident" 
                   label="Date of incident"
                   placeholder="Click on the field to select a date"
@@ -135,27 +133,27 @@ export default class Ccs extends React.Component<ICcsProps> {
                   value={this.state.dateValue2!}
                   allowTextInput={false}
                   isRequired={true}
-                />
+                /> */}
 
-                <DropdownMain 
+                {/* <DropdownMain 
                   placeholderText="Region Details"
                   disabledValue={false} 
                   changeHandler={this.changeRegionHandler}
                   regionsArray={this.state.regionsArray} 
-                />
+                /> */}
 
-                <DropdownSub 
+                {/* <DropdownSub 
                   placeholderText="Sub Region"
                   disabledValue={!this.state.regionValue ? true : false} 
                   changeHandler={this.changeDropDownHandler} 
                   regionsArray={this.state.subRegionArray} 
                   regionValue={this.state.regionValue}
-                />
+                /> */}
 
-                <InputFieldNotes changeHandler={this.offenderNotesHandler} />
+                {/* <InputFieldNotes changeHandler={this.offenderNotesHandler} /> */}
 
 
-                <div className="ms-Grid" dir="ltr">
+                {/* <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
                       <DefaultButton 
@@ -176,11 +174,11 @@ export default class Ccs extends React.Component<ICcsProps> {
                     />
                     </div>
                   </div>
-                </div>
+                </div> */}
 
               </Stack>
 
-            { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
+            {/* { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
             <div className={ styles.formDisplayData }>              
               { this.state.offenderName ? 
                 <div className={ styles.formDataWrap }>
@@ -224,12 +222,13 @@ export default class Ccs extends React.Component<ICcsProps> {
                 </div>
               : null }
             </div>  
-            : null }
+            : null } */}
 
             </div>
           </div>
-        </div> */}
-      </div> 
+        </div>
+
+      </div> // wrapping container
     );
   }
 }
