@@ -22,10 +22,13 @@ class Form extends React.Component<IFormProps,IFormState> {
 	// }
 	
 	public render() {
-
+		console.log(this.props);
 		return (
 			<div>
-				<p>{this.props.Title1}</p>
+				<p>{this.props.heading_dutyDirector}</p>
+				<p>{this.props.heading_regionalLocation}</p>
+				<p>{this.props.heading_officeManagedFrom}</p>
+				<p>{this.props.heading_jaid}</p>
 			</div>
 		);
 	}

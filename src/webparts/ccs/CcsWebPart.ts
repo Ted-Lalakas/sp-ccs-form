@@ -3,7 +3,8 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneHorizontalRule
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'CcsWebPartStrings';
@@ -16,8 +17,21 @@ import { mockArray } from './mockData/FormData';
 
 export interface ICcsWebPartProps {
   description: string;
-  Title1: string;
   context: any;
+  heading_dutyDirector: string;
+  heading_jaid: string;
+  heading_regionalLocation: string;
+  heading_officeManagedFrom: string;
+  heading_dateField: string;
+  heading_timeofCall: string;
+  heading_orderType: string;
+  heading_callSubject: string;
+  heading_issueActivity: string;
+  heading_comment: string;
+  heading_visitRequired: string;
+  heading_resolveTime: string;
+  heading_extraStaff: string;
+  heading_staffTime: string;
 }
 
 export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps> {
@@ -58,9 +72,22 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
       Ccs,
       {
         description: this.properties.description,
-        Title1: this.properties.Title1,
         context: this.context,
-        arrayToUse: arrayPassed
+        arrayToUse: arrayPassed,
+        heading_dutyDirector: this.properties.heading_dutyDirector,
+        heading_jaid: this.properties.heading_jaid,
+        heading_regionalLocation: this.properties.heading_regionalLocation,
+        heading_officeManagedFrom: this.properties.heading_officeManagedFrom,
+        heading_dateField: this.properties.heading_dateField,
+        heading_timeofCall: this.properties.heading_timeofCall,
+        heading_orderType: this.properties.heading_orderType,
+        heading_callSubject: this.properties.heading_callSubject,
+        heading_issueActivity: this.properties.heading_issueActivity,
+        heading_comment: this.properties.heading_comment,
+        heading_visitRequired: this.properties.heading_visitRequired,
+        heading_resolveTime: this.properties.heading_resolveTime,
+        heading_extraStaff: this.properties.heading_extraStaff,
+        heading_staffTime: this.properties.heading_staffTime
       }
     );
     ReactDom.render(element, this.domElement);
@@ -83,17 +110,59 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: strings.GroupHeadingInfo,
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel,
                   multiline: true,
                   resizable: true
+                })
+              ]
+            },
+            {
+              groupName: strings.GroupFormFields,
+              groupFields: [
+                PropertyPaneTextField('heading_dutyDirector', {
+                  label: strings.DutyDirectorLabel
                 }),
-                PropertyPaneTextField('Title1', {
-                  label: strings.Title1FieldLabel,
-                  multiline: false,
-                  resizable: false
+                PropertyPaneTextField('heading_jaid', {
+                  label: strings.JaidFieldLabel
+                }),
+                PropertyPaneTextField('heading_regionalLocation', {
+                  label: strings.RegionalOfficeLocation
+                }),
+                PropertyPaneTextField('heading_officeManagedFrom', {
+                  label: strings.OfficeManagedFrom
+                }),
+                PropertyPaneTextField('heading_dateField', {
+                  label: strings.DateFieldLabel
+                }),
+                PropertyPaneTextField('heading_timeofCall', {
+                  label: strings.TimeofCallLabel
+                }),
+                PropertyPaneTextField('heading_orderType', {
+                  label: strings.OrderTypeLabel
+                }),
+                PropertyPaneTextField('heading_callSubject', {
+                  label: strings.CallSubjectLabel
+                }),
+                PropertyPaneTextField('heading_issueActivity', {
+                  label: strings.IssueActivityLabel
+                }),
+                PropertyPaneTextField('heading_comment', {
+                  label: strings.CommentLabel
+                }),
+                PropertyPaneTextField('heading_visitRequired', {
+                  label: strings.VisitRequiredLabel
+                }),
+                PropertyPaneTextField('heading_resolveTime', {
+                  label: strings.ResolvedTimeLabel
+                }),
+                PropertyPaneTextField('heading_extraStaff', {
+                  label: strings.ExtraStaffLabel
+                }),
+                PropertyPaneTextField('heading_staffTime', {
+                  label: strings.StaffTimeLabel
                 })
               ]
             }
