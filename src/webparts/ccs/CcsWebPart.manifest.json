@@ -18,6 +18,7 @@
     "description": { "default": "Provides the means to record relevant details in order to monitor offender compliance." },
     "officeFabricIconFontName": "Page",
     "properties": {
+      "titleValue": "CCS After Hours Activity Form",
       "description": "Description only",
       "heading_dutyDirector": "Duty Director",
       "heading_jaid": "JAID Number",

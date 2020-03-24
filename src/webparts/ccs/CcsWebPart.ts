@@ -16,6 +16,7 @@ import { ICcsProps } from './components/ICcsProps';
 import { mockArray } from './mockData/FormData';
 
 export interface ICcsWebPartProps {
+  titleValue: string;
   description: string;
   context: any;
   heading_dutyDirector: string;
@@ -74,6 +75,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
+        titleValue: this.properties.titleValue,
         description: this.properties.description,
         context: this.context,
         arrayToUse: arrayPassed,
@@ -118,13 +120,23 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
             {
               groupName: strings.GroupHeadingInfo,
               groupFields: [
+                PropertyPaneTextField('titleValue', {
+                  label: strings.TitleFieldLabel,
+                }),
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel,
                   multiline: true,
                   resizable: true
                 })
               ]
-            },
+            }
+          ]
+        },
+        {
+          header: {
+            description: strings.PropertyPaneDescription
+          },
+          groups: [
             {
               groupName: strings.GroupFormFields,
               groupFields: [
@@ -172,6 +184,21 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                 }),
                 PropertyPaneTextField('heading_staffTime', {
                   label: strings.StaffTimeLabel
+                })
+              ]
+            }
+          ]
+        },
+        {
+          header: {
+            description: strings.PropertyPaneDescription
+          },
+          groups: [
+            {
+              groupName: strings.GroupFormFields,
+              groupFields: [
+                PropertyPaneTextField('heading_dutyDirector', {
+                  label: strings.DutyDirectorLabel
                 })
               ]
             }

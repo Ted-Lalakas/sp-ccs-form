@@ -3,6 +3,7 @@ define([], function() {
     "PropertyPaneDescription": "Settings for the form. You can customise the titles and description here",
     "GroupHeadingInfo": "Header Information",
     "GroupFormFields": "Form Field Titles and placeholder text",
+    "TitleFieldLabel": "Main Title",
     "DescriptionFieldLabel": "Description Field",
     "DutyDirectorLabel": "Duty Director",
     "JaidFieldLabel": "JAID",

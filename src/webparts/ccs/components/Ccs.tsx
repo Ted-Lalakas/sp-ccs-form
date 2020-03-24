@@ -74,6 +74,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return dateTest;
   }
 
+  public changeTimeHandler = (value:string) => {
+    this.setState({ timeValue: value });
+  }
+
   public changeRegionHandler = (value) => {
     this.setState({ regionValue: value });
     this.setState({ subRegionValue: "" });
@@ -81,10 +85,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
   public changeDropDownHandler = (value) => {
     this.setState({ subRegionValue: value });
-  }
-
-  public getCurrentTime(): string {
-    return 'The current time as returned from the corporate library is ' + new Date().toTimeString();
   }
 
   // public toggleChangeHandler = () => {
@@ -105,17 +105,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   //   return valueStyle;
   // }
 
-  public changeTimeHandler = (value:string) => {
-    this.setState({ timeValue: value });
-  }
-
   public render(): React.ReactElement<ICcsProps> {
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <span className={ styles.title }>CCS After Hours Activity Form</span>
+              <span className={ styles.title }>{escape(this.props.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
             </div>
           </div>

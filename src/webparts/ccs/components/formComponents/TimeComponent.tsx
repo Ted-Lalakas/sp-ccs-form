@@ -21,9 +21,11 @@ const TimeComponent = (props:any) => {
 
   return (
     <div style={{ position: 'relative' }} >
-      <PrimaryButton 
-        text="Time of incident" 
-        onClick={() => setShowTime(!showTime)} 
+      <PrimaryButton  
+        onClick={() => setShowTime(!showTime)}
+        toggle
+        checked={showTime}
+        text={showTime ? 'Click to close' : 'Time of call'} 
       />
 
     { showTime ? 
@@ -47,7 +49,7 @@ const TimeComponent = (props:any) => {
                 setTime(newTime.formatted24);
                 props.changeHandler(time);
                 setShowTime(!showTime);
-              }}>Close</div>
+              }}>Set Time</div>
           )}
         />
       </div>

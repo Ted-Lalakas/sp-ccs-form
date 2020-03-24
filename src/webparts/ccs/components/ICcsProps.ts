@@ -1,4 +1,5 @@
 export interface ICcsProps {
+  titleValue: string;
 	description: string;
 	context:any;
 	arrayToUse:any;
