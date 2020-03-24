@@ -32,5 +32,6 @@ export interface ICcsState {
   regionValue: string;
   subRegionValue: string;
   offenderNotes: string;
+  visitRequired: string;
   toggleValue: boolean;
 }

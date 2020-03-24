@@ -16,6 +16,7 @@ import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
 import TimeComponent from './formComponents/TimeComponent';
+import VisitRequired from './formComponents/VisitRequired';
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
@@ -36,6 +37,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       regionValue: "",
       subRegionValue: "",
       offenderNotes: "",
+      visitRequired: "No", 
       toggleValue: false
     };
   }
@@ -85,6 +87,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
   public changeDropDownHandler = (value) => {
     this.setState({ subRegionValue: value });
+  }
+
+  public changeVisitHandler = (value) => {
+    this.setState({ visitRequired: value });
   }
 
   // public toggleChangeHandler = () => {
@@ -166,6 +172,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   regionsArray={this.state.subRegionArray} 
                   regionValue={this.state.regionValue}
                 />
+
+                <VisitRequired visitValue={this.state.visitRequired} visitHandler={this.changeVisitHandler} />
+
 
                 {/* <InputFieldNotes changeHandler={this.offenderNotesHandler} /> */}
 
