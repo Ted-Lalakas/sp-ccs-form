@@ -15,6 +15,8 @@ import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { DefaultButton } from 'office-ui-fabric-react';
 
+import TimeComponent from './formComponents/TimeComponent';
+
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
@@ -30,6 +32,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       offenderJAID: "",
       dateValue: "",
       dateValue2: null,
+      timeValue: null,
       regionValue: "",
       subRegionValue: "",
       offenderNotes: "",
@@ -80,6 +83,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     this.setState({ subRegionValue: value });
   }
 
+  public getCurrentTime(): string {
+    return 'The current time as returned from the corporate library is ' + new Date().toTimeString();
+  }
+
   // public toggleChangeHandler = () => {
   //   this.setState({ toggleValue: !this.state.toggleValue });
   // }
@@ -97,6 +104,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   //   const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
   //   return valueStyle;
   // }
+
+  public changeTimeHandler = (value:string) => {
+    this.setState({ timeValue: value });
+  }
 
   public render(): React.ReactElement<ICcsProps> {
     return (
@@ -131,6 +142,17 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   allowTextInput={false}
                   isRequired={true}
                 />
+
+                <div style={{ marginTop: '1em' }} className="ms-Grid-row">
+                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <TimeComponent changeHandler={this.changeTimeHandler} />
+                  </div>
+                  { this.state.timeValue ?
+                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <h3 className={styles.timeFieldLabel}>Time set: {this.state.timeValue}</h3>
+                  </div>
+                  : null }
+                </div>      
 
                 <RegionDropDown 
                   heading={this.props.heading_regionalLocation}

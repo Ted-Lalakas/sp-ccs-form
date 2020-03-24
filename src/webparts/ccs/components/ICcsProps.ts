@@ -27,6 +27,7 @@ export interface ICcsState {
   offenderJAID: string;
   dateValue: string;
   dateValue2: Date;
+  timeValue: string;
   regionValue: string;
   subRegionValue: string;
   offenderNotes: string;
