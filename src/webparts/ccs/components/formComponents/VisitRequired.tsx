@@ -21,7 +21,7 @@ const VisitRequired = (props:any) => {
         required
       />
     </div>
-    )
+    );
   };
   
   export default VisitRequired;

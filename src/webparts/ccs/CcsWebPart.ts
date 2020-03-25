@@ -79,23 +79,25 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         description: this.properties.description,
         context: this.context,
         arrayToUse: arrayPassed,
-        heading_dutyDirector: this.properties.heading_dutyDirector,
-        heading_jaid: this.properties.heading_jaid,
-        heading_regionalLocation: this.properties.heading_regionalLocation,
-        placeholder_regionalLocation: this.properties.placeholder_regionalLocation,
-        heading_subRegion: this.properties.heading_subRegion,
-        placeholder_subRegion: this.properties.placeholder_subRegion,
-        heading_dateField: this.properties.heading_dateField,
-        placeholder_dateField: this.properties.placeholder_dateField,
-        heading_timeofCall: this.properties.heading_timeofCall,
-        heading_orderType: this.properties.heading_orderType,
-        heading_callSubject: this.properties.heading_callSubject,
-        heading_issueActivity: this.properties.heading_issueActivity,
-        heading_comment: this.properties.heading_comment,
-        heading_visitRequired: this.properties.heading_visitRequired,
-        heading_resolveTime: this.properties.heading_resolveTime,
-        heading_extraStaff: this.properties.heading_extraStaff,
-        heading_staffTime: this.properties.heading_staffTime
+        headings: {
+          heading_dutyDirector: this.properties.heading_dutyDirector,
+          heading_jaid: this.properties.heading_jaid,
+          heading_regionalLocation: this.properties.heading_regionalLocation,
+          placeholder_regionalLocation: this.properties.placeholder_regionalLocation,
+          heading_subRegion: this.properties.heading_subRegion,
+          placeholder_subRegion: this.properties.placeholder_subRegion,
+          heading_dateField: this.properties.heading_dateField,
+          placeholder_dateField: this.properties.placeholder_dateField,
+          heading_timeofCall: this.properties.heading_timeofCall,
+          heading_orderType: this.properties.heading_orderType,
+          heading_callSubject: this.properties.heading_callSubject,
+          heading_issueActivity: this.properties.heading_issueActivity,
+          heading_comment: this.properties.heading_comment,
+          heading_visitRequired: this.properties.heading_visitRequired,
+          heading_resolveTime: this.properties.heading_resolveTime,
+          heading_extraStaff: this.properties.heading_extraStaff,
+          heading_staffTime: this.properties.heading_staffTime
+        }
       }
     );
     ReactDom.render(element, this.domElement);
