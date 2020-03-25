@@ -61,7 +61,7 @@
     position: relative;
     font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
     -webkit-font-smoothing: antialiased;
-    font-size: $ms-font-size-m;
+    font-size: $ms-font-size-l;
     font-weight: $ms-font-weight-regular;
     border-width: 0;
     text-align: center;
@@ -85,7 +85,7 @@
   }
 
   .formDisplayData {
-    background-color: white;
+    background-color: $ms-color-white;
 
     .formDataWrap {
       padding: 1em;
@@ -102,7 +102,7 @@
 
   .submitButtonOn {
     margin-left: -8px;
-    color: #FFF;
+    @include ms-fontColor-white;
     background-color: #005a9e;
 
     &:hover,
@@ -142,7 +142,12 @@
   }
 
   .timeButton {
-    color: darken( #FFF, 20% );
+    color: darken( $ms-color-white, 20% );
     background-color: darken( $ms-color-themeDark, 25% );
+  }
+
+  .labelTitle {
+    color: #333333;
+    padding: 0.4em 0;
   }
 }

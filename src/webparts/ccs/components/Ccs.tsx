@@ -271,20 +271,20 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   visitHandler={this._changeVisitHandler} 
                 />
 
+                <label className={styles.labelTitle}>{this.props.headings.heading_resolveTime}</label>
                 <ResolveTime 
-                  heading={this.props.headings.heading_resolveTime}
                   resolveTime={this.state.resolveTime} 
                   changeHandler={this._changeResolveTimeHandler}
                 />
 
+                <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
                 <ExtraStaff 
-                  heading={this.props.headings.heading_extraStaff}
                   extraStaff={this.state.extraStaff} 
                   changeHandler={this._changeExtraStaffHandler}
                 />
 
+                <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
                 <StaffTime 
-                  heading={this.props.headings.heading_staffTime}
                   staffTime={this.state.staffTime} 
                   changeHandler={this._changeStaffTimeHandler}
                 />
