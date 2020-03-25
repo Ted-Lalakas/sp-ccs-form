@@ -140,4 +140,9 @@
       }
     }
   }
+
+  .timeButton {
+    color: darken( #FFF, 20% );
+    background-color: darken( $ms-color-themeDark, 25% );
+  }
 }

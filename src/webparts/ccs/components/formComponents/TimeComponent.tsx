@@ -1,7 +1,9 @@
 import * as React from 'react';
+import styles from '../Ccs.module.scss';
 import { useState } from 'react';
 import TimeKeeper from 'react-timekeeper';
 import { PrimaryButton } from 'office-ui-fabric-react';
+import { Position } from 'office-ui-fabric-react/lib/utilities/positioning';
 
 const TimeComponent = (props:any) => {
 
@@ -21,7 +23,8 @@ const TimeComponent = (props:any) => {
 
   return (
     <div style={{ position: 'relative' }} >
-      <PrimaryButton  
+      <PrimaryButton
+        className={ props.timeValue ? styles.timeButton : null }  
         onClick={() => setShowTime(!showTime)}
         toggle
         checked={showTime}

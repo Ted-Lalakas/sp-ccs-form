@@ -7,16 +7,7 @@ const dropdownStyles: Partial<IDropdownStyles> = {
   // dropdown: { width: 300 }
 };
 
-// const options: IDropdownOption[] = [
-//   { key: 'Bayside', text: 'Bayside Region', itemType: DropdownMenuItemType.Header },
-//   { key: 'Frankston', text: 'Frankston' },
-//   { key: 'Moorabin', text: 'Moorabin' },
-//   { key: 'Rosebud', text: 'Rosebud' }
-// ];
-
-
 const stackTokens: IStackTokens = { childrenGap: 20 };
-
 
 const SubRegionDropDown = (props) => {
   let filteredValues = [];

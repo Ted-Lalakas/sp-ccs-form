@@ -184,7 +184,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
                 <div style={{ marginTop: '1em' }} className="ms-Grid-row">
                   <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
-                    <TimeComponent changeHandler={this._changeTimeHandler} />
+                    <TimeComponent timeValue={this.state.timeValue} changeHandler={this._changeTimeHandler} />
                   </div>
                   { this.state.timeValue ?
                   <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
