@@ -14,6 +14,7 @@ export interface ICcsProps {
     placeholder_dateField: string;
     heading_timeofCall: string;
     heading_orderType: string;
+    placeholder_orderType: string;
     heading_callSubject: string;
     heading_issueActivity: string;
     heading_comment: string;
@@ -31,6 +32,7 @@ export interface ICcsState {
   timeValue: string;
   regionValue: string;
   subRegionValue: string;
+  orderType: string;
   offenderNotes: string;
   visitRequired: string;
   toggleValue: boolean;

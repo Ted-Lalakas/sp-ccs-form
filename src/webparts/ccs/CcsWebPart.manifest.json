@@ -30,6 +30,7 @@
       "placeholder_dateField": "Click on the field to select a date",
       "heading_timeofCall": "Time of Call",
       "heading_orderType": "Order Type",
+      "placeholder_orderType": "Select an option",
       "heading_callSubject": "Call Subject",
       "heading_issueActivity": "Issue / Activity",
       "heading_comment": "Outcomes / Interventions / Comments / Additional Info",

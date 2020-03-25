@@ -11,7 +11,7 @@ const InputFieldJAID = (props:any) => {
       <TextField
         required
         label={props.heading}
-        onChange={(ev, newValue) => props.changeHandler(newValue, "jaid")}
+        onChange={(ev, newValue) => props.changeHandler(newValue)}
         // styles={{ fieldGroup: { width: 300 } }}
         value={inputValue}
         // errorMessage="Error message"

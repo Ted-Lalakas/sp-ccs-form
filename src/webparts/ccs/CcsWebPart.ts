@@ -29,6 +29,7 @@ export interface ICcsWebPartProps {
   placeholder_dateField: string;
   heading_timeofCall: string;
   heading_orderType: string;
+  placeholder_orderType: string;
   heading_callSubject: string;
   heading_issueActivity: string;
   heading_comment: string;
@@ -90,6 +91,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
           placeholder_dateField: this.properties.placeholder_dateField,
           heading_timeofCall: this.properties.heading_timeofCall,
           heading_orderType: this.properties.heading_orderType,
+          placeholder_orderType: this.properties.placeholder_orderType,
           heading_callSubject: this.properties.heading_callSubject,
           heading_issueActivity: this.properties.heading_issueActivity,
           heading_comment: this.properties.heading_comment,
@@ -166,6 +168,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                 PropertyPaneTextField('heading_orderType', {
                   label: strings.OrderTypeLabel
                 }),
+                PropertyPaneTextField('placeholder_orderType', {}),
                 PropertyPaneTextField('heading_callSubject', {
                   label: strings.CallSubjectLabel
                 }),

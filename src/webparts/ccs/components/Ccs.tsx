@@ -4,7 +4,6 @@ import { ICcsProps, ICcsState } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './formComponents/InputFieldName';
 import InputFieldJAID from './formComponents/InputFieldJAID';
 import InputFieldNotes from './formComponents/InputFieldNotes';
 import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
@@ -18,6 +17,7 @@ import { DefaultButton } from 'office-ui-fabric-react';
 import TimeComponent from './formComponents/TimeComponent';
 import VisitRequired from './formComponents/VisitRequired';
 import ReviewData from './formComponents/ReviewData';
+import OrderType from './formComponents/OrderType';
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
@@ -35,6 +35,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       timeValue: null,
       regionValue: "",
       subRegionValue: "",
+      orderType: "",
       offenderNotes: "",
       visitRequired: "No", 
       toggleValue: false
@@ -63,14 +64,12 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   //   console.log("-------------------------------------------------------------------------");
   // }
 
-  public offenderJAIDHandler = (value:string) => {
+  // JAID
+  public _offenderJAIDHandler = (value:string) => {
     this.setState({ offenderJAID: value });
   }
 
-  public offenderNotesHandler = (value:string) => {
-    this.setState({ offenderNotes: value });
-  }
-
+  // Date Field
   private _onFormatDate = (date: Date): string => {
     // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
     const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
@@ -79,27 +78,43 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return dateTest;
   }
 
-  public changeTimeHandler = (value:string) => {
+  // Time Field
+  public _changeTimeHandler = (value:string) => {
     this.setState({ timeValue: value });
   }
 
-  public changeRegionHandler = (value) => {
+  // Region Drop-down
+  public _changeRegionHandler = (value) => {
     this.setState({ regionValue: value });
     this.setState({ subRegionValue: "" });
   }
 
-  public changeDropDownHandler = (value) => {
+  // Sub-Region Drop-Down
+  public _changeSubRegionHandler = (value) => {
     this.setState({ subRegionValue: value });
   }
 
-  public changeVisitHandler = (value) => {
+  // Order Type Drop-Down
+  public _changeOrderTypeHandler = (value) => {
+    this.setState({ orderType: value });
+  }
+
+  // Notes
+  public _offenderNotesHandler = (value:string) => {
+    this.setState({ offenderNotes: value });
+  }
+
+  // Visit Boolean
+  public _changeVisitHandler = (value) => {
     this.setState({ visitRequired: value });
   }
 
-  public toggleChangeHandler = () => {
+  // Review Data Toggle
+  public _toggleChangeHandler = () => {
     this.setState({ toggleValue: !this.state.toggleValue });
   }
 
+  // Check if Submit button should be enabled
   public fieldFilled = ():boolean => {
     const valueReturned = !this.state.offenderJAID    ||
       !this.state.regionValue     || 
@@ -108,6 +123,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return valueReturned;
   }
 
+  // Set the color styling for the submit button (just styling)
   public colorSetSubmit = (): any => {
     const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
     return valueStyle;
@@ -134,7 +150,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 <InputFieldJAID 
                   heading={this.props.headings.heading_jaid}
                   jaid={this.state.offenderJAID} 
-                  changeHandler={this.offenderJAIDHandler} 
+                  changeHandler={this._offenderJAIDHandler} 
                 />
 
                 <DatePicker 
@@ -149,7 +165,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
                 <div style={{ marginTop: '1em' }} className="ms-Grid-row">
                   <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
-                    <TimeComponent changeHandler={this.changeTimeHandler} />
+                    <TimeComponent changeHandler={this._changeTimeHandler} />
                   </div>
                   { this.state.timeValue ?
                   <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
@@ -162,7 +178,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   heading={this.props.headings.heading_regionalLocation}
                   placeholderText={this.props.headings.placeholder_regionalLocation}
                   disabledValue={false} 
-                  changeHandler={this.changeRegionHandler}
+                  changeHandler={this._changeRegionHandler}
                   regionsArray={this.regionsArray} 
                 />
 
@@ -170,14 +186,24 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   heading={this.props.headings.heading_subRegion} 
                   placeholderText={this.props.headings.placeholder_subRegion}
                   disabledValue={!this.state.regionValue ? true : false} 
-                  changeHandler={this.changeDropDownHandler} 
+                  changeHandler={this._changeSubRegionHandler} 
                   regionsArray={this.subRegionArray} 
                   regionValue={this.state.regionValue}
                 />
 
-                <InputFieldNotes changeHandler={this.offenderNotesHandler} />
+                <OrderType 
+                  heading={this.props.headings.heading_orderType} 
+                  placeholderText={this.props.headings.placeholder_orderType} 
+                  changeHandler={this._changeOrderTypeHandler}
+                  orderType={this.state.orderType}
+                />
+
+                <InputFieldNotes changeHandler={this._offenderNotesHandler} />
                 
-                <VisitRequired visitValue={this.state.visitRequired} visitHandler={this.changeVisitHandler} />
+                <VisitRequired 
+                  visitValue={this.state.visitRequired} 
+                  visitHandler={this._changeVisitHandler} 
+                />
 
                 <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
@@ -196,7 +222,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         checked={this.state.toggleValue}
                         onText="Show" 
                         offText="Hide" 
-                        onChange={this.toggleChangeHandler} 
+                        onChange={this._toggleChangeHandler} 
                     />
                     </div>
                   </div>
