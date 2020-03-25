@@ -9,9 +9,9 @@ const dropdownStyles: Partial<IDropdownStyles> = {
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
-const RegionDropDown = (props) => {
+const SubjectDropDown = (props) => {
   const formatterArr: IDropdownOption[] = [];
-  props.regionsArray.forEach( val => {
+  props.subjectArray.forEach( val => {
     formatterArr.push({
       key: val,
       text: val
@@ -38,4 +38,4 @@ const RegionDropDown = (props) => {
   );
 };
 
-export default RegionDropDown;
+export default SubjectDropDown;

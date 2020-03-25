@@ -13,7 +13,8 @@ import Ccs from './components/Ccs';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 import { ICcsProps } from './components/ICcsProps';
-import { mockArray } from './mockData/FormData';
+import { regionsData } from './mockData/regionsData';
+import { callSubjectData } from './mockData/callSubjectData';
 
 export interface ICcsWebPartProps {
   titleValue: string;
@@ -59,27 +60,31 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     // Check if the app is running on local or online environment
     if (!this._isSharePoint) {
       console.log("LOCAL");
-      this.checkConditionPassToRender(mockArray);
+      this.checkConditionPassToRender(regionsData, callSubjectData);
     } else {
       //TEDS TO BE WORKED ON
       // If online then grab the list and .THEN once that is done render the component to the DOM.
+
+      this.checkConditionPassToRender(regionsData, callSubjectData);
+
       console.log("ONLINE");
-      this._getListItems().then(response => {      
-        this.checkConditionPassToRender(response);
-      });
+      // this._getListItems().then(response => {      
+      //   this.checkConditionPassToRender(response);
+      // });
     }
   }
 
   // Function to run inside the render methods IF statement so that I can pass the correct array depending on the environment
   // Pass the ProcurementNavigator PROP elements and envoke the ReactDom.render method inside the asyncronous call
-  private checkConditionPassToRender(arrayPassed:any[]) {
+  private checkConditionPassToRender(regionsArray:any[], callSubjectDataArray:any[]) {
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
         titleValue: this.properties.titleValue,
         description: this.properties.description,
         context: this.context,
-        arrayToUse: arrayPassed,
+        regionsData: regionsArray,
+        callSubjectData: callSubjectDataArray,
         headings: {
           heading_dutyDirector: this.properties.heading_dutyDirector,
           heading_jaid: this.properties.heading_jaid,

@@ -1,4 +1,4 @@
-export const mockArray:any = [
+export const regionsData:any = [
     { 
       Title: "Bayside",
       Option_x0020_Value: "Frankston", 

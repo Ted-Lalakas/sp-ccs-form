@@ -2,7 +2,8 @@ export interface ICcsProps {
   titleValue: string;
 	description: string;
 	context:any;
-  arrayToUse:any;
+  regionsData:any[];
+  callSubjectData:any[];
   headings: {
     heading_dutyDirector: string;
     heading_jaid: string;
@@ -36,4 +37,6 @@ export interface ICcsState {
   offenderNotes: string;
   visitRequired: string;
   toggleValue: boolean;
+  subjectValue: string;
+  optionValue: string;
 }

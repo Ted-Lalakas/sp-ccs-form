@@ -1,23 +1,26 @@
 import * as React from 'react';
-import styles from './Ccs.module.scss';
-import { ICcsProps, ICcsState } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-import { Stack } from 'office-ui-fabric-react';
+import styles from './Ccs.module.scss';
+import { ICcsProps, ICcsState } from './ICcsProps';
+
+import { Stack, DatePicker, DefaultButton } from 'office-ui-fabric-react';
+import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
+
+import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
+import { getSubjectArrayData, getOptionArrayData } from './formComponents/IssuesInformation/arrayFunctions';
+
+// Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
 import InputFieldNotes from './formComponents/InputFieldNotes';
 import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
 import SubRegionDropDown from './formComponents/RegionSelection/SubRegionDropDown';
-import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
-
-import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
-import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import { DefaultButton } from 'office-ui-fabric-react';
-
 import TimeComponent from './formComponents/TimeComponent';
 import VisitRequired from './formComponents/VisitRequired';
 import ReviewData from './formComponents/ReviewData';
 import OrderType from './formComponents/OrderType';
+import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
+import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
@@ -38,24 +41,30 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       orderType: "",
       offenderNotes: "",
       visitRequired: "No", 
-      toggleValue: false
+      toggleValue: false,
+      subjectValue: "",
+      optionValue: ""
     };
   }
 
   // Grab the array of data and run functions that separate the data
-  private regionsArray:{} = getRegionArrayData(this.props.arrayToUse);
-  private subRegionArray:{} = getSubRegionArrayData(this.props.arrayToUse);
+  private regionsArray:{} = getRegionArrayData(this.props.regionsData);
+  private subRegionArray:{} = getSubRegionArrayData(this.props.regionsData);
+
+  // Grab the array of data and run functions that separate the data
+  private subjectArray:{} = getSubjectArrayData(this.props.callSubjectData);
+  // private optionArray:{} = this.props.callSubjectData;
 
   // Grab the Users (that is logged in) name and email data
   private userName:string = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
   private userEmail:string = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
   
   // For testing purposes. Can be removed.
-  // public componentDidMount() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidMount',this.props);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  public componentDidMount() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidMount',this.props);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // // For testing purposes. Can be removed.
   // public componentDidUpdate() {
@@ -81,6 +90,16 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // Time Field
   public _changeTimeHandler = (value:string) => {
     this.setState({ timeValue: value });
+  }
+
+  // Subject Drop-down
+  public _changeSubjectHandler = (value) => {
+    this.setState({ subjectValue: value });
+  }
+
+  // Option Drop-down
+  public _changeOptionHandler = (value) => {
+    this.setState({ optionValue: value });
   }
 
   // Region Drop-down
@@ -177,7 +196,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 <RegionDropDown 
                   heading={this.props.headings.heading_regionalLocation}
                   placeholderText={this.props.headings.placeholder_regionalLocation}
-                  disabledValue={false} 
                   changeHandler={this._changeRegionHandler}
                   regionsArray={this.regionsArray} 
                 />
@@ -196,6 +214,22 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   placeholderText={this.props.headings.placeholder_orderType} 
                   changeHandler={this._changeOrderTypeHandler}
                   orderType={this.state.orderType}
+                />
+
+                <SubjectDropDown
+                  heading={this.props.headings.heading_regionalLocation}
+                  placeholderText={this.props.headings.placeholder_regionalLocation}
+                  changeHandler={this._changeSubjectHandler}
+                  subjectArray={this.subjectArray}
+                />
+
+                <OptionDropDown
+                  heading={this.props.headings.heading_subRegion} 
+                  placeholderText={this.props.headings.placeholder_subRegion}
+                  disabledValue={!this.state.subjectValue ? true : false} 
+                  changeHandler={this._changeOptionHandler} 
+                  callSubjectArray={this.props.callSubjectData} 
+                  subjectValue={this.state.subjectValue}
                 />
 
                 <InputFieldNotes changeHandler={this._offenderNotesHandler} />
@@ -223,7 +257,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         onText="Show" 
                         offText="Hide" 
                         onChange={this._toggleChangeHandler} 
-                    />
+                      />
                     </div>
                   </div>
                 </div>
@@ -231,7 +265,12 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
               </Stack>
               
               { this.state.toggleValue ? //displays form data (if needed) 
-                <ReviewData { ...this.props.headings } { ...this.state } user={this.userName} email={this.userEmail} />
+                <ReviewData 
+                  { ...this.props.headings } 
+                  { ...this.state } 
+                  user={this.userName} 
+                  email={this.userEmail} 
+                />
               : null }
 
             </div>
