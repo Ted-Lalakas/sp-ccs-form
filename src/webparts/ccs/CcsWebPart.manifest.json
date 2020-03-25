@@ -31,12 +31,14 @@
       "heading_timeofCall": "Time of Call",
       "heading_orderType": "Order Type",
       "placeholder_orderType": "Select an option",
-      "heading_callSubject": "Call Subject",
-      "heading_issueActivity": "Issue / Activity",
+      "heading_subject": "Call Subject",
+      "placeholder_subject": "Select an option",
+      "heading_option": "Issue / Activity",
+      "placeholder_option": "Select an option",
       "heading_comment": "Outcomes / Interventions / Comments / Additional Info",
       "heading_visitRequired": "Visit Required",
       "heading_resolveTime": "DD Resolve Time",
-      "heading_extraStaff": "Number of Additional Staff Required",
+      "heading_extraStaff": "Additional Staff Required",
       "heading_staffTime": "Time Spent by Additional Staff"
     }
   }]

@@ -16,8 +16,10 @@ export interface ICcsProps {
     heading_timeofCall: string;
     heading_orderType: string;
     placeholder_orderType: string;
-    heading_callSubject: string;
-    heading_issueActivity: string;
+    heading_subject: string;
+    placeholder_subject: string;
+    heading_option: string;
+    placeholder_option: string;
     heading_comment: string;
     heading_visitRequired: string;
     heading_resolveTime: string;
@@ -39,4 +41,7 @@ export interface ICcsState {
   toggleValue: boolean;
   subjectValue: string;
   optionValue: string;
+  resolveTime: string;
+  extraStaff: string;
+  staffTime: string;
 }

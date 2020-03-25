@@ -31,8 +31,10 @@ export interface ICcsWebPartProps {
   heading_timeofCall: string;
   heading_orderType: string;
   placeholder_orderType: string;
-  heading_callSubject: string;
-  heading_issueActivity: string;
+  heading_subject: string;
+  placeholder_subject: string;
+  heading_option: string;
+  placeholder_option: string;
   heading_comment: string;
   heading_visitRequired: string;
   heading_resolveTime: string;
@@ -97,8 +99,10 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
           heading_timeofCall: this.properties.heading_timeofCall,
           heading_orderType: this.properties.heading_orderType,
           placeholder_orderType: this.properties.placeholder_orderType,
-          heading_callSubject: this.properties.heading_callSubject,
-          heading_issueActivity: this.properties.heading_issueActivity,
+          heading_subject: this.properties.heading_subject,
+          placeholder_subject: this.properties.placeholder_subject,
+          heading_option: this.properties.heading_option,
+          placeholder_option: this.properties.placeholder_option,
           heading_comment: this.properties.heading_comment,
           heading_visitRequired: this.properties.heading_visitRequired,
           heading_resolveTime: this.properties.heading_resolveTime,
@@ -174,12 +178,14 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                   label: strings.OrderTypeLabel
                 }),
                 PropertyPaneTextField('placeholder_orderType', {}),
-                PropertyPaneTextField('heading_callSubject', {
+                PropertyPaneTextField('heading_subject', {
                   label: strings.CallSubjectLabel
                 }),
-                PropertyPaneTextField('heading_issueActivity', {
-                  label: strings.IssueActivityLabel
+                PropertyPaneTextField('placeholder_subject', {}),
+                PropertyPaneTextField('heading_option', {
+                  label: strings.CallOptionLabel
                 }),
+                PropertyPaneTextField('placeholder_option', {}),
                 PropertyPaneTextField('heading_comment', {
                   label: strings.CommentLabel
                 }),

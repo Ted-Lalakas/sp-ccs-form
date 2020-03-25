@@ -21,6 +21,9 @@ import ReviewData from './formComponents/ReviewData';
 import OrderType from './formComponents/OrderType';
 import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
 import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
+import ResolveTime from './formComponents/ResolveTime';
+import ExtraStaff from './formComponents/ExtraStaff';
+import StaffTime from './formComponents/StaffTime';
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
@@ -43,7 +46,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       visitRequired: "No", 
       toggleValue: false,
       subjectValue: "",
-      optionValue: ""
+      optionValue: "",
+      resolveTime: "",
+      extraStaff: "",
+      staffTime: ""
     };
   }
 
@@ -67,11 +73,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   // // For testing purposes. Can be removed.
-  // public componentDidUpdate() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  public componentDidUpdate() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -128,6 +134,21 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     this.setState({ visitRequired: value });
   }
 
+  // Resolve Time
+  public _changeResolveTimeHandler = (value) => {
+    this.setState({ resolveTime: value });
+  }
+
+  // Extra Staff
+  public _changeExtraStaffHandler = (value) => {
+    this.setState({ extraStaff: value });
+  }
+
+  // Staff Time
+  public _changeStaffTimeHandler = (value) => {
+    this.setState({ staffTime: value });
+  }
+
   // Review Data Toggle
   public _toggleChangeHandler = () => {
     this.setState({ toggleValue: !this.state.toggleValue });
@@ -135,9 +156,17 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
   // Check if Submit button should be enabled
   public fieldFilled = ():boolean => {
-    const valueReturned = !this.state.offenderJAID    ||
+    const valueReturned = 
+      !this.state.offenderJAID    ||
       !this.state.regionValue     || 
-      !this.state.subRegionValue  || 
+      !this.state.subRegionValue  ||
+      !this.state.timeValue  ||
+      !this.state.orderType  ||
+      !this.state.subjectValue  ||
+      !this.state.optionValue  ||
+      !this.state.resolveTime  ||
+      !this.state.extraStaff  || 
+      !this.state.staffTime  || 
       !this.state.dateValue ? true : false;
     return valueReturned;
   }
@@ -217,26 +246,47 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 />
 
                 <SubjectDropDown
-                  heading={this.props.headings.heading_regionalLocation}
-                  placeholderText={this.props.headings.placeholder_regionalLocation}
+                  heading={this.props.headings.heading_subject}
+                  placeholderText={this.props.headings.placeholder_subject}
                   changeHandler={this._changeSubjectHandler}
                   subjectArray={this.subjectArray}
                 />
 
                 <OptionDropDown
-                  heading={this.props.headings.heading_subRegion} 
-                  placeholderText={this.props.headings.placeholder_subRegion}
+                  heading={this.props.headings.heading_option} 
+                  placeholderText={this.props.headings.placeholder_option}
                   disabledValue={!this.state.subjectValue ? true : false} 
                   changeHandler={this._changeOptionHandler} 
                   callSubjectArray={this.props.callSubjectData} 
                   subjectValue={this.state.subjectValue}
                 />
 
-                <InputFieldNotes changeHandler={this._offenderNotesHandler} />
+                <InputFieldNotes 
+                  heading={this.props.headings.heading_comment}
+                  changeHandler={this._offenderNotesHandler} 
+                />
                 
                 <VisitRequired 
                   visitValue={this.state.visitRequired} 
                   visitHandler={this._changeVisitHandler} 
+                />
+
+                <ResolveTime 
+                  heading={this.props.headings.heading_resolveTime}
+                  resolveTime={this.state.resolveTime} 
+                  changeHandler={this._changeResolveTimeHandler}
+                />
+
+                <ExtraStaff 
+                  heading={this.props.headings.heading_extraStaff}
+                  extraStaff={this.state.extraStaff} 
+                  changeHandler={this._changeExtraStaffHandler}
+                />
+
+                <StaffTime 
+                  heading={this.props.headings.heading_staffTime}
+                  staffTime={this.state.staffTime} 
+                  changeHandler={this._changeStaffTimeHandler}
                 />
 
                 <div className="ms-Grid" dir="ltr">

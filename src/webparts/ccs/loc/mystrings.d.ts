@@ -12,7 +12,7 @@ declare interface ICcsWebPartStrings {
   TimeofCallLabel: string;
   OrderTypeLabel: string;
   CallSubjectLabel: string;
-  IssueActivityLabel: string;
+  CallOptionLabel: string;
   CommentLabel: string;
   VisitRequiredLabel: string;
   ResolvedTimeLabel: string;

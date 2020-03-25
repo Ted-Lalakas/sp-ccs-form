@@ -13,7 +13,7 @@ define([], function() {
     "TimeofCallLabel": "Time",
     "OrderTypeLabel": "Order Type",
     "CallSubjectLabel": "Call Subject",
-    "IssueActivityLabel": "Issue",
+    "CallOptionLabel": "Issue / Activity",
     "CommentLabel": "Comments",
     "VisitRequiredLabel": "Visit Required",
     "ResolvedTimeLabel": "DD Resolve Time",
