@@ -61,7 +61,7 @@
     position: relative;
     font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
     -webkit-font-smoothing: antialiased;
-    font-size: $ms-font-size-m;
+    font-size: $ms-font-size-l;
     font-weight: $ms-font-weight-regular;
     border-width: 0;
     text-align: center;
@@ -85,11 +85,10 @@
   }
 
   .formDisplayData {
-    background-color: white;
-    padding: 1em;
+    background-color: $ms-color-white;
 
     .formDataWrap {
-      margin-bottom: 3em;
+      padding: 1em;
 
       label {
         color: #000;
@@ -103,7 +102,7 @@
 
   .submitButtonOn {
     margin-left: -8px;
-    color: #FFF;
+    @include ms-fontColor-white;
     background-color: #005a9e;
 
     &:hover,
@@ -117,5 +116,38 @@
 
   .reviewToggle {
     text-align: right;
+  }
+
+  .timeFieldLabel {
+    color: #000;
+    margin-block-start: 0.3em;
+    margin-block-end: 0;
+    text-align: right;
+  }
+
+  .reviewHead {
+    @include ms-fontColor-white;
+    background-color: $ms-color-themeDark;
+    padding: 1em;
+    color: $ms-color-themeDark;
+
+    h3 {
+      @include ms-fontColor-white;
+
+      span { 
+        font-size: 90%;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .timeButton {
+    color: darken( $ms-color-white, 20% );
+    background-color: darken( $ms-color-themeDark, 25% );
+  }
+
+  .labelTitle {
+    color: #333333;
+    padding: 0.4em 0;
   }
 }

@@ -7,18 +7,9 @@ const dropdownStyles: Partial<IDropdownStyles> = {
   // dropdown: { width: 300 }
 };
 
-const options: IDropdownOption[] = [
-  { key: 'Bayside', text: 'Bayside Region', itemType: DropdownMenuItemType.Header },
-  { key: 'Frankston', text: 'Frankston' },
-  { key: 'Moorabin', text: 'Moorabin' },
-  { key: 'Rosebud', text: 'Rosebud' }
-];
-
-
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
-
-const DropdownSub = (props) => {
+const SubRegionDropDown = (props) => {
   let filteredValues = [];
   let formatterArr: IDropdownOption[] = [];
 
@@ -44,8 +35,8 @@ const DropdownSub = (props) => {
     <Stack tokens={stackTokens}>
       <Dropdown 
         required
-        placeholder="Select an option" 
-        label={props.placeholderText} 
+        label={props.heading}
+        placeholder={props.placeholderText}
         options={formatterArr} 
         styles={dropdownStyles}
         onChange={(ev, option) => props.changeHandler(option.text)}
@@ -55,4 +46,4 @@ const DropdownSub = (props) => {
   );
 };
 
-export default DropdownSub;
+export default SubRegionDropDown;

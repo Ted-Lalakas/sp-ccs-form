@@ -1,21 +1,31 @@
 import * as React from 'react';
-import styles from './Ccs.module.scss';
-import { ICcsProps } from './ICcsProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-import { Stack } from 'office-ui-fabric-react';
-import InputFieldName from './TextField/InputFieldName';
-import InputFieldJAID from './TextField/InputFieldJAID';
-import InputFieldNotes from './TextField/InputFieldNotes';
-import DropdownMain from './DropDown/DropDown';
-import DropdownSub from './DropDown/DropDownSub';
-import { getRegionArrayData, getSubRegionArrayData } from './CcsArrayFunc';
+import styles from './Ccs.module.scss';
+import { ICcsProps, ICcsState } from './ICcsProps';
 
-import { DatePicker, mergeStyleSets } from 'office-ui-fabric-react';
+import { Stack, DatePicker, DefaultButton } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import { DefaultButton } from 'office-ui-fabric-react';
 
-export default class Ccs extends React.Component<any, any, any> {
+import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
+import { getSubjectArrayData, getOptionArrayData } from './formComponents/IssuesInformation/arrayFunctions';
+
+// Custom components
+import InputFieldJAID from './formComponents/InputFieldJAID';
+import InputFieldNotes from './formComponents/InputFieldNotes';
+import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
+import SubRegionDropDown from './formComponents/RegionSelection/SubRegionDropDown';
+import TimeComponent from './formComponents/TimeComponent';
+import VisitRequired from './formComponents/VisitRequired';
+import ReviewData from './formComponents/ReviewData';
+import OrderType from './formComponents/OrderType';
+import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
+import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
+import ResolveTime from './formComponents/ResolveTime';
+import ExtraStaff from './formComponents/ExtraStaff';
+import StaffTime from './formComponents/StaffTime';
+
+export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
@@ -25,45 +35,56 @@ export default class Ccs extends React.Component<any, any, any> {
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
-      regionsArray: getRegionArrayData(this.props.arrayToUse),
-      subRegionArray: getSubRegionArrayData(this.props.arrayToUse),
-      offenderName: "",
       offenderJAID: "",
       dateValue: "",
       dateValue2: null,
+      timeValue: null,
       regionValue: "",
       subRegionValue: "",
+      orderType: "",
       offenderNotes: "",
-      toggleValue: false
+      visitRequired: "No", 
+      toggleValue: false,
+      subjectValue: "",
+      optionValue: "",
+      resolveTime: "",
+      extraStaff: "",
+      staffTime: ""
     };
   }
 
+  // Grab the array of data and run functions that separate the data
+  private regionsArray:{} = getRegionArrayData(this.props.regionsData);
+  private subRegionArray:{} = getSubRegionArrayData(this.props.regionsData);
+
+  // Grab the array of data and run functions that separate the data
+  private subjectArray:{} = getSubjectArrayData(this.props.callSubjectData);
+  // private optionArray:{} = this.props.callSubjectData;
+
+  // Grab the Users (that is logged in) name and email data
+  private userName:string = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
+  private userEmail:string = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
+  
   // For testing purposes. Can be removed.
   public componentDidMount() {
     console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidMount',this.state);
+    console.log('[Ccs.tsx] componentDidMount',this.props);
     console.log("-------------------------------------------------------------------------");
   }
 
-  // For testing purposes. Can be removed.
+  // // For testing purposes. Can be removed.
   public componentDidUpdate() {
     console.log("-------------------------------------------------------------------------");
-    console.log('[ProcurementNavigator.tsx] componentDidUpdate',this.state);
+    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
     console.log("-------------------------------------------------------------------------");
   }
 
-  public offenderNameHandler = (value) => {
-    this.setState({ offenderName: value });
-  }
-
-  public offenderJAIDHandler = (value) => {
+  // JAID
+  public _offenderJAIDHandler = (value:string) => {
     this.setState({ offenderJAID: value });
   }
 
-  public offenderNotesHandler = (value) => {
-    this.setState({ offenderNotes: value });
-  }
-
+  // Date Field
   private _onFormatDate = (date: Date): string => {
     // const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
     const dateTest = date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
@@ -72,28 +93,85 @@ export default class Ccs extends React.Component<any, any, any> {
     return dateTest;
   }
 
-  public changeRegionHandler = (value) => {
+  // Time Field
+  public _changeTimeHandler = (value:string) => {
+    this.setState({ timeValue: value });
+  }
+
+  // Subject Drop-down
+  public _changeSubjectHandler = (value) => {
+    this.setState({ subjectValue: value });
+  }
+
+  // Option Drop-down
+  public _changeOptionHandler = (value) => {
+    this.setState({ optionValue: value });
+  }
+
+  // Region Drop-down
+  public _changeRegionHandler = (value) => {
     this.setState({ regionValue: value });
     this.setState({ subRegionValue: "" });
   }
 
-  public changeDropDownHandler = (value) => {
+  // Sub-Region Drop-Down
+  public _changeSubRegionHandler = (value) => {
     this.setState({ subRegionValue: value });
   }
 
-  public toggleChangeHandler = () => {
+  // Order Type Drop-Down
+  public _changeOrderTypeHandler = (value) => {
+    this.setState({ orderType: value });
+  }
+
+  // Notes
+  public _offenderNotesHandler = (value:string) => {
+    this.setState({ offenderNotes: value });
+  }
+
+  // Visit Boolean
+  public _changeVisitHandler = (value) => {
+    this.setState({ visitRequired: value });
+  }
+
+  // Resolve Time
+  public _changeResolveTimeHandler = (value) => {
+    this.setState({ resolveTime: value });
+  }
+
+  // Extra Staff
+  public _changeExtraStaffHandler = (value) => {
+    this.setState({ extraStaff: value });
+  }
+
+  // Staff Time
+  public _changeStaffTimeHandler = (value) => {
+    this.setState({ staffTime: value });
+  }
+
+  // Review Data Toggle
+  public _toggleChangeHandler = () => {
     this.setState({ toggleValue: !this.state.toggleValue });
   }
 
+  // Check if Submit button should be enabled
   public fieldFilled = ():boolean => {
-    const valueReturned = !this.state.offenderName    ||
+    const valueReturned = 
       !this.state.offenderJAID    ||
       !this.state.regionValue     || 
-      !this.state.subRegionValue  || 
+      !this.state.subRegionValue  ||
+      !this.state.timeValue  ||
+      !this.state.orderType  ||
+      !this.state.subjectValue  ||
+      !this.state.optionValue  ||
+      !this.state.resolveTime  ||
+      !this.state.extraStaff  || 
+      !this.state.staffTime  || 
       !this.state.dateValue ? true : false;
     return valueReturned;
   }
 
+  // Set the color styling for the submit button (just styling)
   public colorSetSubmit = (): any => {
     const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
     return valueStyle;
@@ -105,7 +183,7 @@ export default class Ccs extends React.Component<any, any, any> {
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <span className={ styles.title }>CCS After Hours Activity Form</span>
+              <span className={ styles.title }>{escape(this.props.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
             </div>
           </div>
@@ -116,37 +194,100 @@ export default class Ccs extends React.Component<any, any, any> {
             <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
-                <InputFieldName changeHandler={this.offenderNameHandler} />
 
-                <InputFieldJAID jaid={this.state.offenderJAID} changeHandler={this.offenderJAIDHandler} />
+                <InputFieldJAID 
+                  heading={this.props.headings.heading_jaid}
+                  jaid={this.state.offenderJAID} 
+                  changeHandler={this._offenderJAIDHandler} 
+                />
 
                 <DatePicker 
-                  ariaLabel="Date of incident" 
-                  label="Date of incident"
-                  placeholder="Click on the field to select a date"
+                  ariaLabel={this.props.headings.heading_dateField} 
+                  label={this.props.headings.heading_dateField}
+                  placeholder={this.props.headings.placeholder_dateField}
                   onSelectDate={this._onFormatDate}
                   value={this.state.dateValue2!}
                   allowTextInput={false}
                   isRequired={true}
                 />
 
-                <DropdownMain 
-                  placeholderText="Region Details"
-                  disabledValue={false} 
-                  changeHandler={this.changeRegionHandler}
-                  regionsArray={this.state.regionsArray} 
+                <div style={{ marginTop: '1em' }} className="ms-Grid-row">
+                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <TimeComponent timeValue={this.state.timeValue} changeHandler={this._changeTimeHandler} />
+                  </div>
+                  { this.state.timeValue ?
+                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <h3 className={styles.timeFieldLabel}>Time set: {this.state.timeValue}</h3>
+                  </div>
+                  : null }
+                </div>      
+
+                <RegionDropDown 
+                  heading={this.props.headings.heading_regionalLocation}
+                  placeholderText={this.props.headings.placeholder_regionalLocation}
+                  changeHandler={this._changeRegionHandler}
+                  regionsArray={this.regionsArray} 
                 />
 
-                <DropdownSub 
-                  placeholderText="Sub Region"
+                <SubRegionDropDown
+                  heading={this.props.headings.heading_subRegion} 
+                  placeholderText={this.props.headings.placeholder_subRegion}
                   disabledValue={!this.state.regionValue ? true : false} 
-                  changeHandler={this.changeDropDownHandler} 
-                  regionsArray={this.state.subRegionArray} 
+                  changeHandler={this._changeSubRegionHandler} 
+                  regionsArray={this.subRegionArray} 
                   regionValue={this.state.regionValue}
                 />
 
-                <InputFieldNotes changeHandler={this.offenderNotesHandler} />
+                <OrderType 
+                  heading={this.props.headings.heading_orderType} 
+                  placeholderText={this.props.headings.placeholder_orderType} 
+                  changeHandler={this._changeOrderTypeHandler}
+                  orderType={this.state.orderType}
+                />
 
+                <SubjectDropDown
+                  heading={this.props.headings.heading_subject}
+                  placeholderText={this.props.headings.placeholder_subject}
+                  changeHandler={this._changeSubjectHandler}
+                  subjectArray={this.subjectArray}
+                />
+
+                <OptionDropDown
+                  heading={this.props.headings.heading_option} 
+                  placeholderText={this.props.headings.placeholder_option}
+                  disabledValue={!this.state.subjectValue ? true : false} 
+                  changeHandler={this._changeOptionHandler} 
+                  callSubjectArray={this.props.callSubjectData} 
+                  subjectValue={this.state.subjectValue}
+                />
+
+                <InputFieldNotes 
+                  heading={this.props.headings.heading_comment}
+                  changeHandler={this._offenderNotesHandler} 
+                />
+                
+                <VisitRequired 
+                  visitValue={this.state.visitRequired} 
+                  visitHandler={this._changeVisitHandler} 
+                />
+
+                <label className={styles.labelTitle}>{this.props.headings.heading_resolveTime}</label>
+                <ResolveTime 
+                  resolveTime={this.state.resolveTime} 
+                  changeHandler={this._changeResolveTimeHandler}
+                />
+
+                <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
+                <ExtraStaff 
+                  extraStaff={this.state.extraStaff} 
+                  changeHandler={this._changeExtraStaffHandler}
+                />
+
+                <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
+                <StaffTime 
+                  staffTime={this.state.staffTime} 
+                  changeHandler={this._changeStaffTimeHandler}
+                />
 
                 <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
@@ -165,64 +306,28 @@ export default class Ccs extends React.Component<any, any, any> {
                         checked={this.state.toggleValue}
                         onText="Show" 
                         offText="Hide" 
-                        onChange={this.toggleChangeHandler} 
-                    />
+                        onChange={this._toggleChangeHandler} 
+                      />
                     </div>
                   </div>
                 </div>
 
               </Stack>
-
-            { this.state.toggleValue ? //displays form data (if needed) extra feature just for fun
-            <div className={ styles.formDisplayData }>              
-              { this.state.offenderName ? 
-                <div className={ styles.formDataWrap }>
-                  <label>Offender Name</label>
-                  <p>{this.state.offenderName}</p>
-                </div>
+              
+              { this.state.toggleValue ? //displays form data (if needed) 
+                <ReviewData 
+                  { ...this.props.headings } 
+                  { ...this.state } 
+                  user={this.userName} 
+                  email={this.userEmail} 
+                />
               : null }
-
-              { this.state.offenderJAID ? 
-                <div className={ styles.formDataWrap }>
-                  <label>Offender JAID</label>
-                  <p>{this.state.offenderJAID}</p>
-                </div>
-              : null }
-
-              { this.state.dateValue ?
-                <div className={ styles.formDataWrap }>
-                  <label>Date of incident</label>
-                  <p>{this.state.dateValue}</p>
-                </div>
-              : null }
-
-              { this.state.regionValue ? 
-                <div className={ styles.formDataWrap }>
-                  <label>Region</label>
-                  <p>{this.state.regionValue}</p>
-                </div>
-              : null }
-
-              { this.state.subRegionValue ? 
-                <div className={ styles.formDataWrap }>
-                  <label>Sub Region</label>
-                  <p>{this.state.subRegionValue}</p>
-                </div>
-              : null }
-
-              { this.state.offenderNotes ? 
-                <div className={ styles.formDataWrap }> 
-                  <label>Notes</label>
-                  <p>{this.state.offenderNotes}</p>
-                </div>
-              : null }
-            </div>  
-            : null }
 
             </div>
           </div>
         </div>
-      </div>
+
+      </div> // wrapping container
     );
   }
 }

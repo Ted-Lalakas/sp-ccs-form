@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
-const InputFieldName = (props) => {
+const InputFieldNotes = (props:any) => {
   return (
     <React.Fragment>
       <TextField
-        required
-        label="Offender Name"
+        label={props.heading}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
-        // styles={{ fieldGroup: { width: 300 } }}
+        // styles={{ fieldGroup: { width: 450 } }}
+        resizable={true}
+        multiline rows={6}
       />
     </React.Fragment>
   );
 };
 
-export default InputFieldName;
+export default InputFieldNotes;

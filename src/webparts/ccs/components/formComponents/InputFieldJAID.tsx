@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
-const InputFieldJAID = (props) => {
+const InputFieldJAID = (props:any) => {
 
   //Check if number
   const inputValue = !Number(props.jaid) ? "" : props.jaid;
@@ -10,13 +10,13 @@ const InputFieldJAID = (props) => {
     <React.Fragment>
       <TextField
         required
-        label="Offender JAID (number values only)"
+        label={props.heading}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         // styles={{ fieldGroup: { width: 300 } }}
         value={inputValue}
         // errorMessage="Error message"
         onGetErrorMessage={(value) => {
-          return inputValue.length <= 6 ? '' : `Length must be no more than 6. Actual length is ${inputValue.length}.`;
+          return inputValue.length <= 9 ? '' : `Length must be no more than 9. Actual length is ${inputValue.length}.`;
         }}
       />
     </React.Fragment>
