@@ -1,13 +1,44 @@
 import * as React from 'react';
 import styles from '../Ccs.module.scss';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
 const ReviewData = (props:any) => {
-  console.log(props);
+  // Check if Submit button should be enabled
+  const SubmitOn = ():boolean => {
+    const otherValueSet:boolean = props.optionValue != "Other" 
+                                    ? true 
+                                    : props.optionValue == "Other" && props.optionOtherValue != "" 
+                                      ? true 
+                                      : false;
+
+    const disableSubmitButton = 
+      props.offenderJAID    &&
+      props.dateValue       &&
+      props.timeValue       &&
+      props.regionValue     && 
+      props.subRegionValue  &&
+      props.orderType       &&
+      props.subjectValue    &&
+      props.optionValue     &&
+      props.resolveTime     &&
+      props.extraStaff      &&
+      props.staffTime       && 
+      otherValueSet ? false : true;  
+    return disableSubmitButton;
+  }
+
+  // Set the color styling for the submit button (just styling)
+  const colorSetSubmit = ():any => {
+    const valueStyle = SubmitOn() ? styles.reviewSubmitOff : styles.reviewSubmitOn;
+    return valueStyle;
+  };
+
   return (
     <div className={ styles.formDisplayData }>  
       
       <div className={styles.reviewHead} >            
-        <h3>{props.heading_dutyDirector} <span>{props.user} ({props.email})</span></h3>
+        <h2>{props.heading_dutyDirector}</h2>
+        <span>{props.user} ({props.email})</span>
       </div>
 
       { props.offenderJAID ? 
@@ -45,6 +76,27 @@ const ReviewData = (props:any) => {
         </div>
       : null }
 
+      { props.orderType ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_orderType}</label>
+          <p>{props.orderType}</p>
+        </div>
+      : null }
+
+      { props.subjectValue ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_subject}</label>
+          <p>{props.subjectValue}</p>
+        </div>
+      : null }
+
+      { props.optionValue ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_option}</label>
+          <p>{props.optionValue}</p>
+        </div>
+      : null }
+
       { props.offenderNotes ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_comment}</label>
@@ -57,6 +109,33 @@ const ReviewData = (props:any) => {
         <p>{props.visitRequired}</p>
       </div>
 
+      { props.resolveTime ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_resolveTime}</label>
+          <p>{props.resolveTime}</p>
+        </div>
+      : null }
+
+      { props.extraStaff ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_extraStaff}</label>
+          <p>{props.extraStaff}</p>
+        </div>
+      : null }
+
+      { props.staffTime ? 
+        <div className={ styles.formDataWrap }> 
+          <label>{props.heading_staffTime}</label>
+          <p>{props.staffTime}</p>
+        </div>
+      : null }
+
+      <PrimaryButton 
+        className={ colorSetSubmit() }
+        text="Submit Data" 
+        onClick={() => alert("Its clicked!")}  
+        disabled={SubmitOn()} 
+      />
     </div>   
   );
 };

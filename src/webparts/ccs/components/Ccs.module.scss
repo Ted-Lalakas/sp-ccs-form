@@ -92,10 +92,11 @@
   }
 
   .formDisplayData {
+    margin-top: 1em;
     background-color: $ms-color-white;
 
     .formDataWrap {
-      padding: 1em;
+      padding: 0 1em;
 
       label {
         color: #000;
@@ -121,6 +122,22 @@
     margin-left: -8px;
   }
 
+  .reviewSubmitOn {
+    margin: 2em 1em;
+    padding: 2em;
+    @include ms-fontColor-white;
+    background-color: #005a9e;
+
+    &:hover,
+    &:active,
+    &:focus { background-color: #036ab9; }
+  }
+
+  .reviewSubmitOff {
+    margin: 2em 1em;
+    padding: 2em;
+  }
+
   .reviewToggle {
     text-align: right;
   }
@@ -137,14 +154,17 @@
     background-color: lighten( $ms-color-themeDark, 20% );
     padding: 1em;
     color: $ms-color-themeDark;
-
-    h3 {
+    margin-bottom: 1em;
+    
+    h2 { 
       @include ms-fontColor-white;
+      margin-block-end: 0.2em; 
+    }
 
-      span { 
-        font-size: 90%;
-        font-weight: 400;
-      }
+    span {
+      @include ms-fontColor-white;
+      font-size: 90%;
+      font-weight: 400;
     }
   }
 

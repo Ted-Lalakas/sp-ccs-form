@@ -43,15 +43,15 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       regionValue: "",
       subRegionValue: "",
       orderType: "",
-      offenderNotes: "",
-      visitRequired: "No", 
-      toggleValue: false,
       subjectValue: "",
       optionValue: "",
       optionOtherValue: "",
+      offenderNotes: "",
+      visitRequired: "No",
       resolveTime: "",
       extraStaff: "",
-      staffTime: ""
+      staffTime: "",
+      toggleValue: false
     };
   }
 
@@ -153,25 +153,32 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   // Check if Submit button should be enabled
-  public fieldFilled = ():boolean => {
-    const valueReturned = 
-      !this.state.offenderJAID    ||
-      !this.state.regionValue     || 
-      !this.state.subRegionValue  ||
-      !this.state.timeValue       ||
-      !this.state.orderType       ||
-      !this.state.subjectValue    ||
-      !this.state.optionValue     ||
-      !this.state.resolveTime     ||
-      !this.state.extraStaff      || 
-      !this.state.staffTime       || 
-      !this.state.dateValue ? true : false;
-    return valueReturned;
+  public SubmitOn = ():boolean => {
+    const otherValueSet:boolean = this.state.optionValue != "Other" 
+                                    ? true 
+                                    : this.state.optionValue == "Other" && this.state.optionOtherValue != "" 
+                                      ? true 
+                                      : false;
+
+    const disableSubmitButton = 
+      this.state.offenderJAID    &&
+      this.state.dateValue       &&
+      this.state.timeValue       &&
+      this.state.regionValue     && 
+      this.state.subRegionValue  &&
+      this.state.orderType       &&
+      this.state.subjectValue    &&
+      this.state.optionValue     &&
+      this.state.resolveTime     &&
+      this.state.extraStaff      &&
+      this.state.staffTime       && 
+      otherValueSet ? false : true;  
+    return disableSubmitButton;
   }
 
   // Set the color styling for the submit button (just styling)
   public colorSetSubmit = ():any => {
-    const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
+    const valueStyle = this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
     return valueStyle;
   }
 
@@ -306,17 +313,12 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
-                      {/* <DefaultButton 
-                        className={ this.colorSetSubmit() }
-                        text="Submit Data" 
-                        onClick={() => alert("Its clicked!")} 
-                        disabled={this.fieldFilled()} 
-                      /> */}
                       <CompoundButton 
                         primary 
                         className={ this.colorSetSubmit() }
                         secondaryText="You can review before saving" 
-                        disabled={this.fieldFilled()} 
+                        disabled={this.SubmitOn()}
+                        onClick={() => alert("Its clicked!")}  
                       >
                         Submit Data
                       </CompoundButton>
@@ -340,7 +342,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   { ...this.props.headings } 
                   { ...this.state } 
                   user={this.props.userData._displayName} 
-                  email={this.props.userData._email} 
+                  email={this.props.userData._email}
                 />
               : null }
 
