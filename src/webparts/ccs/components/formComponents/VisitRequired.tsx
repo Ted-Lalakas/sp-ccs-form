@@ -12,15 +12,15 @@ const VisitRequired = (props:any) => {
   ];
 
   return (
-    <div>
+    <React.Fragment>
       <ChoiceGroup 
         defaultSelectedKey={props.visitValue} 
         options={options} 
         onChange={(ev, option) => props.visitHandler(option.key)} 
-        label="Visit Required" 
+        label={props.heading} 
         required
       />
-    </div>
+    </React.Fragment>
     );
   };
   

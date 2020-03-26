@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack';
+import { Stack } from 'office-ui-fabric-react';
 import { Dropdown, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
@@ -19,11 +19,9 @@ const OrderType = (props:any) => {
     { key: 'Supervision', text: 'Supervision' },
     { key: 'Other', text: 'Other' }
   ];
-  
-  const stackTokens: IStackTokens = { childrenGap: 20 };
 
   return (
-    <Stack tokens={stackTokens}>
+    <Stack tokens={{ childrenGap: 15 }}>
       <Dropdown 
         required
         placeholder={props.placeholderText}
@@ -43,7 +41,6 @@ const OrderType = (props:any) => {
 
       { showTextField ?
       <TextField 
-        placeholder="Please add other" 
         onChange={(ev, newValue) => props.changeHandler(newValue)}
       />
       : null }

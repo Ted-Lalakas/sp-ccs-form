@@ -1,8 +1,12 @@
 define([], function() {
   return {
-    "PropertyPaneDescription": "Settings for the form. You can customise the titles and description here",
+    "PropertyPaneDescription": "You can customise the heading and description",
+    "FormElements": "The titles and placeholder text for each field can be edited",
+    "ReviewForm": "Any extra title found in the review form area that isn't part of the initial form",
     "GroupHeadingInfo": "Header Information",
+    "GroupReviewForm": "Review Form Data",
     "GroupFormFields": "Form Field Titles and placeholder text",
+    "GroupFormFields2": "Form Field Titles and placeholder text",
     "TitleFieldLabel": "Main Title",
     "DescriptionFieldLabel": "Description Field",
     "DutyDirectorLabel": "Duty Director",

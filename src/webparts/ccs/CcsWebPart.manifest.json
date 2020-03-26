@@ -14,11 +14,11 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
     "group": { "default": "Other" },
-    "title": { "default": "CCS After Hours Activity Form" },
+    "title": { "default": "CCS After Hours Form" },
     "description": { "default": "Provides the means to record relevant details in order to monitor offender compliance." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "titleValue": "CCS After Hours Activity Form",
+      "titleValue": "CCS After Hours Form",
       "description": "Description only",
       "heading_dutyDirector": "Duty Director",
       "heading_jaid": "JAID Number",
@@ -39,7 +39,8 @@
       "heading_visitRequired": "Visit Required",
       "heading_resolveTime": "DD Resolve Time",
       "heading_extraStaff": "Additional Staff Required",
-      "heading_staffTime": "Time Spent by Additional Staff"
+      "heading_staffTime": "Time Spent by Additional Staff",
+      "group2": { "default": "Review Form Data" }
     }
   }]
 }

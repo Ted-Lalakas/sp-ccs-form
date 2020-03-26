@@ -1,7 +1,11 @@
 declare interface ICcsWebPartStrings {
   PropertyPaneDescription: string;
+  FormElements: string;
+  ReviewForm: string;
   GroupHeadingInfo: string;
+  GroupReviewForm: string;
   GroupFormFields: string;
+  GroupFormFields2: string;
   TitleFieldLabel: string;
   DescriptionFieldLabel: string;
   DutyDirectorLabel: string;

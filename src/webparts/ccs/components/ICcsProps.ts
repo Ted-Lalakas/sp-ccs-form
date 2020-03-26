@@ -1,7 +1,7 @@
 export interface ICcsProps {
   titleValue: string;
 	description: string;
-	context:any;
+  userData:any;
   regionsData:any[];
   callSubjectData:any[];
   headings: {
@@ -41,6 +41,7 @@ export interface ICcsState {
   toggleValue: boolean;
   subjectValue: string;
   optionValue: string;
+  optionOtherValue: string;
   resolveTime: string;
   extraStaff: string;
   staffTime: string;

@@ -4,11 +4,12 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
-import { Stack, DatePicker, DefaultButton } from 'office-ui-fabric-react';
+import { Stack, DatePicker, TextField } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
+import { CompoundButton } from 'office-ui-fabric-react';
 
 import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
-import { getSubjectArrayData, getOptionArrayData } from './formComponents/IssuesInformation/arrayFunctions';
+import { getSubjectArrayData } from './formComponents/IssuesInformation/arrayFunctions';
 
 // Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
@@ -47,6 +48,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       toggleValue: false,
       subjectValue: "",
       optionValue: "",
+      optionOtherValue: "",
       resolveTime: "",
       extraStaff: "",
       staffTime: ""
@@ -59,12 +61,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
   // Grab the array of data and run functions that separate the data
   private subjectArray:{} = getSubjectArrayData(this.props.callSubjectData);
-  // private optionArray:{} = this.props.callSubjectData;
 
-  // Grab the Users (that is logged in) name and email data
-  private userName:string = JSON.stringify(this.props.context.pageContext.user._displayName).replace(/"/g, '');
-  private userEmail:string = JSON.stringify(this.props.context.pageContext.user._email).replace(/"/g, '');
-  
   // For testing purposes. Can be removed.
   public componentDidMount() {
     console.log("-------------------------------------------------------------------------");
@@ -98,30 +95,31 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     this.setState({ timeValue: value });
   }
 
-  // Subject Drop-down
-  public _changeSubjectHandler = (value) => {
-    this.setState({ subjectValue: value });
-  }
-
-  // Option Drop-down
-  public _changeOptionHandler = (value) => {
-    this.setState({ optionValue: value });
-  }
-
   // Region Drop-down
-  public _changeRegionHandler = (value) => {
+  public _changeRegionHandler = (value:string) => {
     this.setState({ regionValue: value });
     this.setState({ subRegionValue: "" });
   }
 
   // Sub-Region Drop-Down
-  public _changeSubRegionHandler = (value) => {
+  public _changeSubRegionHandler = (value:string) => {
     this.setState({ subRegionValue: value });
   }
 
   // Order Type Drop-Down
-  public _changeOrderTypeHandler = (value) => {
+  public _changeOrderTypeHandler = (value:string) => {
     this.setState({ orderType: value });
+  }
+
+  // Subject Drop-down
+  public _changeSubjectHandler = (value:string) => {
+    this.setState({ subjectValue: value });
+    this.setState({ optionValue: "" });
+  }
+  
+  // Option Drop-down
+  public _changeOptionHandler = (value:string) => {
+    this.setState({ optionValue: value });
   }
 
   // Notes
@@ -130,22 +128,22 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   // Visit Boolean
-  public _changeVisitHandler = (value) => {
+  public _changeVisitHandler = (value:string) => {
     this.setState({ visitRequired: value });
   }
 
   // Resolve Time
-  public _changeResolveTimeHandler = (value) => {
+  public _changeResolveTimeHandler = (value:string) => {
     this.setState({ resolveTime: value });
   }
 
   // Extra Staff
-  public _changeExtraStaffHandler = (value) => {
+  public _changeExtraStaffHandler = (value:string) => {
     this.setState({ extraStaff: value });
   }
 
   // Staff Time
-  public _changeStaffTimeHandler = (value) => {
+  public _changeStaffTimeHandler = (value:string) => {
     this.setState({ staffTime: value });
   }
 
@@ -160,19 +158,19 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       !this.state.offenderJAID    ||
       !this.state.regionValue     || 
       !this.state.subRegionValue  ||
-      !this.state.timeValue  ||
-      !this.state.orderType  ||
-      !this.state.subjectValue  ||
-      !this.state.optionValue  ||
-      !this.state.resolveTime  ||
-      !this.state.extraStaff  || 
-      !this.state.staffTime  || 
+      !this.state.timeValue       ||
+      !this.state.orderType       ||
+      !this.state.subjectValue    ||
+      !this.state.optionValue     ||
+      !this.state.resolveTime     ||
+      !this.state.extraStaff      || 
+      !this.state.staffTime       || 
       !this.state.dateValue ? true : false;
     return valueReturned;
   }
 
   // Set the color styling for the submit button (just styling)
-  public colorSetSubmit = (): any => {
+  public colorSetSubmit = ():any => {
     const valueStyle = this.fieldFilled() ? styles.submitButtonOff : styles.submitButtonOn;
     return valueStyle;
   }
@@ -182,19 +180,18 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       <div className={ styles.ccs }>
         <div className={ styles.container }>
           <div className={ styles.row }>
-            <div className={ styles.column }>
+            {/* <div className={ styles.column }> */}
               <span className={ styles.title }>{escape(this.props.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
             </div>
-          </div>
+          {/* </div> */}
         </div>
 
         <div className={ styles.container }>
           <div className={ styles.row2 }>
-            <div className={ styles.column }>
+            {/* <div className={ styles.column }> */}
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
-
                 <InputFieldJAID 
                   heading={this.props.headings.heading_jaid}
                   jaid={this.state.offenderJAID} 
@@ -210,6 +207,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   allowTextInput={false}
                   isRequired={true}
                 />
+              </Stack>
 
                 <div style={{ marginTop: '1em' }} className="ms-Grid-row">
                   <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
@@ -222,21 +220,25 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   : null }
                 </div>      
 
-                <RegionDropDown 
-                  heading={this.props.headings.heading_regionalLocation}
-                  placeholderText={this.props.headings.placeholder_regionalLocation}
-                  changeHandler={this._changeRegionHandler}
-                  regionsArray={this.regionsArray} 
-                />
+                <div style={{ marginTop: '3em', marginBottom: '2em' }}>  
+                <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }> 
+                  <RegionDropDown 
+                    heading={this.props.headings.heading_regionalLocation}
+                    placeholderText={this.props.headings.placeholder_regionalLocation}
+                    changeHandler={this._changeRegionHandler}
+                    regionsArray={this.regionsArray} 
+                  />
 
-                <SubRegionDropDown
-                  heading={this.props.headings.heading_subRegion} 
-                  placeholderText={this.props.headings.placeholder_subRegion}
-                  disabledValue={!this.state.regionValue ? true : false} 
-                  changeHandler={this._changeSubRegionHandler} 
-                  regionsArray={this.subRegionArray} 
-                  regionValue={this.state.regionValue}
-                />
+                  <SubRegionDropDown
+                    heading={this.props.headings.heading_subRegion} 
+                    placeholderText={this.props.headings.placeholder_subRegion}
+                    disabledValue={!this.state.regionValue ? true : false} 
+                    changeHandler={this._changeSubRegionHandler} 
+                    regionsArray={this.subRegionArray} 
+                    regionValue={this.state.regionValue}
+                  />
+                </Stack>
+                </div>
 
                 <OrderType 
                   heading={this.props.headings.heading_orderType} 
@@ -245,59 +247,80 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   orderType={this.state.orderType}
                 />
 
-                <SubjectDropDown
-                  heading={this.props.headings.heading_subject}
-                  placeholderText={this.props.headings.placeholder_subject}
-                  changeHandler={this._changeSubjectHandler}
-                  subjectArray={this.subjectArray}
-                />
+                <div style={{ marginTop: '2em', marginBottom: '2em' }}>  
+                <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>     
+                  <SubjectDropDown
+                    heading={this.props.headings.heading_subject}
+                    placeholderText={this.props.headings.placeholder_subject}
+                    changeHandler={this._changeSubjectHandler}
+                    subjectArray={this.subjectArray}
+                  />
 
-                <OptionDropDown
-                  heading={this.props.headings.heading_option} 
-                  placeholderText={this.props.headings.placeholder_option}
-                  disabledValue={!this.state.subjectValue ? true : false} 
-                  changeHandler={this._changeOptionHandler} 
-                  callSubjectArray={this.props.callSubjectData} 
-                  subjectValue={this.state.subjectValue}
-                />
+                  <OptionDropDown
+                    heading={this.props.headings.heading_option} 
+                    placeholderText={this.props.headings.placeholder_option}
+                    disabledValue={!this.state.subjectValue ? true : false} 
+                    changeHandler={this._changeOptionHandler} 
+                    callSubjectArray={this.props.callSubjectData} 
+                    subjectValue={this.state.subjectValue}
+                  />
+                  { this.state.optionValue == 'Other' ? 
+                  <TextField
+                    onChange={(ev, newValue) => this.setState({ optionOtherValue: newValue })}
+                  />
+                  : null }
+                </Stack>
+                </div>
 
-                <InputFieldNotes 
-                  heading={this.props.headings.heading_comment}
-                  changeHandler={this._offenderNotesHandler} 
-                />
-                
-                <VisitRequired 
-                  visitValue={this.state.visitRequired} 
-                  visitHandler={this._changeVisitHandler} 
-                />
+                <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
+                  <InputFieldNotes 
+                    heading={this.props.headings.heading_comment}
+                    changeHandler={this._offenderNotesHandler} 
+                  />
+                  
+                  <VisitRequired
+                    heading={this.props.headings.heading_visitRequired} 
+                    visitValue={this.state.visitRequired} 
+                    visitHandler={this._changeVisitHandler} 
+                  />
 
-                <label className={styles.labelTitle}>{this.props.headings.heading_resolveTime}</label>
-                <ResolveTime 
-                  resolveTime={this.state.resolveTime} 
-                  changeHandler={this._changeResolveTimeHandler}
-                />
+                  <label className={styles.labelTitle}>{this.props.headings.heading_resolveTime}</label>
+                  <ResolveTime 
+                    resolveTime={this.state.resolveTime} 
+                    changeHandler={this._changeResolveTimeHandler}
+                  />
 
-                <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
-                <ExtraStaff 
-                  extraStaff={this.state.extraStaff} 
-                  changeHandler={this._changeExtraStaffHandler}
-                />
+                  <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
+                  <ExtraStaff 
+                    extraStaff={this.state.extraStaff} 
+                    changeHandler={this._changeExtraStaffHandler}
+                  />
 
-                <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
-                <StaffTime 
-                  staffTime={this.state.staffTime} 
-                  changeHandler={this._changeStaffTimeHandler}
-                />
+                  <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
+                  <StaffTime 
+                    staffTime={this.state.staffTime} 
+                    changeHandler={this._changeStaffTimeHandler}
+                  />
+                </Stack>
 
                 <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
-                      <DefaultButton 
+                      {/* <DefaultButton 
                         className={ this.colorSetSubmit() }
                         text="Submit Data" 
                         onClick={() => alert("Its clicked!")} 
                         disabled={this.fieldFilled()} 
-                      />
+                      /> */}
+                      <CompoundButton 
+                        primary 
+                        className={ this.colorSetSubmit() }
+                        secondaryText="You can review before saving" 
+                        disabled={this.fieldFilled()} 
+                      >
+                        Submit Data
+                      </CompoundButton>
+
                     </div>
                     <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
                       <Toggle 
@@ -311,20 +334,18 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     </div>
                   </div>
                 </div>
-
-              </Stack>
               
               { this.state.toggleValue ? //displays form data (if needed) 
                 <ReviewData 
                   { ...this.props.headings } 
                   { ...this.state } 
-                  user={this.userName} 
-                  email={this.userEmail} 
+                  user={this.props.userData._displayName} 
+                  email={this.props.userData._email} 
                 />
               : null }
 
             </div>
-          </div>
+          {/* </div> */}
         </div>
 
       </div> // wrapping container

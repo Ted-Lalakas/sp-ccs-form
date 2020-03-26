@@ -19,7 +19,6 @@ import { callSubjectData } from './mockData/callSubjectData';
 export interface ICcsWebPartProps {
   titleValue: string;
   description: string;
-  context: any;
   heading_dutyDirector: string;
   heading_jaid: string;
   heading_regionalLocation: string;
@@ -84,7 +83,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
       {
         titleValue: this.properties.titleValue,
         description: this.properties.description,
-        context: this.context,
+        userData: this.context.pageContext.user,
         regionsData: regionsArray,
         callSubjectData: callSubjectDataArray,
         headings: {
@@ -147,17 +146,21 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         },
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: strings.FormElements
           },
           groups: [
             {
               groupName: strings.GroupFormFields,
               groupFields: [
-                PropertyPaneTextField('heading_dutyDirector', {
-                  label: strings.DutyDirectorLabel
-                }),
                 PropertyPaneTextField('heading_jaid', {
                   label: strings.JaidFieldLabel
+                }),
+                PropertyPaneTextField('heading_dateField', {
+                  label: strings.DateFieldLabel
+                }),
+                PropertyPaneTextField('placeholder_dateField', {}),                
+                PropertyPaneTextField('heading_timeofCall', {
+                  label: strings.TimeofCallLabel
                 }),
                 PropertyPaneTextField('heading_regionalLocation', {
                   label: strings.RegionalOfficeLocation
@@ -167,17 +170,22 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                   label: strings.SubRegion
                 }),
                 PropertyPaneTextField('placeholder_subRegion', {}),
-                PropertyPaneTextField('heading_dateField', {
-                  label: strings.DateFieldLabel
-                }),
-                PropertyPaneTextField('placeholder_dateField', {}),                
-                PropertyPaneTextField('heading_timeofCall', {
-                  label: strings.TimeofCallLabel
-                }),
                 PropertyPaneTextField('heading_orderType', {
                   label: strings.OrderTypeLabel
                 }),
-                PropertyPaneTextField('placeholder_orderType', {}),
+                PropertyPaneTextField('placeholder_orderType', {})
+              ]
+            }
+          ]
+        },
+        {
+          header: {
+            description: strings.FormElements
+          },
+          groups: [
+            {
+              groupName: strings.GroupFormFields,
+              groupFields: [
                 PropertyPaneTextField('heading_subject', {
                   label: strings.CallSubjectLabel
                 }),
@@ -207,11 +215,11 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         },
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: strings.ReviewForm
           },
           groups: [
             {
-              groupName: strings.GroupFormFields,
+              groupName: strings.GroupReviewForm,
               groupFields: [
                 PropertyPaneTextField('heading_dutyDirector', {
                   label: strings.DutyDirectorLabel
