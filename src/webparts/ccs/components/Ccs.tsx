@@ -13,26 +13,26 @@ import { getSubjectArrayData } from './formComponents/IssuesInformation/arrayFun
 
 // Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
-import InputFieldNotes from './formComponents/InputFieldNotes';
+import TimeComponent from './formComponents/TimeComponent';
 import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
 import SubRegionDropDown from './formComponents/RegionSelection/SubRegionDropDown';
-import TimeComponent from './formComponents/TimeComponent';
-import VisitRequired from './formComponents/VisitRequired';
-import ReviewData from './formComponents/ReviewData';
 import OrderType from './formComponents/OrderType';
+import VisitRequired from './formComponents/VisitRequired';
 import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
 import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
+import InputFieldNotes from './formComponents/InputFieldNotes';
 import ResolveTime from './formComponents/ResolveTime';
 import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
+import ReviewData from './formComponents/ReviewData';
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
-    console.log("-------------------------------------------------------------------------");
-    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    console.log("-------------------------------------------------------------------------");
+    // console.log("-------------------------------------------------------------------------");
+    // console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+    // console.log("-------------------------------------------------------------------------");
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
@@ -63,18 +63,18 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   private subjectArray:{} = getSubjectArrayData(this.props.callSubjectData);
 
   // For testing purposes. Can be removed.
-  public componentDidMount() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[Ccs.tsx] componentDidMount',this.props);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // public componentDidMount() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidMount',this.props);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
-  // // For testing purposes. Can be removed.
-  public componentDidUpdate() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // For testing purposes. Can be removed.
+  // public componentDidUpdate() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -160,6 +160,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                                       ? true 
                                       : false;
 
+    const checkJAIDLegth = this.state.offenderJAID.length <= 9 ? true : false;
+
     const disableSubmitButton = 
       this.state.offenderJAID    &&
       this.state.dateValue       &&
@@ -172,14 +174,14 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       this.state.resolveTime     &&
       this.state.extraStaff      &&
       this.state.staffTime       && 
+      checkJAIDLegth             &&
       otherValueSet ? false : true;  
     return disableSubmitButton;
   }
 
   // Set the color styling for the submit button (just styling)
   public colorSetSubmit = ():any => {
-    const valueStyle = this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
-    return valueStyle;
+    return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
   public render(): React.ReactElement<ICcsProps> {
@@ -340,7 +342,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 </div>
               
               { this.state.toggleValue ? //displays form data (if needed) 
-                <ReviewData 
+                <ReviewData
                   { ...this.props.headings } 
                   { ...this.state } 
                   user={this.props.userData._displayName} 

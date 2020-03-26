@@ -43,71 +43,94 @@ const ReviewData = (props:any) => {
         <span>{props.user} ({props.email})</span>
       </div>
 
-       
+      { props.offenderJAID ? 
         <div className={ styles.formDataWrap }>
           <label>{props.heading_jaid}</label>
-          <p>{ props.offenderJAID ? props.offenderJAID : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.offenderJAID}</p>
         </div>
+      : null }
 
+      { props.dateValue ?
         <div className={ styles.formDataWrap }>
           <label>{props.heading_dateField}</label>
-          <p>{ props.dateValue ? props.dateValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.dateValue}</p>
         </div>
+      : null }
 
+      { props.timeValue ?
         <div className={ styles.formDataWrap }>
           <label>{props.heading_timeofCall}</label>
-          <p>{ props.timeValue ? props.timeValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.timeValue}</p>
         </div>
+      : null }
 
+      { props.regionValue ? 
         <div className={ styles.formDataWrap }>
           <label>{props.heading_regionalLocation}</label>
-          <p>{ props.regionValue ? props.regionValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.regionValue}</p>
         </div>
- 
+      : null }
+
+      { props.subRegionValue ? 
         <div className={ styles.formDataWrap }>
           <label>{props.heading_subRegion}</label>
-          <p>{ props.subRegionValue ? props.subRegionValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.subRegionValue}</p>
         </div>
+      : null }
 
+      { props.orderType ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_orderType}</label>
-          <p>{ props.orderType ? props.orderType : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.orderType}</p>
         </div>
+      : null }
 
+      { props.subjectValue ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_subject}</label>
-          <p>{ props.subjectValue ? props.subjectValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.subjectValue}</p>
         </div>
+      : null }
 
+      { props.optionValue ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_option}</label>
-          <p>{ props.optionValue ? props.optionValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.optionValue}</p>
         </div>
+      : null }
 
+      { props.offenderNotes ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_comment}</label>
-          <p>{ props.offenderNotes ? props.offenderNotes : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.offenderNotes}</p>
         </div>
+      : null }
 
       <div className={ styles.formDataWrap }> 
         <label>{props.heading_visitRequired}</label>
         <p>{props.visitRequired}</p>
       </div>
 
+      { props.resolveTime ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_resolveTime}</label>
-          <p>{ props.resolveTime ? props.resolveTime : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.resolveTime}</p>
         </div>
+      : null }
 
+      { props.extraStaff ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_extraStaff}</label>
-          <p>{ props.extraStaff ? props.extraStaff : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.extraStaff}</p>
         </div>
+      : null }
 
+      { props.staffTime ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_staffTime}</label>
-          <p>{ props.staffTime ? props.staffTime : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.staffTime}</p>
         </div>
+      : null }
 
       <PrimaryButton 
         className={ colorSetSubmit() }
