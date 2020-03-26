@@ -274,6 +274,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   { this.state.optionValue == 'Other' ? 
                   <TextField
                     onChange={(ev, newValue) => this.setState({ optionOtherValue: newValue })}
+                    resizable={true}
+                    multiline rows={2}
                   />
                   : null }
                 </Stack>

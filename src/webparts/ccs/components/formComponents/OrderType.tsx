@@ -42,6 +42,8 @@ const OrderType = (props:any) => {
       { showTextField ?
       <TextField 
         onChange={(ev, newValue) => props.changeHandler(newValue)}
+        resizable={true}
+        multiline rows={2}
       />
       : null }
     </Stack>

@@ -25,7 +25,7 @@ const ReviewData = (props:any) => {
       props.staffTime       && 
       otherValueSet ? false : true;  
     return disableSubmitButton;
-  }
+  };
 
   // Set the color styling for the submit button (just styling)
   const colorSetSubmit = ():any => {
