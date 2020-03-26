@@ -189,16 +189,16 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       <div className={ styles.ccs }>
         <div className={ styles.container }>
           <div className={ styles.row }>
-            <div className={ styles.column }>
+{/* */} {/* <div className={ styles.column }> */}
               <span className={ styles.title }>{escape(this.props.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
-            </div>
+{/* */}{/* </div> */}
           </div>
         </div>
 
         <div className={ styles.container }>
           <div className={ styles.row2 }>
-            <div className={ styles.column }>
+{/* */} {/* <div className={ styles.column }> */}
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
                 <InputFieldJAID 
@@ -352,7 +352,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 />
               : null }
 
-            </div>
+{/* */}{/* </div> */}
           </div>
         </div>
 
