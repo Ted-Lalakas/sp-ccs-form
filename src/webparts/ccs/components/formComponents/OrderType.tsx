@@ -10,7 +10,7 @@ const OrderType = (props:any) => {
   const [showTextField, setTextField] = useState(false);
 
   const dropdownStyles: Partial<IDropdownStyles> = {
-    // dropdown: { width: 300 }
+    dropdown: { maxWidth: 350 }
   };
   
   const options: IDropdownOption[] = [
@@ -41,6 +41,7 @@ const OrderType = (props:any) => {
 
       { showTextField ?
       <TextField 
+      styles={{ fieldGroup: { width: 350 } }}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         resizable={true}
         multiline rows={2}

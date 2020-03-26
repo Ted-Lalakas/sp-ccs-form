@@ -189,16 +189,16 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       <div className={ styles.ccs }>
         <div className={ styles.container }>
           <div className={ styles.row }>
-            {/* <div className={ styles.column }> */}
+            <div className={ styles.column }>
               <span className={ styles.title }>{escape(this.props.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.description)}</p>
             </div>
-          {/* </div> */}
+          </div>
         </div>
 
         <div className={ styles.container }>
           <div className={ styles.row2 }>
-            {/* <div className={ styles.column }> */}
+            <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
                 <InputFieldJAID 
@@ -208,6 +208,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 />
 
                 <DatePicker 
+                  className={styles.datePicker}
                   ariaLabel={this.props.headings.heading_dateField} 
                   label={this.props.headings.heading_dateField}
                   placeholder={this.props.headings.placeholder_dateField}
@@ -219,11 +220,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
               </Stack>
 
                 <div style={{ marginTop: '1em' }} className="ms-Grid-row">
-                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                  <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg4">
                     <TimeComponent timeValue={this.state.timeValue} changeHandler={this._changeTimeHandler} />
                   </div>
                   { this.state.timeValue ?
-                  <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                  <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg8">
                     <h3 className={styles.timeFieldLabel}>Time set: {this.state.timeValue}</h3>
                   </div>
                   : null }
@@ -277,6 +278,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   <TextField
                     onChange={(ev, newValue) => this.setState({ optionOtherValue: newValue })}
                     resizable={true}
+                    styles={{ fieldGroup: { maxWidth: 350 } }}
                     multiline rows={2}
                   />
                   : null }
@@ -316,7 +318,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
                 <div className="ms-Grid" dir="ltr">
                   <div className="ms-Grid-row">
-                    <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
                       <CompoundButton 
                         primary 
                         className={ this.colorSetSubmit() }
@@ -328,7 +330,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                       </CompoundButton>
 
                     </div>
-                    <div className="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
                       <Toggle 
                         className={ styles.reviewToggle }
                         label="Review Form Data" 
@@ -351,7 +353,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
               : null }
 
             </div>
-          {/* </div> */}
+          </div>
         </div>
 
       </div> // wrapping container

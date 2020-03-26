@@ -3,7 +3,7 @@ import { Dropdown, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-rea
 
 
 const dropdownStyles: Partial<IDropdownStyles> = {
-  // dropdown: { width: 300 }
+  dropdown: { maxWidth: 350 }
 };
 
 const SubjectDropDown = (props) => {

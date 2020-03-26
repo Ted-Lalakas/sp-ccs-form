@@ -12,7 +12,7 @@ const InputFieldJAID = (props:any) => {
         required
         label={props.heading}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
-        // styles={{ fieldGroup: { width: 300 } }}
+        styles={{ fieldGroup: { width: 110 } }}
         value={inputValue}
         // errorMessage="Error message"
         onGetErrorMessage={(value) => {

@@ -3,7 +3,7 @@ import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from
 
 
 const dropdownStyles: Partial<IDropdownStyles> = {
-  // dropdown: { width: 300 }
+  dropdown: { maxWidth: 350 }
 };
 
 const SubRegionDropDown = (props) => {

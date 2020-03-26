@@ -7,7 +7,7 @@ const InputFieldNotes = (props:any) => {
       <TextField
         label={props.heading}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
-        // styles={{ fieldGroup: { width: 450 } }}
+        styles={{ fieldGroup: { maxWidth: 350 } }}
         resizable={true}
         multiline rows={6}
       />

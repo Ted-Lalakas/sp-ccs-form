@@ -108,6 +108,10 @@
     }
   }
 
+  .datePicker {
+    max-width: 200px;
+  }
+
   .submitButtonOn {
     margin-left: -8px;
     @include ms-fontColor-white;
@@ -146,7 +150,7 @@
     color: #000;
     margin-block-start: 0;
     margin-block-end: 0;
-    text-align: right;
+    text-align: left;
   }
 
   .reviewHead {

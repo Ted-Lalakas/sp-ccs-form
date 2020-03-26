@@ -84,10 +84,12 @@ const ReviewData = (props:any) => {
           <p>{ props.optionValue ? props.optionValue : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
         </div>
 
+        { props.offenderNotes ? 
         <div className={ styles.formDataWrap }> 
           <label>{props.heading_comment}</label>
-          <p>{ props.offenderNotes ? props.offenderNotes : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <p>{props.offenderNotes}</p>
         </div>
+      : null }
 
       <div className={ styles.formDataWrap }> 
         <label>{props.heading_visitRequired}</label>

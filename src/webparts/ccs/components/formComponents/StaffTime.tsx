@@ -9,15 +9,15 @@ const StaffTime = (props:any) => {
 
   return (
     <div className="ms-Grid-row">
-      <div className="ms-Grid-col ms-sm6 ms-md5 ms-lg4">
+      <div className="ms-Grid-col ms-sm12 ms-md5 ms-lg4">
       <TextField
         required
         onChange={(ev, newValue) => props.changeHandler(newValue)}
-        styles={{ fieldGroup: { width: 100 } }}
+        styles={{ fieldGroup: { width: 70 } }}
         value={inputValue}
       />
     </div>
-      <div className="ms-Grid-col ms-sm6 ms-md7 ms-lg8">
+      <div className="ms-Grid-col ms-sm12 ms-md7 ms-lg8">
         <Slider
           max={60}
           value={inputValue}
