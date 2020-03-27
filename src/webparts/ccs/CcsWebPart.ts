@@ -3,8 +3,7 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField,
-  PropertyPaneHorizontalRule
+  PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'CcsWebPartStrings';
@@ -17,6 +16,7 @@ import { regionsData } from './mockData/regionsData';
 import { callSubjectData } from './mockData/callSubjectData';
 
 export interface ICcsWebPartProps {
+  context: any;
   titleValue: string;
   description: string;
   heading_dutyDirector: string;
@@ -66,12 +66,12 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
       //TEDS TO BE WORKED ON
       // If online then grab the list and .THEN once that is done render the component to the DOM.
 
-      this.checkConditionPassToRender(regionsData, callSubjectData);
+      // this.checkConditionPassToRender(regionsData, callSubjectData);
 
       console.log("ONLINE");
-      // this._getListItems().then(response => {      
-      //   this.checkConditionPassToRender(response);
-      // });
+      this._getListItems().then(response => {      
+        this.checkConditionPassToRender(response, callSubjectData);
+      });
     }
   }
 
@@ -81,6 +81,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
+        context: this.context,
         titleValue: this.properties.titleValue,
         description: this.properties.description,
         userData: this.context.pageContext.user,

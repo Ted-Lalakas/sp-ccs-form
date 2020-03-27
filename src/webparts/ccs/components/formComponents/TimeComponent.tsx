@@ -28,7 +28,7 @@ const TimeComponent = (props:any) => {
         onClick={() => setShowTime(!showTime)}
         toggle
         checked={showTime}
-        text={showTime ? 'Click to close' : 'Time of call'} 
+        text={showTime ? 'Click to close' : props.heading} 
       />
 
     { showTime ? 

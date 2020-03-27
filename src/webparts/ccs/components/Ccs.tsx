@@ -159,7 +159,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                                     : this.state.optionValue == "Other" && this.state.optionOtherValue != "" 
                                       ? true 
                                       : false;
-
+                              
     const checkJAIDLegth = this.state.offenderJAID.length <= 9 ? true : false;
 
     const disableSubmitButton = 
@@ -184,7 +184,41 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
+  public _submitFormHandler = (listname:string):void => {
+    let submitValues = {
+      user: "User1",
+      email: "user@contoso.com",
+      jaid: "3243432",
+      date: "Mar 13, 2020",
+      time: "12:05",
+      region: "Baytest",
+      subregion: "Franklin",
+      order: "Parole",
+      subject: "Test subject",
+      option: "test option value",
+      comment: "this is a test comment for testing purposes.",
+      visit: "No",
+      resolved: "1",
+      staff: "0",
+      stafftime: "5"
+    }
+
+    let requestdatastr = JSON.stringify(submitValues);
+    requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
+    console.log(requestdatastr);
+
+    let requestlistItem: string = JSON.stringify({
+      '__metadata': {'type': this.props.context.getListItemType(listname)}
+      });
+
+    requestlistItem = requestlistItem.substring(1, requestlistItem .length-1);
+    requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
+    console.log(requestlistItem);
+
+  };
+
   public render(): React.ReactElement<ICcsProps> {
+    // console.log(this.props.context);
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
@@ -221,7 +255,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
                 <div style={{ marginTop: '1em' }} className="ms-Grid-row">
                   <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg4">
-                    <TimeComponent timeValue={this.state.timeValue} changeHandler={this._changeTimeHandler} />
+                    <TimeComponent 
+                      timeValue={this.state.timeValue} 
+                      changeHandler={this._changeTimeHandler} 
+                      heading={this.props.headings.heading_timeofCall}
+                      />
                   </div>
                   { this.state.timeValue ?
                   <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg8">
@@ -324,7 +362,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         className={ this.colorSetSubmit() }
                         secondaryText="You can review before saving" 
                         disabled={this.SubmitOn()}
-                        onClick={() => alert("Its clicked!")}  
+                        // disabled={false}
+                        onClick={() => alert('Form submitted')}
+                        // onClick={() => this._submitFormHandler("https://tedsandbox.sharepoint.com/sites/Coruscant/Lists/ccslist")}  
                       >
                         Submit Data
                       </CompoundButton>
