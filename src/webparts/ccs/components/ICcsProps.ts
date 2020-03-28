@@ -1,4 +1,6 @@
 export interface ICcsProps {
+  loadListItems: any;
+  testvar: Promise<string>;
   context: any;
   titleValue: string;
 	description: string;
@@ -30,6 +32,7 @@ export interface ICcsProps {
 }
 
 export interface ICcsState {
+  list1: any;
   offenderJAID: string;
   dateValue: string;
   dateValue2: Date;

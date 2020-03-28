@@ -4,7 +4,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
-import { Stack, DatePicker, TextField } from 'office-ui-fabric-react';
+import { Stack, DatePicker, TextField, autobind, DefaultButton } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { CompoundButton } from 'office-ui-fabric-react';
 
@@ -30,12 +30,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
-    // console.log("-------------------------------------------------------------------------");
-    // console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    // console.log("-------------------------------------------------------------------------");
+    console.log("-------------------------------------------------------------------------");
+    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.state);
+    console.log("-------------------------------------------------------------------------");
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
+      list1: null,
       offenderJAID: "",
       dateValue: "",
       dateValue2: null,
@@ -53,6 +54,15 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       staffTime: "",
       toggleValue: false
     };
+
+    this._loadListItems();
+  }
+
+  @autobind
+  private async _loadListItems(): Promise<void> {
+    const items: any = await this.props.loadListItems();
+    console.log(items);
+    this.setState({ list1: items });
   }
 
   // Grab the array of data and run functions that separate the data
@@ -70,11 +80,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // }
 
   // For testing purposes. Can be removed.
-  // public componentDidUpdate() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  public componentDidUpdate() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -221,6 +231,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     // console.log(this.props.context);
     return (
       <div className={ styles.ccs }>
+
+        <DefaultButton
+          text="Load list"
+          title="Load list"
+          onClick={this._loadListItems}
+        />
+
         <div className={ styles.container }>
           <div className={ styles.row }>
 {/* */} {/* <div className={ styles.column }> */}

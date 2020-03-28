@@ -15,8 +15,20 @@ import { ICcsProps } from './components/ICcsProps';
 import { regionsData } from './mockData/regionsData';
 import { callSubjectData } from './mockData/callSubjectData';
 
+import pnp from "sp-pnp-js";
+import { sp } from "@pnp/sp";
+// import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
+export interface IListItem {
+  Title: string;
+  Color: string;
+}  //IListItem[]
+
 export interface ICcsWebPartProps {
-  context: any;
+  loadListItems: () => Promise<any>;
   titleValue: string;
   description: string;
   heading_dutyDirector: string;
@@ -41,52 +53,65 @@ export interface ICcsWebPartProps {
   heading_staffTime: string;
 }
 
+
 export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps> {
 
   private get _isSharePoint(): boolean {
     return (Environment.type === EnvironmentType.SharePoint || Environment.type === EnvironmentType.ClassicSharePoint);
   }
 
-  private _getListItems(): Promise<any[]> {
-    return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + "/_api/web/lists/getByTitle('CCS After Hours Form Data')/items?$select=Title,Option_x0020_Value,Type_x0020_of_x0020_Data", SPHttpClient.configurations.v1)
-      .then((response: SPHttpClientResponse) => {
-        return response.json();
-      })
-      .then(jsonResponse => {
-        return jsonResponse.value;
-      }) as Promise<any[]>;
-  }
+  // private _getListItems(): Promise<any[]> {
+  //   return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + "/_api/web/lists/getByTitle('CCS After Hours Form Data')/items?$select=Title,Option_x0020_Value,Type_x0020_of_x0020_Data", SPHttpClient.configurations.v1)
+  //     .then((response: SPHttpClientResponse) => {
+  //       return response.json();
+  //     })
+  //     .then(jsonResponse => {
+  //       return jsonResponse.value;
+  //     }) as Promise<any[]>;
+  // }
 
-  public render(): void {
-    // Check if the app is running on local or online environment
-    if (!this._isSharePoint) {
-      console.log("LOCAL");
-      this.checkConditionPassToRender(regionsData, callSubjectData);
-    } else {
-      //TEDS TO BE WORKED ON
-      // If online then grab the list and .THEN once that is done render the component to the DOM.
+  // private _getRegions():any {
+  //   pnp.sp.web.lists.getByTitle("CCS After Hours Form Data").items
+  //     .select("Title","Option_x0020_Value","Type_x0020_of_x0020_Data")
+  //     .get()
+  //     .then((items: any[]) => {
+  //       // console.log(items);
+  //       return items;
+  //   });
+  // }
 
-      // this.checkConditionPassToRender(regionsData, callSubjectData);
-
-      console.log("ONLINE");
-      this._getListItems().then(response => {      
-        this.checkConditionPassToRender(response, callSubjectData);
+  protected onInit(): Promise<void> {
+    return super.onInit().then(_ => {  
+      // other init code may be present  
+      sp.setup({
+        spfxContext: this.context
       });
-    }
+    });
   }
 
-  // Function to run inside the render methods IF statement so that I can pass the correct array depending on the environment
-  // Pass the ProcurementNavigator PROP elements and envoke the ReactDom.render method inside the asyncronous call
-  private checkConditionPassToRender(regionsArray:any[], callSubjectDataArray:any[]) {
+  
+  public render(): void {
+
+    const test111 = async () => {
+      const data = await sp.web.lists.getByTitle("CCS After Hours Form Data").items.select("Title","Option_x0020_Value","Type_x0020_of_x0020_Data").get();
+      // console.log("HERE");
+      // console.log(JSON.stringify(data, null, 2));
+      // console.log("END");
+      return JSON.stringify(data, null, 2);
+    };
+
+
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
+        loadListItems: this.loadListItem,
+        testvar: test111(),
         context: this.context,
         titleValue: this.properties.titleValue,
         description: this.properties.description,
         userData: this.context.pageContext.user,
-        regionsData: regionsArray,
-        callSubjectData: callSubjectDataArray,
+        regionsData: regionsData,
+        callSubjectData: callSubjectData,
         headings: {
           heading_dutyDirector: this.properties.heading_dutyDirector,
           heading_jaid: this.properties.heading_jaid,
@@ -111,7 +136,12 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         }
       }
     );
-    ReactDom.render(element, this.domElement);
+    ReactDom.render(element, this.domElement); 
+  }
+
+  private async loadListItem(): Promise<IListItem[]> {
+    const result: IListItem[] = await sp.web.lists.getByTitle("CCS After Hours Form Data").items.select("Title","Option_x0020_Value","Type_x0020_of_x0020_Data").getAll();
+    return(result);
   }
 
   protected onDispose(): void {
