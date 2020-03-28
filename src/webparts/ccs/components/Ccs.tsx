@@ -30,9 +30,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
-    // console.log("-------------------------------------------------------------------------");
-    // console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    // console.log("-------------------------------------------------------------------------");
+    console.log("-------------------------------------------------------------------------");
+    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+    console.log("-------------------------------------------------------------------------");
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
