@@ -201,7 +201,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       resolved: "1",
       staff: "0",
       stafftime: "5"
-    }
+    };
 
     let requestdatastr = JSON.stringify(submitValues);
     requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
@@ -215,7 +215,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
     console.log(requestlistItem);
 
-  };
+  }
 
   public render(): React.ReactElement<ICcsProps> {
     // console.log(this.props.context);
@@ -224,8 +224,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
         <div className={ styles.container }>
           <div className={ styles.row }>
 {/* */} {/* <div className={ styles.column }> */}
-              <span className={ styles.title }>{escape(this.props.titleValue)}</span>
-              <p className={ styles.description }>{escape(this.props.description)}</p>
+              <span className={ styles.title }>{escape(this.props.headings.titleValue)}</span>
+              <p className={ styles.description }>{escape(this.props.headings.description)}</p>
 {/* */}{/* </div> */}
           </div>
         </div>

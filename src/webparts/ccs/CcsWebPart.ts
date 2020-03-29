@@ -14,30 +14,7 @@ import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 import { ICcsProps } from './components/ICcsProps';
 import { regionsData } from './mockData/regionsData';
 import { callSubjectData } from './mockData/callSubjectData';
-
 export interface ICcsWebPartProps {
-  titleValue: string;
-  description: string;
-  heading_dutyDirector: string;
-  heading_jaid: string;
-  heading_regionalLocation: string;
-  placeholder_regionalLocation: string;
-  heading_subRegion: string;
-  placeholder_subRegion: string;
-  heading_dateField: string;
-  placeholder_dateField: string;
-  heading_timeofCall: string;
-  heading_orderType: string;
-  placeholder_orderType: string;
-  heading_subject: string;
-  placeholder_subject: string;
-  heading_option: string;
-  placeholder_option: string;
-  heading_comment: string;
-  heading_visitRequired: string;
-  heading_resolveTime: string;
-  heading_extraStaff: string;
-  heading_staffTime: string;
 }
 
 export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps> {
@@ -56,38 +33,18 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
       }) as Promise<any[]>;
   }
 
+  // regionsData: this._isSharePoint ? this._getListItems().then(response => {return response}) : regionsData,
+  
   public render(): void {
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
+        regionsOnline: this._getListItems().then(response => {return response}),
         context: this.context,
-        titleValue: this.properties.titleValue,
-        description: this.properties.description,
         userData: this.context.pageContext.user,
-        regionsData: this._isSharePoint ? this._getListItems().then(response => {return response}) : regionsData,
-        callSubjectData: callSubjectData,
-        headings: {
-          heading_dutyDirector: this.properties.heading_dutyDirector,
-          heading_jaid: this.properties.heading_jaid,
-          heading_regionalLocation: this.properties.heading_regionalLocation,
-          placeholder_regionalLocation: this.properties.placeholder_regionalLocation,
-          heading_subRegion: this.properties.heading_subRegion,
-          placeholder_subRegion: this.properties.placeholder_subRegion,
-          heading_dateField: this.properties.heading_dateField,
-          placeholder_dateField: this.properties.placeholder_dateField,
-          heading_timeofCall: this.properties.heading_timeofCall,
-          heading_orderType: this.properties.heading_orderType,
-          placeholder_orderType: this.properties.placeholder_orderType,
-          heading_subject: this.properties.heading_subject,
-          placeholder_subject: this.properties.placeholder_subject,
-          heading_option: this.properties.heading_option,
-          placeholder_option: this.properties.placeholder_option,
-          heading_comment: this.properties.heading_comment,
-          heading_visitRequired: this.properties.heading_visitRequired,
-          heading_resolveTime: this.properties.heading_resolveTime,
-          heading_extraStaff: this.properties.heading_extraStaff,
-          heading_staffTime: this.properties.heading_staffTime
-        }
+        headings: this.properties,
+        regionsData: regionsData,
+        callSubjectData: callSubjectData
       }
     );
     ReactDom.render(element, this.domElement);
