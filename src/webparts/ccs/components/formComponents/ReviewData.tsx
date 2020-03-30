@@ -102,14 +102,23 @@ const ReviewData = (props:any) => {
         </div>
 
         <div className={ styles.formDataWrap }> 
-          <label>{props.heading_extraStaff}</label>
-          <p>{ props.extraStaff ? props.extraStaff : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          <label>{props.heading_moreStaffBool}</label>
+          <p>{ props.staffRequired ? props.staffRequired : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
         </div>
 
-        <div className={ styles.formDataWrap }> 
-          <label>{props.heading_staffTime}</label>
-          <p>{ props.staffTime ? props.staffTime : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
-        </div>
+        { props.staffRequired == "Yes" ?
+        <React.Fragment>
+          <div className={ styles.formDataWrap }> 
+            <label>{props.heading_extraStaff}</label>
+            <p>{ props.extraStaff ? props.extraStaff : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          </div>
+
+          <div className={ styles.formDataWrap }> 
+            <label>{props.heading_staffTime}</label>
+            <p>{ props.staffTime ? props.staffTime : <span style={{ color: 'red', fontWeight: 600 }}>Field not set</span>}</p>
+          </div>
+        </React.Fragment>
+        : null }
 
       <PrimaryButton 
         className={ colorSetSubmit() }

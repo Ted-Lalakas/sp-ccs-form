@@ -14,6 +14,7 @@ import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
 import { ICcsProps } from './components/ICcsProps';
 import { regionsData } from './mockData/regionsData';
 import { callSubjectData } from './mockData/callSubjectData';
+
 export interface ICcsWebPartProps {
 }
 
@@ -39,7 +40,7 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
-        regionsOnline: this._getListItems().then(response => {return response}),
+        // regionsOnline: this._getListItems().then(response => {return response}),
         context: this.context,
         userData: this.context.pageContext.user,
         headings: this.properties,
@@ -139,6 +140,9 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
                 }),
                 PropertyPaneTextField('heading_resolveTime', {
                   label: strings.ResolvedTimeLabel
+                }),
+                PropertyPaneTextField('heading_moreStaffBool', {
+                  label: strings.MoreStaffRequiredLabel
                 }),
                 PropertyPaneTextField('heading_extraStaff', {
                   label: strings.ExtraStaffLabel

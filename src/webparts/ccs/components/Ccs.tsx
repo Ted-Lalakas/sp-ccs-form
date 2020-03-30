@@ -22,6 +22,7 @@ import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown'
 import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
 import InputFieldNotes from './formComponents/InputFieldNotes';
 import ResolveTime from './formComponents/ResolveTime';
+import StaffRequired from './formComponents/StaffRequired';
 import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
 import ReviewData from './formComponents/ReviewData';
@@ -45,10 +46,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       orderType: "",
       subjectValue: "",
       optionValue: "",
-      optionOtherValue: "",
       offenderNotes: "",
       visitRequired: "No",
       resolveTime: "",
+      staffRequired: "No",
       extraStaff: "",
       staffTime: "",
       toggleValue: false
@@ -70,11 +71,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // }
 
   // For testing purposes. Can be removed.
-  // public componentDidUpdate() {
-  //   console.log("-------------------------------------------------------------------------");
-  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-  //   console.log("-------------------------------------------------------------------------");
-  // }
+  public componentDidUpdate() {
+    console.log("-------------------------------------------------------------------------");
+    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+    console.log("-------------------------------------------------------------------------");
+  }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -137,6 +138,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     this.setState({ resolveTime: value });
   }
 
+  // Additional Staff Required boolean
+  public _changeStaffHandler = (value:string) => {
+    this.setState({ staffRequired: value });
+    this.setState({ extraStaff: "" });
+    this.setState({ staffTime: "" });  
+  }
+
   // Extra Staff
   public _changeExtraStaffHandler = (value:string) => {
     this.setState({ extraStaff: value });
@@ -153,14 +161,26 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   // Check if Submit button should be enabled
-  public SubmitOn = ():boolean => {
-    const otherValueSet:boolean = this.state.optionValue != "Other" 
-                                    ? true 
-                                    : this.state.optionValue == "Other" && this.state.optionOtherValue != "" 
-                                      ? true 
-                                      : false;
-                              
-    const checkJAIDLegth = this.state.offenderJAID.length <= 9 ? true : false;
+  public SubmitOn = ():boolean => {                              
+    const checkJAIDLegth = this.state.offenderJAID.length <= 9 && this.state.offenderJAID != "" ? true : false;
+
+    const staffExtra = ():boolean => {
+      if(this.state.staffRequired == "Yes") {
+        return this.state.extraStaff ? true : false;
+      } else {
+        return true;
+      }
+    };
+
+    // showStaffFields
+
+    const staffTime = ():boolean => {
+      if(this.state.staffRequired == "Yes") {
+        return this.state.staffTime ? true : false;
+      } else {
+        return true;
+      }
+    };
 
     const disableSubmitButton = 
       this.state.offenderJAID    &&
@@ -172,10 +192,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       this.state.subjectValue    &&
       this.state.optionValue     &&
       this.state.resolveTime     &&
-      this.state.extraStaff      &&
-      this.state.staffTime       && 
-      checkJAIDLegth             &&
-      otherValueSet ? false : true;  
+      staffExtra()               && 
+      staffTime()                && 
+      checkJAIDLegth ? false : true;  
+
     return disableSubmitButton;
   }
 
@@ -203,17 +223,17 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       stafftime: "5"
     };
 
-    let requestdatastr = JSON.stringify(submitValues);
-    requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
-    console.log(requestdatastr);
+    // let requestdatastr = JSON.stringify(submitValues);
+    // requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
+    // console.log(requestdatastr);
 
-    let requestlistItem: string = JSON.stringify({
-      '__metadata': {'type': this.props.context.getListItemType(listname)}
-      });
+    // let requestlistItem: string = JSON.stringify({
+    //   '__metadata': {'type': this.props.context.getListItemType(listname)}
+    //   });
 
-    requestlistItem = requestlistItem.substring(1, requestlistItem .length-1);
-    requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
-    console.log(requestlistItem);
+    // requestlistItem = requestlistItem.substring(1, requestlistItem .length-1);
+    // requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
+    // console.log(requestlistItem);
 
   }
 
@@ -312,14 +332,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     callSubjectArray={this.props.callSubjectData} 
                     subjectValue={this.state.subjectValue}
                   />
-                  { this.state.optionValue == 'Other' ? 
-                  <TextField
-                    onChange={(ev, newValue) => this.setState({ optionOtherValue: newValue })}
-                    resizable={true}
-                    styles={{ fieldGroup: { maxWidth: 350 } }}
-                    multiline rows={2}
-                  />
-                  : null }
                 </Stack>
                 </div>
 
@@ -332,26 +344,47 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   <VisitRequired
                     heading={this.props.headings.heading_visitRequired} 
                     visitValue={this.state.visitRequired} 
-                    visitHandler={this._changeVisitHandler} 
+                    changeHandler={this._changeVisitHandler} 
                   />
 
-                  <label className={styles.labelTitle}>{this.props.headings.heading_resolveTime}</label>
-                  <ResolveTime 
-                    resolveTime={this.state.resolveTime} 
-                    changeHandler={this._changeResolveTimeHandler}
+                  <div style={{ marginTop: '1em' }} className="ms-Grid-row">
+                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                      <TimeComponent 
+                        timeValue={this.state.resolveTime}
+                        changeHandler={this._changeResolveTimeHandler}
+                        heading={this.props.headings.heading_resolveTime}
+                        />
+                    </div>
+                    { this.state.resolveTime ?
+                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                      <h3 className={styles.timeFieldLabel}>Time set: {this.state.resolveTime}</h3>
+                    </div>
+                    : null }
+                  </div> 
+
+                  <StaffRequired
+                    heading={this.props.headings.heading_moreStaffBool} 
+                    staffValue={this.state.staffRequired} 
+                    changeHandler={this._changeStaffHandler} 
                   />
 
-                  <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
-                  <ExtraStaff 
-                    extraStaff={this.state.extraStaff} 
-                    changeHandler={this._changeExtraStaffHandler}
-                  />
-
-                  <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
-                  <StaffTime 
-                    staffTime={this.state.staffTime} 
-                    changeHandler={this._changeStaffTimeHandler}
-                  />
+                  { this.state.staffRequired == "Yes" ?    
+                  <React.Fragment>
+                    <label className={styles.labelTitle}>{this.props.headings.heading_extraStaff}</label>
+                    <ExtraStaff 
+                      extraStaff={this.state.extraStaff} 
+                      changeHandler={this._changeExtraStaffHandler}
+                    />
+                    
+                    
+                    <label className={styles.labelTitle}>{this.props.headings.heading_staffTime}</label>
+                    <StaffTime 
+                      staffTime={this.state.staffTime} 
+                      changeHandler={this._changeStaffTimeHandler}
+                    />
+                  </React.Fragment>
+                  : null }
+                  
                 </Stack>
 
                 <div className="ms-Grid" dir="ltr">

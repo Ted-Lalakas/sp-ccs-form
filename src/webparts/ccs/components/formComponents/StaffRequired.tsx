@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/ChoiceGroup';
 
-const VisitRequired = (props:any) => {
+const StaffRequired = (props:any) => {
 
-  // props.visitValue
+  // props.staffValue
 
   const options: IChoiceGroupOption[] = [
-    { key: 'Yes', text: 'Yes', iconProps: { iconName: 'Car' } },
-    { key: 'No', text: 'No', iconProps: { iconName: 'Telemarketer' } }
+    { key: 'Yes', text: 'Yes', iconProps: { iconName: 'Group' } },
+    { key: 'No', text: 'No', iconProps: { iconName: 'BlockContact' } }
   ];
 
   return (
     <React.Fragment>
       <ChoiceGroup 
-        defaultSelectedKey={props.visitValue} 
+        defaultSelectedKey={props.staffValue} 
         options={options} 
         onChange={(ev, option) => props.changeHandler(option.key)} 
         label={props.heading} 
@@ -23,4 +23,4 @@ const VisitRequired = (props:any) => {
     );
   };
   
-  export default VisitRequired;
+  export default StaffRequired;

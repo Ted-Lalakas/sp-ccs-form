@@ -1,6 +1,7 @@
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 export interface ICcsProps {
-  regionsOnline: any;
-  context: any;
+  // regionsOnline: any;
+  context: WebPartContext;
   userData:any;
   headings: any;
   regionsData:any[];
@@ -20,7 +21,7 @@ export interface ICcsState {
   toggleValue: boolean;
   subjectValue: string;
   optionValue: string;
-  optionOtherValue: string;
+  staffRequired: string;
   resolveTime: string;
   extraStaff: string;
   staffTime: string;

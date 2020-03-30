@@ -12,10 +12,6 @@ export const callSubjectData:any = [
     option: "Change of parole conditions"
   },
   {
-    subject: "APB",
-    option: "Other"
-  },
-  {
     subject: "Business / Secruity",
     option: "Alarm not set at location"
   },
@@ -30,10 +26,6 @@ export const callSubjectData:any = [
   {
     subject: "Business / Secruity",
     option: "Media contact / report"
-  },
-  {
-    subject: "Business / Secruity",
-    option: "Other"
   },
   {
     subject: "Community Work",
@@ -80,10 +72,6 @@ export const callSubjectData:any = [
     option: "Vehicle problems"
   },
   {
-    subject: "Community Work",
-    option: "Other"
-  },
-  {
     subject: "EM-Contact",
     option: "EMC seeking advice"
   },
@@ -128,10 +116,6 @@ export const callSubjectData:any = [
     option: "Seeking Welfare check"
   },
   {
-    subject: "EM-Contact",
-    option: "Other"
-  },
-  {
     subject: "EM-PID",
     option: "Device not charging"
   },
@@ -172,10 +156,6 @@ export const callSubjectData:any = [
     option: "Power outage"
   },
   {
-    subject: "EM-PID",
-    option: "Other"
-  },
-  {
     subject: "EM-SCRAM",
     option: "Device not charging"
   },
@@ -214,10 +194,6 @@ export const callSubjectData:any = [
   {
     subject: "EM-SCRAM",
     option: "SCRAM - Faceplate, battery and exhaust needs changing"
-  },
-  {
-    subject: "EM-SCRAM",
-    option: "Other"
   },
   {
     subject: "EM-SOLO",
@@ -272,10 +248,6 @@ export const callSubjectData:any = [
     option: "Power outage"
   },
   {
-    subject: "EM-SOLO",
-    option: "Other"
-  },
-  {
     subject: "Mental Health",
     option: "Admitted to Psychiatric facility"
   },
@@ -292,20 +264,12 @@ export const callSubjectData:any = [
     option: "Seen by MH professional"
   },
   {
-    subject: "Mental Health",
-    option: "Other"
-  },
-  {
     subject: "Offender Contact",
     option: "Unwell - unable to meet order requirements"
   },
   {
     subject: "Offender Contact",
     option: "Won’t meet curfew requirements"
-  },
-  {
-    subject: "Offender Contact",
-    option: "Other"
   },
   {
     subject: "Physical Curfew",
@@ -328,10 +292,6 @@ export const callSubjectData:any = [
     option: "Random curfew check"
   },
   {
-    subject: "Physical Curfew",
-    option: "Other"
-  },
-  {
     subject: "Police",
     option: "Offender contacted prohibited person"
   },
@@ -342,10 +302,6 @@ export const callSubjectData:any = [
   {
     subject: "Police",
     option: "Offender located in prohibited area"
-  },
-  {
-    subject: "Police",
-    option: "Other"
   },
   {
     subject: "Supervision Order",
@@ -366,9 +322,5 @@ export const callSubjectData:any = [
   {
     subject: "Supervision Order",
     option: "No further action required"
-  },
-  {
-    subject: "Supervision Order",
-    option: "Other"
   }
 ];
