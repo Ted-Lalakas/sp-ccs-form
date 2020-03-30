@@ -20,6 +20,7 @@ declare interface ICcsWebPartStrings {
   CommentLabel: string;
   VisitRequiredLabel: string;
   ResolvedTimeLabel: string;
+  MoreStaffRequiredLabel: string;
   ExtraStaffLabel: string;
   StaffTimeLabel: string;
 }

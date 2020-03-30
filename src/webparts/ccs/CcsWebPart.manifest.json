@@ -38,7 +38,8 @@
       "heading_comment": "Outcomes / Interventions / Comments / Additional Info",
       "heading_visitRequired": "Visit Required",
       "heading_resolveTime": "DD Resolve Time",
-      "heading_extraStaff": "Additional Staff Required",
+      "heading_moreStaffBool": "Additional Staff Required",
+      "heading_extraStaff": "Number of Staff",
       "heading_staffTime": "Time Spent by Additional Staff",
       "group2": { "default": "Review Form Data" }
     }

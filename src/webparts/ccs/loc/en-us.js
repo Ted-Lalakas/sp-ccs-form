@@ -21,7 +21,8 @@ define([], function() {
     "CommentLabel": "Comments",
     "VisitRequiredLabel": "Visit Required",
     "ResolvedTimeLabel": "DD Resolve Time",
-    "ExtraStaffLabel": "Staff Required",
+    "MoreStaffRequiredLabel": "Staff Required",
+    "ExtraStaffLabel": "Number of staff",
     "StaffTimeLabel": "Time Spent by Staff"
   }
 });
