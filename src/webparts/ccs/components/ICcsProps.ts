@@ -13,7 +13,6 @@ export interface ICcsProps {
 }
 
 export interface ICcsState {
-  regionsList: any;
   offenderJAID: string;
   dateValue: string;
   dateValue2: Date;
