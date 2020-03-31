@@ -193,181 +193,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
-  
-  // private getListItemEntityTypeName(): Promise<string> {
-  //   return new Promise<string>((resolve: (listItemEntityTypeName: string) => void, reject: (error: any) => void): void => {
-  //     if (this.listItemEntityTypeName) {
-  //       console.log("Resolve1");
-  //       console.log(this.listItemEntityTypeName);
-  //       resolve(this.listItemEntityTypeName);
-  //       return;
-  //     }
-
-  //     this.props.context.spHttpClient.get(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')/items`,
-  //       SPHttpClient.configurations.v1,
-  //       {
-  //         headers: {
-  //           'Accept': 'application/json;odata=nometadata',
-  //           'odata-version': ''
-  //         }
-  //       })
-  //       .then((response: SPHttpClientResponse): Promise<{ ListItemEntityTypeFullName: string }> => {
-  //         console.log("response1");
-  //         console.log(response.json());
-  //         return response.json();
-  //       }, (error: any): void => {
-  //         reject(error);
-  //       })
-  //       .then((response: { ListItemEntityTypeFullName: string }): void => {
-  //         this.listItemEntityTypeName = response.ListItemEntityTypeFullName;
-  //         console.log("Resolve");
-  //         console.log(this.listItemEntityTypeName);
-  //         resolve(this.listItemEntityTypeName);
-  //       });
-  //   });
-  // }
-
-  // private createItem(): Promise<string> {
-  //   this.getListItemEntityTypeName()
-  //     .then((listItemEntityTypeName: string): Promise<SPHttpClientResponse> => {
-  //       console.log(listItemEntityTypeName);
-  //       const body: string = JSON.stringify({
-  //         '__metadata': {
-  //           'type': "SP.Data.test1.ListItem"
-  //         },
-  //         'Title': "User1"
-  //       });
-  //       return this.props.context.spHttpClient.post(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')/items`,
-  //         SPHttpClient.configurations.v1,
-  //         {
-  //           headers: {
-  //             'Accept': 'application/json;odata=nometadata',
-  //             'Content-type': 'application/json;odata=verbose',
-  //             'odata-version': ''
-  //           },
-  //           body: body
-  //         });
-  //     })
-  //     .then((response: SPHttpClientResponse): Promise<any> => {
-  //       return response.json();
-  //     })
-  //     .then((item: any): void => {
-  //       console.log('successfully created');
-  //       console.log(item);
-  //     }, (error: any): void => {
-  //       console.log('Error while creating the item: ' + error);
-  //     });
-  // }
-
-
-  // private _postListItems(): Promise<any[]> {
-  //   console.log("TEST");
-  //   const opt: any = { 
-  //     headers: { 'ACCEPT': 'application/json; odata.metadata=none' }, 
-  //     '__metadata': {
-  //       'type': "SP.Data.test1.ListItem"
-  //     },
-  //     "Title": "MyItem"
-  //   } 
-
-  //   return this.context.spHttpClient.post(
-  //       this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')`, 
-  //       SPHttpClient.configurations.v1, opt
-  //       )
-  //     .then((response: SPHttpClientResponse) => {
-  //       console.log(`Status code: ${response.status}`);
-  //       console.log(`Status text: ${response.statusText}`);
-  //     })
-  //     .then(jsonResponse => {
-  //       console.log(jsonResponse);
-  //     }) as Promise<any[]>;
-  // }
-
-
-
-  // private _makePOSTRequest(): Promise<void> {
-
-    // const spOpts: ISPHttpClientOptions = {
-    //   body: `{         
-    //     Title: "User1",
-    //     Email: "user@contoso.com",
-    //     Jaid: "3243432",
-    //     Date: "16/3/2020",
-    //     Time: "12:05",
-    //     Region: "Baytest",
-    //     SubRegion: "Franklin",
-    //     OrderType: "Parole",
-    //     Subject: "Test subject",
-    //     Option: "test option value",
-    //     Comment: "this is a test comment for testing purposes.",
-    //     VisitRequired: "No",
-    //     ResolveTime: "12:50",
-    //     StaffRequired: "0",
-    //     StaffTime: "5"
-    //   }`
-    // };
-
-    // const opt: any = { 
-    //   headers: { 'ACCEPT': 'application/json; odata.metadata=none' }, 
-    //   body: { 
-    //     Title: "User1",
-    //     Email: "user@contoso.com",
-    //     Jaid: "3243432",
-    //     Date: "16/3/2020",
-    //     Time: "12:05",
-    //     Region: "Baytest",
-    //     SubRegion: "Franklin",
-    //     OrderType: "Parole",
-    //     Subject: "Test subject",
-    //     Option: "test option value",
-    //     Comment: "this is a test comment for testing purposes.",
-    //     VisitRequired: "No",
-    //     ResolveTime: "12:50",
-    //     StaffRequired: "0",
-    //     StaffTime: "5"
-    //   } 
-    // };
-
-    // let promise: Promise<void> = new Promise<void>((resolve, reject) => {
-
-    // });
-
-
-
-
-    // this.props.context.spHttpClient.post(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')`, SPHttpClient.configurations.v1, opt)
-    //   .then((response: SPHttpClientResponse) => {
-    //     // Access properties of the response object. 
-    //     console.log(`Status code: ${response.status}`);
-    //     console.log(`Status text: ${response.statusText}`);
-
-    //     //response.json() returns a promise so you get access to the json in the resolve callback.
-    //     response.json().then((responseJSON: JSON) => {
-    //       console.log(responseJSON);
-    //     });
-    //   });
-
-
-
-
-
-  //     private _getListItems(listTitle:string, filter:string): Promise<any[]> {
-  //       return this.context.spHttpClient.get(
-  //           this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('${listTitle}')/items?$select=${filter}`, 
-  //           SPHttpClient.configurations.v1,
-  //             { 
-  //               headers: { 'ACCEPT': 'application/json; odata.metadata=none' } 
-  //             }
-  //           )
-  //         .then((response: SPHttpClientResponse) => {
-  //           return response.json();
-  //         })
-  //         .then(jsonResponse => {
-  //           return jsonResponse.value;
-  //         }) as Promise<any[]>;
-  //     }
-  // }
-
   // public _submitFormHandler = (listname:string):void => {
   //   let submitValues = {
   //     Title: "User1",
@@ -387,24 +212,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   //     StaffTime: "5"
   //   };
 
-    // let requestdatastr = JSON.stringify(submitValues);
-    // requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
-    // console.log(requestdatastr);
-
-    // let requestlistItem: string = JSON.stringify({
-    //   '__metadata': {'type': this.props.context.getListItemType(listname)}
-    //   });
-
-    // requestlistItem = requestlistItem.substring(1, requestlistItem .length-1);
-    // requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
-    // console.log(requestlistItem);
-
-  // }
-
   public render(): React.ReactElement<ICcsProps> {
-    // console.log(this.props.context);
-
-    // console.log(this.props.regionsOnline);
 
     return (
       <div className={ styles.ccs }>
@@ -565,7 +373,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         disabled={this.SubmitOn()}
                         // disabled={false}
                         // onClick={() => alert('Form submitted')}
-                        onClick={()=>{console.log("Test")}}  
+                        onClick={()=>{console.log("Test");}}  
                       >
                         Submit Data
                       </CompoundButton>
