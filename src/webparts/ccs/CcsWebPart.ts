@@ -10,22 +10,30 @@ import * as strings from 'CcsWebPartStrings';
 import Ccs from './components/Ccs';
 
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { ICcsProps } from './components/ICcsProps';
-import { regionsData } from './mockData/regionsData';
-import { callSubjectData } from './mockData/callSubjectData';
+import { ccsRegions } from './mockData/ccsRegions';
+import { ccsCallSubject } from './mockData/ccsCallSubject';
+import { ccsOrderType } from './mockData/ccsOrderType';
 
 export interface ICcsWebPartProps {
 }
 
 export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps> {
+  public test: any;
 
   private get _isSharePoint(): boolean {
     return (Environment.type === EnvironmentType.SharePoint || Environment.type === EnvironmentType.ClassicSharePoint);
   }
 
-  private _getListItems(): Promise<any[]> {
-    return this.context.spHttpClient.get(this.context.pageContext.web.absoluteUrl + "/_api/web/lists/getByTitle('CCS After Hours Form Data')/items?$select=Title,Option_x0020_Value,Type_x0020_of_x0020_Data", SPHttpClient.configurations.v1)
+  private _getListItems(listTitle:string, filter:string): Promise<any[]> {
+    return this.context.spHttpClient.get(
+        this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('${listTitle}')/items?$select=${filter}`, 
+        SPHttpClient.configurations.v1,
+          { 
+            headers: { 'ACCEPT': 'application/json; odata.metadata=none' } 
+          }
+        )
       .then((response: SPHttpClientResponse) => {
         return response.json();
       })
@@ -33,22 +41,46 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
         return jsonResponse.value;
       }) as Promise<any[]>;
   }
-
-  // regionsData: this._isSharePoint ? this._getListItems().then(response => {return response}) : regionsData,
   
-  public render(): void {
-    const element: React.ReactElement<ICcsProps> = React.createElement(
-      Ccs,
-      {
-        // regionsOnline: this._getListItems().then(response => {return response}),
-        context: this.context,
-        userData: this.context.pageContext.user,
-        headings: this.properties,
-        regionsData: regionsData,
-        callSubjectData: callSubjectData
-      }
-    );
-    ReactDom.render(element, this.domElement);
+  public render() {
+    if (!this._isSharePoint) {
+      console.log("LOCAL");
+      this.run(ccsRegions,ccsCallSubject,ccsOrderType);
+    } else {
+      console.log("ONLINE");
+      this.run(this._getListItems("ccsRegions","Title,subRegion"),this._getListItems("ccsCallSubject","Title,subject"),this._getListItems("ccsOrderType","Title"));
+    }
+  }
+
+  private async run(regionsData:any, subjectsData:any, ordersData:any) {
+      const regions = await regionsData;
+      const subjects = await subjectsData;
+      const orders = await ordersData;
+
+      // Regions: Grab all titles and set an array of unique items
+      const regionTitleAll = [...regions.map(x => x.Title)];
+	    const regionUnique = regionTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
+
+      // Subjects: Grab all titles and set an array of unique items
+      const subjectTitleAll = [...subjects.map(x => x.Title)];
+      const subjectUnique = subjectTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
+
+      const orderUnique = [...orders.map(x => x.Title)];
+
+      const element: React.ReactElement<ICcsProps> = React.createElement(
+        Ccs,
+        {
+          regionsAll: regions,
+          regionsUnique: regionUnique,
+          subjectsAll: subjects,
+          subjectsUnique: subjectUnique,
+          ordersAll: orderUnique,
+          context: this.context,
+          userData: this.context.pageContext.user,
+          headings: this.properties
+        }
+      );
+      ReactDom.render(element, this.domElement);
   }
 
   protected onDispose(): void {

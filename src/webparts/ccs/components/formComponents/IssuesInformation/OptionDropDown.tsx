@@ -9,18 +9,18 @@ const OptionDropDown = (props:any) => {
   let formatterArr: IDropdownOption[] = [];
 
   if(props.subjectValue) {
-    let filteredArray = props.callSubjectArray.filter(val => val.subject == props.subjectValue);
+    let filteredArray = props.callSubjectArray.filter(val => val.Title == props.subjectValue);
 
     filteredArray.forEach( val => {
       formatterArr.push({
-        key: val.option,
-        text: val.option
+        key: val.subject,
+        text: val.subject
       });
      });
 
     formatterArr.unshift( {
-      key: filteredArray[0].subject,
-      text: filteredArray[0].subject,
+      key: props.subjectValue,
+      text: props.subjectValue,
       itemType: DropdownMenuItemType.Header
     });
   }

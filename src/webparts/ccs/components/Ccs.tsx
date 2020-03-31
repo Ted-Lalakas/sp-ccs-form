@@ -4,12 +4,9 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
-import { Stack, DatePicker, TextField } from 'office-ui-fabric-react';
+import { Stack, DatePicker } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { CompoundButton } from 'office-ui-fabric-react';
-
-import { getRegionArrayData, getSubRegionArrayData } from './formComponents/RegionSelection/arrayFunctions';
-import { getSubjectArrayData } from './formComponents/IssuesInformation/arrayFunctions';
 
 // Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
@@ -21,7 +18,6 @@ import VisitRequired from './formComponents/VisitRequired';
 import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
 import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
 import InputFieldNotes from './formComponents/InputFieldNotes';
-import ResolveTime from './formComponents/ResolveTime';
 import StaffRequired from './formComponents/StaffRequired';
 import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
@@ -37,6 +33,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
+      regionsList: null,
       offenderJAID: "",
       dateValue: "",
       dateValue2: null,
@@ -55,13 +52,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       toggleValue: false
     };
   }
-
-  // Grab the array of data and run functions that separate the data
-  private regionsArray:{} = getRegionArrayData(this.props.regionsData);
-  private subRegionArray:{} = getSubRegionArrayData(this.props.regionsData);
-
-  // Grab the array of data and run functions that separate the data
-  private subjectArray:{} = getSubjectArrayData(this.props.callSubjectData);
 
   // For testing purposes. Can be removed.
   // public componentDidMount() {
@@ -239,6 +229,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
 
   public render(): React.ReactElement<ICcsProps> {
     // console.log(this.props.context);
+
+    // console.log(this.props.regionsOnline);
+
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
@@ -294,7 +287,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     heading={this.props.headings.heading_regionalLocation}
                     placeholderText={this.props.headings.placeholder_regionalLocation}
                     changeHandler={this._changeRegionHandler}
-                    regionsArray={this.regionsArray} 
+                    regionsUnique={this.props.regionsUnique} 
                   />
 
                   <SubRegionDropDown
@@ -302,7 +295,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     placeholderText={this.props.headings.placeholder_subRegion}
                     disabledValue={!this.state.regionValue ? true : false} 
                     changeHandler={this._changeSubRegionHandler} 
-                    regionsArray={this.subRegionArray} 
+                    regionsArray={this.props.regionsAll} 
                     regionValue={this.state.regionValue}
                   />
                 </Stack>
@@ -312,6 +305,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   heading={this.props.headings.heading_orderType} 
                   placeholderText={this.props.headings.placeholder_orderType} 
                   changeHandler={this._changeOrderTypeHandler}
+                  orderArray={this.props.ordersAll} 
                   orderType={this.state.orderType}
                 />
 
@@ -321,7 +315,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     heading={this.props.headings.heading_subject}
                     placeholderText={this.props.headings.placeholder_subject}
                     changeHandler={this._changeSubjectHandler}
-                    subjectArray={this.subjectArray}
+                    subjectArray={this.props.subjectsUnique}
                   />
 
                   <OptionDropDown
@@ -329,7 +323,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     placeholderText={this.props.headings.placeholder_option}
                     disabledValue={!this.state.subjectValue ? true : false} 
                     changeHandler={this._changeOptionHandler} 
-                    callSubjectArray={this.props.callSubjectData} 
+                    callSubjectArray={this.props.subjectsAll} 
                     subjectValue={this.state.subjectValue}
                   />
                 </Stack>

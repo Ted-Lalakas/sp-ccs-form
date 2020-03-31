@@ -5,20 +5,20 @@ import { Dropdown, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-rea
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 const OrderType = (props:any) => {
-
   // uses Hook state to save a boolean value. Used to show/hide the text field
   const [showTextField, setTextField] = useState(false);
 
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { maxWidth: 350 }
   };
-  
-  const options: IDropdownOption[] = [
-    { key: 'CCO (inc. CW)', text: 'CCO (inc. CW)'},
-    { key: 'Parole', text: 'Parole' },
-    { key: 'Supervision', text: 'Supervision' },
-    { key: 'Other', text: 'Other' }
-  ];
+
+  const formatterArr: IDropdownOption[] = [];
+  props.orderArray.forEach( val => {
+    formatterArr.push({
+      key: val,
+      text: val
+    });
+  });
 
   return (
     <Stack tokens={{ childrenGap: 15 }}>
@@ -26,7 +26,7 @@ const OrderType = (props:any) => {
         required
         placeholder={props.placeholderText}
         label={props.heading}
-        options={options} 
+        options={formatterArr} 
         styles={dropdownStyles}
         onChange={(ev, option) => {
           if(option.text == "Other") {

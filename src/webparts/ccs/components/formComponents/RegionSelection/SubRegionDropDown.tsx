@@ -1,29 +1,26 @@
 import * as React from 'react';
 import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
-
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { maxWidth: 350 }
 };
 
-const SubRegionDropDown = (props) => {
-  let filteredValues = [];
+const SubRegionDropDown = (props:any) => {
   let formatterArr: IDropdownOption[] = [];
 
   if(props.regionValue) {
-    let filteredArray = props.regionsArray.filter(val => val.regions == props.regionValue);
-    filteredValues = [...filteredArray[0].subRegions];
+    let filteredArray = props.regionsArray.filter(val => val.Title == props.regionValue);
 
-    filteredValues.forEach( val => {
+    filteredArray.forEach( val => {
       formatterArr.push({
-        key: val.Option_x0020_Value,
-        text: val.Option_x0020_Value
+        key: val.subRegion,
+        text: val.subRegion
       });
      });
 
     formatterArr.unshift( {
-      key: filteredValues[0].Title,
-      text: filteredValues[0].Title,
+      key: props.regionValue,
+      text: props.regionValue,
       itemType: DropdownMenuItemType.Header
     });
   }

@@ -1,6 +1,10 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 export interface ICcsProps {
-  // regionsOnline: any;
+  regionsAll: any;
+  regionsUnique: any;
+  subjectsAll: any;
+  subjectsUnique: any;
+  ordersAll: any;
   context: WebPartContext;
   userData:any;
   headings: any;
@@ -9,6 +13,7 @@ export interface ICcsProps {
 }
 
 export interface ICcsState {
+  regionsList: any;
   offenderJAID: string;
   dateValue: string;
   dateValue2: Date;

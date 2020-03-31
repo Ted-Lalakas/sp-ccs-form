@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Dropdown, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
-
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { maxWidth: 350 }
 };

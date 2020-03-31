@@ -7,7 +7,7 @@ const dropdownStyles: Partial<IDropdownStyles> = {
 
 const RegionDropDown = (props) => {
   const formatterArr: IDropdownOption[] = [];
-  props.regionsArray.forEach( val => {
+  props.regionsUnique.forEach( val => {
     formatterArr.push({
       key: val,
       text: val
