@@ -23,6 +23,12 @@ import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
 import ReviewData from './formComponents/ReviewData';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+import { IItemAddResult } from "@pnp/sp/items";
+
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
@@ -193,25 +199,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
-  // public _submitFormHandler = (listname:string):void => {
-  //   let submitValues = {
-  //     Title: "User1",
-  //     Email: "user@contoso.com",
-  //     Jaid: "3243432",
-  //     Date: "16/3/2020",
-  //     Time: "12:05",
-  //     Region: "Baytest",
-  //     SubRegion: "Franklin",
-  //     OrderType: "Parole",
-  //     Subject: "Test subject",
-  //     Option: "test option value",
-  //     Comment: "this is a test comment for testing purposes.",
-  //     VisitRequired: "No",
-  //     ResolveTime: "12:50",
-  //     StaffRequired: "0",
-  //     StaffTime: "5"
-  //   };
-
   public render(): React.ReactElement<ICcsProps> {
 
     return (
@@ -373,7 +360,25 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         disabled={this.SubmitOn()}
                         // disabled={false}
                         // onClick={() => alert('Form submitted')}
-                        onClick={()=>{console.log("Test");}}  
+                        onClick={async()=>{                        
+                          await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
+                            Title: "User1",
+                            Email: "user@contoso.com",
+                            Jaid: "3243432",
+                            Date: "16/3/2020",
+                            Time: "12:05",
+                            Region: "Baytest",
+                            SubRegion: "Franklin",
+                            OrderType: "Parole",
+                            Subject: "Test subject",
+                            Option: "test option value",
+                            Comment: "this is a test comment for testing purposes.",
+                            VisitRequired: "No",
+                            ResolveTime: "12:50",
+                            StaffRequired: "0",
+                            StaffTime: "5"
+                          });
+                        }}  
                       >
                         Submit Data
                       </CompoundButton>

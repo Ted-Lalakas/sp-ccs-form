@@ -15,7 +15,6 @@ import { ccsRegions } from './mockData/ccsRegions';
 import { ccsCallSubject } from './mockData/ccsCallSubject';
 import { ccsOrderType } from './mockData/ccsOrderType';
 
-// import { sp } from "@pnp/sp/presets/all";
 import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
