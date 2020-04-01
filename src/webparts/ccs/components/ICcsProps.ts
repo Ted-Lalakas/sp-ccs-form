@@ -1,4 +1,5 @@
 export interface ICcsProps {
+  environment: string;
   regionsAll: any;
   regionsUnique: any;
   subjectsAll: any;

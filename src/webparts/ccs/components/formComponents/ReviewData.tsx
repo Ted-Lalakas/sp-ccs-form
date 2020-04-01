@@ -2,34 +2,45 @@ import * as React from 'react';
 import styles from '../Ccs.module.scss';
 import { PrimaryButton } from 'office-ui-fabric-react';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
 const ReviewData = (props:any) => {
+
   // Check if Submit button should be enabled
-  const SubmitOn = ():boolean => {
-    const otherValueSet:boolean = props.optionValue != "Other" 
-                                    ? true 
-                                    : props.optionValue == "Other" && props.optionOtherValue != "" 
-                                      ? true 
-                                      : false;
+  const SubmitOn = ():boolean => {                              
+    const checkJAIDLegth = props.offenderJAID.length <= 9 && props.offenderJAID != "" ? true : false;
 
-    const checkJAIDLegth = props.offenderJAID.length <= 9 ? true : false;
+    let staffExtra:boolean =  false;
+      if(props.staffRequired == "Yes") {
+        staffExtra = props.extraStaff ? true : false;
+      } else {
+        staffExtra = true;
+      }
 
-    const disableSubmitButton = 
-      props.offenderJAID    &&
-      props.dateValue       &&
-      props.timeValue       &&
-      props.regionValue     && 
-      props.subRegionValue  &&
-      props.orderType       &&
-      props.subjectValue    &&
-      props.optionValue     &&
-      props.resolveTime     &&
-      props.extraStaff      &&
-      props.staffTime       &&
-      checkJAIDLegth        && 
-      otherValueSet ? false : true;  
-    return disableSubmitButton;
+    let staffTime:boolean =  false;    
+    if(props.staffRequired == "Yes") {
+      staffTime = props.staffTime ? true : false;
+    } else {
+      staffTime = true;
+    }
+
+    return props.offenderJAID    &&
+           props.dateValue       &&
+           props.timeValue       &&
+           props.regionValue     && 
+           props.subRegionValue  &&
+           props.orderType       &&
+           props.subjectValue    &&
+           props.optionValue     &&
+           props.resolveTime     &&
+           staffExtra            && 
+           staffTime             && 
+           checkJAIDLegth ? false : true;
   };
-
+  
   // Set the color styling for the submit button (just styling)
   const colorSetSubmit = ():any => {
     return SubmitOn() ? styles.reviewSubmitOff : styles.reviewSubmitOn;
@@ -122,9 +133,30 @@ const ReviewData = (props:any) => {
 
       <PrimaryButton 
         className={ colorSetSubmit() }
-        text="Submit Data" 
-        onClick={() => alert("Its clicked!")}  
+        text="Submit Data"  
         disabled={SubmitOn()} 
+        onClick={async()=>{
+          props.env == "local" ? console.log("Local Submit") :                        
+            await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
+              Title: props.user,
+              Email: props.email,
+              Jaid: props.offenderJAID,
+              Date: props.dateValue,
+              Time: props.timeValue,
+              Region: props.regionValue,
+              SubRegion: props.subRegionValue,
+              OrderType: props.orderType,
+              Subject: props.subjectValue,
+              Option: props.optionValue,
+              Comment: props.offenderNotes,
+              VisitRequired: props.visitRequired,
+              ResolveTime: props.resolveTime,
+              StaffRequired: props.staffRequired,
+              ExtraStaff: props.extraStaff,
+              StaffTime: props.staffTime
+            });
+          }
+        } 
       />
     </div>   
   );

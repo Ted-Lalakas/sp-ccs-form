@@ -32,14 +32,17 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     let regions:any = null;
     let subjects:any = null;
     let orders:any = null;
+    let env:string = "";
 
     if (!this._isSharePoint) {
-      console.log("LOCAL");
+      // LOCAL
+      env = "local";
       regions = ccsRegions;
       subjects = ccsCallSubject;
       orders = ccsOrderType;
     } else {
-      console.log("ONLINE");
+      // ONLINE
+      env = "online";
       regions = await sp.web.lists.getByTitle("ccsRegions").items.select("Title","subRegion").getAll();
       subjects = await sp.web.lists.getByTitle("ccsCallSubject").items.select("Title","subject").getAll();
       orders = await sp.web.lists.getByTitle("ccsOrderType").items.select("Title").getAll();
@@ -53,11 +56,13 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
     const subjectTitleAll = [...subjects.map(x => x.Title)];
     const subjectUnique = subjectTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
 
+    // Simplify the array going through
     const orderUnique = [...orders.map(x => x.Title)];
 
     const element: React.ReactElement<ICcsProps> = React.createElement(
       Ccs,
       {
+        environment: env,
         regionsAll: regions,
         regionsUnique: regionUnique,
         subjectsAll: subjects,

@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { escape } from '@microsoft/sp-lodash-subset';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
@@ -22,12 +27,6 @@ import StaffRequired from './formComponents/StaffRequired';
 import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
 import ReviewData from './formComponents/ReviewData';
-
-import { sp } from "@pnp/sp";
-import "@pnp/sp/webs";
-import "@pnp/sp/lists";
-import "@pnp/sp/items";
-import { IItemAddResult } from "@pnp/sp/items";
 
 export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
@@ -57,7 +56,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       toggleValue: false
     };
   }
-
   // For testing purposes. Can be removed.
   // public componentDidMount() {
   //   console.log("-------------------------------------------------------------------------");
@@ -159,39 +157,32 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   public SubmitOn = ():boolean => {                              
     const checkJAIDLegth = this.state.offenderJAID.length <= 9 && this.state.offenderJAID != "" ? true : false;
 
-    const staffExtra = ():boolean => {
+    let staffExtra:boolean =  false;
       if(this.state.staffRequired == "Yes") {
-        return this.state.extraStaff ? true : false;
+        staffExtra = this.state.extraStaff ? true : false;
       } else {
-        return true;
+        staffExtra = true;
       }
-    };
 
-    // showStaffFields
+    let staffTime:boolean =  false;    
+    if(this.state.staffRequired == "Yes") {
+      staffTime = this.state.staffTime ? true : false;
+    } else {
+      staffTime = true;
+    }
 
-    const staffTime = ():boolean => {
-      if(this.state.staffRequired == "Yes") {
-        return this.state.staffTime ? true : false;
-      } else {
-        return true;
-      }
-    };
-
-    const disableSubmitButton = false;
-      // this.state.offenderJAID    &&
-      // this.state.dateValue       &&
-      // this.state.timeValue       &&
-      // this.state.regionValue     && 
-      // this.state.subRegionValue  &&
-      // this.state.orderType       &&
-      // this.state.subjectValue    &&
-      // this.state.optionValue     &&
-      // this.state.resolveTime     &&
-      // staffExtra()               && 
-      // staffTime()                && 
-      // checkJAIDLegth ? false : true;  
-
-    return disableSubmitButton;
+    return this.state.offenderJAID    &&
+            this.state.dateValue       &&
+            this.state.timeValue       &&
+            this.state.regionValue     && 
+            this.state.subRegionValue  &&
+            this.state.orderType       &&
+            this.state.subjectValue    &&
+            this.state.optionValue     &&
+            this.state.resolveTime     &&
+            staffExtra                 && 
+            staffTime                  && 
+            checkJAIDLegth ? false : true;
   }
 
   // Set the color styling for the submit button (just styling)
@@ -200,7 +191,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   public render(): React.ReactElement<ICcsProps> {
-
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
@@ -358,26 +348,26 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                         className={ this.colorSetSubmit() }
                         secondaryText="You can review before saving" 
                         disabled={this.SubmitOn()}
-                        // disabled={false}
-                        // onClick={() => alert('Form submitted')}
-                        onClick={async()=>{                        
-                          await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
-                            Title: "User1",
-                            Email: "user@contoso.com",
-                            Jaid: "3243432",
-                            Date: "16/3/2020",
-                            Time: "12:05",
-                            Region: "Baytest",
-                            SubRegion: "Franklin",
-                            OrderType: "Parole",
-                            Subject: "Test subject",
-                            Option: "test option value",
-                            Comment: "this is a test comment for testing purposes.",
-                            VisitRequired: "No",
-                            ResolveTime: "12:50",
-                            StaffRequired: "0",
-                            StaffTime: "5"
-                          });
+                        onClick={async()=>{
+                          this.props.environment == "local" ? console.log("Local Submit") :                         
+                            await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
+                              Title: this.props.userData._displayName,
+                              Email: this.props.userData._email,
+                              Jaid: this.state.offenderJAID,
+                              Date: this.state.dateValue,
+                              Time: this.state.timeValue,
+                              Region: this.state.regionValue,
+                              SubRegion: this.state.subRegionValue,
+                              OrderType: this.state.orderType,
+                              Subject: this.state.subjectValue,
+                              Option: this.state.optionValue,
+                              Comment: this.state.offenderNotes,
+                              VisitRequired: this.state.visitRequired,
+                              ResolveTime: this.state.resolveTime,
+                              StaffRequired: this.state.staffRequired,
+                              ExtraStaff: this.state.extraStaff,
+                              StaffTime: this.state.staffTime
+                            });
                         }}  
                       >
                         Submit Data
@@ -399,8 +389,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
               
               { this.state.toggleValue ? //displays form data (if needed) 
                 <ReviewData
-                  { ...this.props.headings } 
+                  { ...this.props.headings }  
                   { ...this.state } 
+                  env={this.props.environment}
                   user={this.props.userData._displayName} 
                   email={this.props.userData._email}
                 />
