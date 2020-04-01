@@ -28,6 +28,7 @@ const SubRegionDropDown = (props:any) => {
   return (
     <Dropdown 
       required
+      defaultSelectedKey={props.value}
       label={props.heading}
       placeholder={props.placeholderText}
       options={formatterArr} 

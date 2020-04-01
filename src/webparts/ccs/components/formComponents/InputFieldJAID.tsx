@@ -14,7 +14,6 @@ const InputFieldJAID = (props:any) => {
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         styles={{ fieldGroup: { width: 110 } }}
         value={inputValue}
-        // errorMessage="Error message"
         onGetErrorMessage={(value) => {
           return inputValue.length <= 9 ? '' : `Length must be no more than 9. Actual length is ${inputValue.length}.`;
         }}

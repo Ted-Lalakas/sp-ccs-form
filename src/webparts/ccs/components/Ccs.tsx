@@ -12,6 +12,7 @@ import { ICcsProps, ICcsState } from './ICcsProps';
 import { Stack, DatePicker } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { CompoundButton } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
 // Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
@@ -32,9 +33,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
-    console.log("-------------------------------------------------------------------------");
-    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    console.log("-------------------------------------------------------------------------");
+    // console.log("-------------------------------------------------------------------------");
+    // console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+    // console.log("-------------------------------------------------------------------------");
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
@@ -42,11 +43,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       dateValue: "",
       dateValue2: null,
       timeValue: null,
-      regionValue: "",
-      subRegionValue: "",
-      orderType: "",
-      subjectValue: "",
-      optionValue: "",
+      regionValue: null,
+      subRegionValue: null,
+      orderType: null,
+      subjectValue: null,
+      optionValue: null,
       offenderNotes: "",
       visitRequired: "No",
       resolveTime: "",
@@ -64,11 +65,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // }
 
   // For testing purposes. Can be removed.
-  public componentDidUpdate() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // public componentDidUpdate() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -190,7 +191,76 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
+  // Set the color styling for the submit button (just styling)
+  public colorSetReviewSubmit = ():any => {
+    return this.SubmitOn() ? styles.reviewSubmitOff : styles.reviewSubmitOn;
+  }
+
   public render(): React.ReactElement<ICcsProps> {
+    
+    const submitHandler = async () => {
+      if(this.props.environment == "local") {
+        console.log("Local Submit");
+        this.setState({
+          offenderJAID: "",
+          dateValue: "",
+          dateValue2: null,
+          timeValue: null,
+          regionValue: null,
+          subRegionValue: null,
+          orderType: null,
+          subjectValue: null,
+          optionValue: null,
+          offenderNotes: "",
+          visitRequired: "No",
+          resolveTime: "",
+          staffRequired: "No",
+          extraStaff: "",
+          staffTime: "",
+          toggleValue: false
+        });
+      } else {                   
+          await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
+            Title: this.props.userData._displayName,
+            Email: this.props.userData._email,
+            Jaid: this.state.offenderJAID,
+            Date: this.state.dateValue,
+            Time: this.state.timeValue,
+            Region: this.state.regionValue,
+            SubRegion: this.state.subRegionValue,
+            OrderType: this.state.orderType,
+            Subject: this.state.subjectValue,
+            Option: this.state.optionValue,
+            Comment: this.state.offenderNotes,
+            VisitRequired: this.state.visitRequired,
+            ResolveTime: this.state.resolveTime,
+            StaffRequired: this.state.staffRequired,
+            ExtraStaff: this.state.extraStaff,
+            StaffTime: this.state.staffTime
+          });
+
+          this.setState({
+            offenderJAID: "",
+            dateValue: "",
+            dateValue2: null,
+            timeValue: null,
+            regionValue: null,
+            subRegionValue: null,
+            orderType: null,
+            subjectValue: null,
+            optionValue: null,
+            offenderNotes: "",
+            visitRequired: "No",
+            resolveTime: "",
+            staffRequired: "No",
+            extraStaff: "",
+            staffTime: "",
+            toggleValue: false
+          });
+        }
+    };
+
+
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
@@ -246,7 +316,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     heading={this.props.headings.heading_regionalLocation}
                     placeholderText={this.props.headings.placeholder_regionalLocation}
                     changeHandler={this._changeRegionHandler}
-                    regionsUnique={this.props.regionsUnique} 
+                    regionsUnique={this.props.regionsUnique}
+                    value={this.state.regionValue} 
                   />
 
                   <SubRegionDropDown
@@ -256,6 +327,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     changeHandler={this._changeSubRegionHandler} 
                     regionsArray={this.props.regionsAll} 
                     regionValue={this.state.regionValue}
+                    value={this.state.subRegionValue} 
                   />
                 </Stack>
                 </div>
@@ -265,7 +337,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   placeholderText={this.props.headings.placeholder_orderType} 
                   changeHandler={this._changeOrderTypeHandler}
                   orderArray={this.props.ordersAll} 
-                  orderType={this.state.orderType}
+                  value={this.state.orderType} 
                 />
 
                 <div style={{ marginTop: '2em', marginBottom: '2em' }}>  
@@ -275,6 +347,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     placeholderText={this.props.headings.placeholder_subject}
                     changeHandler={this._changeSubjectHandler}
                     subjectArray={this.props.subjectsUnique}
+                    value={this.state.subjectValue} 
                   />
 
                   <OptionDropDown
@@ -284,6 +357,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     changeHandler={this._changeOptionHandler} 
                     callSubjectArray={this.props.subjectsAll} 
                     subjectValue={this.state.subjectValue}
+                    value={this.state.optionValue} 
                   />
                 </Stack>
                 </div>
@@ -292,12 +366,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   <InputFieldNotes 
                     heading={this.props.headings.heading_comment}
                     changeHandler={this._offenderNotesHandler} 
+                    value={this.state.offenderNotes}
                   />
                   
                   <VisitRequired
-                    heading={this.props.headings.heading_visitRequired} 
-                    visitValue={this.state.visitRequired} 
+                    heading={this.props.headings.heading_visitRequired}  
                     changeHandler={this._changeVisitHandler} 
+                    value={this.state.visitRequired}
                   />
 
                   <div style={{ marginTop: '1em' }} className="ms-Grid-row">
@@ -316,9 +391,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   </div> 
 
                   <StaffRequired
-                    heading={this.props.headings.heading_moreStaffBool} 
-                    staffValue={this.state.staffRequired} 
+                    heading={this.props.headings.heading_moreStaffBool}  
                     changeHandler={this._changeStaffHandler} 
+                    value={this.state.staffRequired}
                   />
 
                   { this.state.staffRequired == "Yes" ?    
@@ -345,30 +420,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
                       <CompoundButton 
                         primary 
-                        className={ this.colorSetSubmit() }
+                        className={this.colorSetSubmit()}
                         secondaryText="You can review before saving" 
                         disabled={this.SubmitOn()}
-                        onClick={async()=>{
-                          this.props.environment == "local" ? console.log("Local Submit") :                         
-                            await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
-                              Title: this.props.userData._displayName,
-                              Email: this.props.userData._email,
-                              Jaid: this.state.offenderJAID,
-                              Date: this.state.dateValue,
-                              Time: this.state.timeValue,
-                              Region: this.state.regionValue,
-                              SubRegion: this.state.subRegionValue,
-                              OrderType: this.state.orderType,
-                              Subject: this.state.subjectValue,
-                              Option: this.state.optionValue,
-                              Comment: this.state.offenderNotes,
-                              VisitRequired: this.state.visitRequired,
-                              ResolveTime: this.state.resolveTime,
-                              StaffRequired: this.state.staffRequired,
-                              ExtraStaff: this.state.extraStaff,
-                              StaffTime: this.state.staffTime
-                            });
-                        }}  
+                        onClick={submitHandler}  
                       >
                         Submit Data
                       </CompoundButton>
@@ -388,6 +443,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 </div>
               
               { this.state.toggleValue ? //displays form data (if needed) 
+              <div className={ styles.formDisplayData }> 
                 <ReviewData
                   { ...this.props.headings }  
                   { ...this.state } 
@@ -395,6 +451,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   user={this.props.userData._displayName} 
                   email={this.props.userData._email}
                 />
+                <PrimaryButton 
+                  text="Submit Data"
+                  className={this.colorSetReviewSubmit()}
+                  disabled={this.SubmitOn()}
+                  onClick={submitHandler} 
+                />
+              </div>  
               : null }
 
 {/* */}{/* </div> */}

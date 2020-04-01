@@ -24,6 +24,7 @@ const OrderType = (props:any) => {
     <Stack tokens={{ childrenGap: 15 }}>
       <Dropdown 
         required
+        defaultSelectedKey={props.value}
         placeholder={props.placeholderText}
         label={props.heading}
         options={formatterArr} 
@@ -39,9 +40,10 @@ const OrderType = (props:any) => {
         }} 
       />
 
-      { showTextField ?
+      { showTextField && props.value != null ?
       <TextField 
-      styles={{ fieldGroup: { width: 350 } }}
+        placeholder="Other order type"  
+        styles={{ fieldGroup: { width: 350 } }}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         resizable={true}
         multiline rows={2}

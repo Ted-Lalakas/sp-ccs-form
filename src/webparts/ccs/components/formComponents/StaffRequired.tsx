@@ -13,7 +13,7 @@ const StaffRequired = (props:any) => {
   return (
     <React.Fragment>
       <ChoiceGroup 
-        defaultSelectedKey={props.staffValue} 
+        selectedKey={props.value} 
         options={options} 
         onChange={(ev, option) => props.changeHandler(option.key)} 
         label={props.heading} 
