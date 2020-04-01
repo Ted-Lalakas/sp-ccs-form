@@ -10,77 +10,69 @@ import * as strings from 'CcsWebPartStrings';
 import Ccs from './components/Ccs';
 
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { ICcsProps } from './components/ICcsProps';
 import { ccsRegions } from './mockData/ccsRegions';
 import { ccsCallSubject } from './mockData/ccsCallSubject';
 import { ccsOrderType } from './mockData/ccsOrderType';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
 export interface ICcsWebPartProps {
 }
 
 export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps> {
-  public test: any;
-
   private get _isSharePoint(): boolean {
     return (Environment.type === EnvironmentType.SharePoint || Environment.type === EnvironmentType.ClassicSharePoint);
   }
-
-  private _getListItems(listTitle:string, filter:string): Promise<any[]> {
-    return this.context.spHttpClient.get(
-        this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('${listTitle}')/items?$select=${filter}`, 
-        SPHttpClient.configurations.v1,
-          { 
-            headers: { 'ACCEPT': 'application/json; odata.metadata=none' } 
-          }
-        )
-      .then((response: SPHttpClientResponse) => {
-        return response.json();
-      })
-      .then(jsonResponse => {
-        return jsonResponse.value;
-      }) as Promise<any[]>;
-  }
   
-  public render() {
+  public async render() {
+    let regions:any = null;
+    let subjects:any = null;
+    let orders:any = null;
+    let env:string = "";
+
     if (!this._isSharePoint) {
-      console.log("LOCAL");
-      this.run(ccsRegions,ccsCallSubject,ccsOrderType);
+      // LOCAL
+      env = "local";
+      regions = ccsRegions;
+      subjects = ccsCallSubject;
+      orders = ccsOrderType;
     } else {
-      console.log("ONLINE");
-      this.run(this._getListItems("ccsRegions","Title,subRegion"),this._getListItems("ccsCallSubject","Title,subject"),this._getListItems("ccsOrderType","Title"));
-    }
-  }
+      // ONLINE
+      env = "online";
+      regions = await sp.web.lists.getByTitle("ccsRegions").items.select("Title","subRegion").getAll();
+      subjects = await sp.web.lists.getByTitle("ccsCallSubject").items.select("Title","subject").getAll();
+      orders = await sp.web.lists.getByTitle("ccsOrderType").items.select("Title").getAll();
+    }      
 
-  private async run(regionsData:any, subjectsData:any, ordersData:any) {
-      const regions = await regionsData;
-      const subjects = await subjectsData;
-      const orders = await ordersData;
+    // Regions: Grab all titles and set an array of unique items
+    const regionTitleAll = [...regions.map(x => x.Title)];
+    const regionUnique = regionTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
 
-      // Regions: Grab all titles and set an array of unique items
-      const regionTitleAll = [...regions.map(x => x.Title)];
-	    const regionUnique = regionTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
+    // Subjects: Grab all titles and set an array of unique items
+    const subjectTitleAll = [...subjects.map(x => x.Title)];
+    const subjectUnique = subjectTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
 
-      // Subjects: Grab all titles and set an array of unique items
-      const subjectTitleAll = [...subjects.map(x => x.Title)];
-      const subjectUnique = subjectTitleAll.reduce((unique, item) => unique.includes(item) ? unique : [...unique, item], []);
+    // Simplify the array going through
+    const orderUnique = [...orders.map(x => x.Title)];
 
-      const orderUnique = [...orders.map(x => x.Title)];
-
-      const element: React.ReactElement<ICcsProps> = React.createElement(
-        Ccs,
-        {
-          regionsAll: regions,
-          regionsUnique: regionUnique,
-          subjectsAll: subjects,
-          subjectsUnique: subjectUnique,
-          ordersAll: orderUnique,
-          context: this.context,
-          userData: this.context.pageContext.user,
-          headings: this.properties
-        }
-      );
-      ReactDom.render(element, this.domElement);
+    const element: React.ReactElement<ICcsProps> = React.createElement(
+      Ccs,
+      {
+        environment: env,
+        regionsAll: regions,
+        regionsUnique: regionUnique,
+        subjectsAll: subjects,
+        subjectsUnique: subjectUnique,
+        ordersAll: orderUnique,
+        userData: this.context.pageContext.user,
+        headings: this.properties
+      }
+    );
+    ReactDom.render(element, this.domElement);
   }
 
   protected onDispose(): void {

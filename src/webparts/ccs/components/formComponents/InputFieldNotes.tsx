@@ -5,6 +5,7 @@ const InputFieldNotes = (props:any) => {
   return (
     <React.Fragment>
       <TextField
+        defaultValue={props.value}
         label={props.heading}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         styles={{ fieldGroup: { maxWidth: 350 } }}

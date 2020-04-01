@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { escape } from '@microsoft/sp-lodash-subset';
 
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
 import { Stack, DatePicker } from 'office-ui-fabric-react';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { CompoundButton } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
 // Custom components
 import InputFieldJAID from './formComponents/InputFieldJAID';
@@ -27,9 +33,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   constructor(props:any) {
     super(props);
 
-    console.log("-------------------------------------------------------------------------");
-    console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
-    console.log("-------------------------------------------------------------------------");
+    // console.log("-------------------------------------------------------------------------");
+    // console.log("[ProcurementNavigator.tsx] CONSTRUCTOR",this.props);
+    // console.log("-------------------------------------------------------------------------");
 
     // State handles variable changes and will be used by submit to store the data
     this.state = {
@@ -37,11 +43,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       dateValue: "",
       dateValue2: null,
       timeValue: null,
-      regionValue: "",
-      subRegionValue: "",
-      orderType: "",
-      subjectValue: "",
-      optionValue: "",
+      regionValue: null,
+      subRegionValue: null,
+      orderType: null,
+      subjectValue: null,
+      optionValue: null,
       offenderNotes: "",
       visitRequired: "No",
       resolveTime: "",
@@ -51,7 +57,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       toggleValue: false
     };
   }
-
   // For testing purposes. Can be removed.
   // public componentDidMount() {
   //   console.log("-------------------------------------------------------------------------");
@@ -60,11 +65,11 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // }
 
   // For testing purposes. Can be removed.
-  public componentDidUpdate() {
-    console.log("-------------------------------------------------------------------------");
-    console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
-    console.log("-------------------------------------------------------------------------");
-  }
+  // public componentDidUpdate() {
+  //   console.log("-------------------------------------------------------------------------");
+  //   console.log('[Ccs.tsx] componentDidUpdate - STATE',this.state);
+  //   console.log("-------------------------------------------------------------------------");
+  // }
 
   // JAID
   public _offenderJAIDHandler = (value:string) => {
@@ -153,39 +158,32 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   public SubmitOn = ():boolean => {                              
     const checkJAIDLegth = this.state.offenderJAID.length <= 9 && this.state.offenderJAID != "" ? true : false;
 
-    const staffExtra = ():boolean => {
+    let staffExtra:boolean =  false;
       if(this.state.staffRequired == "Yes") {
-        return this.state.extraStaff ? true : false;
+        staffExtra = this.state.extraStaff ? true : false;
       } else {
-        return true;
+        staffExtra = true;
       }
-    };
 
-    // showStaffFields
+    let staffTime:boolean =  false;    
+    if(this.state.staffRequired == "Yes") {
+      staffTime = this.state.staffTime ? true : false;
+    } else {
+      staffTime = true;
+    }
 
-    const staffTime = ():boolean => {
-      if(this.state.staffRequired == "Yes") {
-        return this.state.staffTime ? true : false;
-      } else {
-        return true;
-      }
-    };
-
-    const disableSubmitButton = false;
-      // this.state.offenderJAID    &&
-      // this.state.dateValue       &&
-      // this.state.timeValue       &&
-      // this.state.regionValue     && 
-      // this.state.subRegionValue  &&
-      // this.state.orderType       &&
-      // this.state.subjectValue    &&
-      // this.state.optionValue     &&
-      // this.state.resolveTime     &&
-      // staffExtra()               && 
-      // staffTime()                && 
-      // checkJAIDLegth ? false : true;  
-
-    return disableSubmitButton;
+    return this.state.offenderJAID    &&
+            this.state.dateValue       &&
+            this.state.timeValue       &&
+            this.state.regionValue     && 
+            this.state.subRegionValue  &&
+            this.state.orderType       &&
+            this.state.subjectValue    &&
+            this.state.optionValue     &&
+            this.state.resolveTime     &&
+            staffExtra                 && 
+            staffTime                  && 
+            checkJAIDLegth ? false : true;
   }
 
   // Set the color styling for the submit button (just styling)
@@ -193,218 +191,75 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     return this.SubmitOn() ? styles.submitButtonOff : styles.submitButtonOn;
   }
 
-  
-  // private getListItemEntityTypeName(): Promise<string> {
-  //   return new Promise<string>((resolve: (listItemEntityTypeName: string) => void, reject: (error: any) => void): void => {
-  //     if (this.listItemEntityTypeName) {
-  //       console.log("Resolve1");
-  //       console.log(this.listItemEntityTypeName);
-  //       resolve(this.listItemEntityTypeName);
-  //       return;
-  //     }
-
-  //     this.props.context.spHttpClient.get(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')/items`,
-  //       SPHttpClient.configurations.v1,
-  //       {
-  //         headers: {
-  //           'Accept': 'application/json;odata=nometadata',
-  //           'odata-version': ''
-  //         }
-  //       })
-  //       .then((response: SPHttpClientResponse): Promise<{ ListItemEntityTypeFullName: string }> => {
-  //         console.log("response1");
-  //         console.log(response.json());
-  //         return response.json();
-  //       }, (error: any): void => {
-  //         reject(error);
-  //       })
-  //       .then((response: { ListItemEntityTypeFullName: string }): void => {
-  //         this.listItemEntityTypeName = response.ListItemEntityTypeFullName;
-  //         console.log("Resolve");
-  //         console.log(this.listItemEntityTypeName);
-  //         resolve(this.listItemEntityTypeName);
-  //       });
-  //   });
-  // }
-
-  // private createItem(): Promise<string> {
-  //   this.getListItemEntityTypeName()
-  //     .then((listItemEntityTypeName: string): Promise<SPHttpClientResponse> => {
-  //       console.log(listItemEntityTypeName);
-  //       const body: string = JSON.stringify({
-  //         '__metadata': {
-  //           'type': "SP.Data.test1.ListItem"
-  //         },
-  //         'Title': "User1"
-  //       });
-  //       return this.props.context.spHttpClient.post(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')/items`,
-  //         SPHttpClient.configurations.v1,
-  //         {
-  //           headers: {
-  //             'Accept': 'application/json;odata=nometadata',
-  //             'Content-type': 'application/json;odata=verbose',
-  //             'odata-version': ''
-  //           },
-  //           body: body
-  //         });
-  //     })
-  //     .then((response: SPHttpClientResponse): Promise<any> => {
-  //       return response.json();
-  //     })
-  //     .then((item: any): void => {
-  //       console.log('successfully created');
-  //       console.log(item);
-  //     }, (error: any): void => {
-  //       console.log('Error while creating the item: ' + error);
-  //     });
-  // }
-
-
-  // private _postListItems(): Promise<any[]> {
-  //   console.log("TEST");
-  //   const opt: any = { 
-  //     headers: { 'ACCEPT': 'application/json; odata.metadata=none' }, 
-  //     '__metadata': {
-  //       'type': "SP.Data.test1.ListItem"
-  //     },
-  //     "Title": "MyItem"
-  //   } 
-
-  //   return this.context.spHttpClient.post(
-  //       this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')`, 
-  //       SPHttpClient.configurations.v1, opt
-  //       )
-  //     .then((response: SPHttpClientResponse) => {
-  //       console.log(`Status code: ${response.status}`);
-  //       console.log(`Status text: ${response.statusText}`);
-  //     })
-  //     .then(jsonResponse => {
-  //       console.log(jsonResponse);
-  //     }) as Promise<any[]>;
-  // }
-
-
-
-  // private _makePOSTRequest(): Promise<void> {
-
-    // const spOpts: ISPHttpClientOptions = {
-    //   body: `{         
-    //     Title: "User1",
-    //     Email: "user@contoso.com",
-    //     Jaid: "3243432",
-    //     Date: "16/3/2020",
-    //     Time: "12:05",
-    //     Region: "Baytest",
-    //     SubRegion: "Franklin",
-    //     OrderType: "Parole",
-    //     Subject: "Test subject",
-    //     Option: "test option value",
-    //     Comment: "this is a test comment for testing purposes.",
-    //     VisitRequired: "No",
-    //     ResolveTime: "12:50",
-    //     StaffRequired: "0",
-    //     StaffTime: "5"
-    //   }`
-    // };
-
-    // const opt: any = { 
-    //   headers: { 'ACCEPT': 'application/json; odata.metadata=none' }, 
-    //   body: { 
-    //     Title: "User1",
-    //     Email: "user@contoso.com",
-    //     Jaid: "3243432",
-    //     Date: "16/3/2020",
-    //     Time: "12:05",
-    //     Region: "Baytest",
-    //     SubRegion: "Franklin",
-    //     OrderType: "Parole",
-    //     Subject: "Test subject",
-    //     Option: "test option value",
-    //     Comment: "this is a test comment for testing purposes.",
-    //     VisitRequired: "No",
-    //     ResolveTime: "12:50",
-    //     StaffRequired: "0",
-    //     StaffTime: "5"
-    //   } 
-    // };
-
-    // let promise: Promise<void> = new Promise<void>((resolve, reject) => {
-
-    // });
-
-
-
-
-    // this.props.context.spHttpClient.post(this.props.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('ccsFormSubmit')`, SPHttpClient.configurations.v1, opt)
-    //   .then((response: SPHttpClientResponse) => {
-    //     // Access properties of the response object. 
-    //     console.log(`Status code: ${response.status}`);
-    //     console.log(`Status text: ${response.statusText}`);
-
-    //     //response.json() returns a promise so you get access to the json in the resolve callback.
-    //     response.json().then((responseJSON: JSON) => {
-    //       console.log(responseJSON);
-    //     });
-    //   });
-
-
-
-
-
-  //     private _getListItems(listTitle:string, filter:string): Promise<any[]> {
-  //       return this.context.spHttpClient.get(
-  //           this.context.pageContext.web.absoluteUrl + `/_api/web/lists/getByTitle('${listTitle}')/items?$select=${filter}`, 
-  //           SPHttpClient.configurations.v1,
-  //             { 
-  //               headers: { 'ACCEPT': 'application/json; odata.metadata=none' } 
-  //             }
-  //           )
-  //         .then((response: SPHttpClientResponse) => {
-  //           return response.json();
-  //         })
-  //         .then(jsonResponse => {
-  //           return jsonResponse.value;
-  //         }) as Promise<any[]>;
-  //     }
-  // }
-
-  // public _submitFormHandler = (listname:string):void => {
-  //   let submitValues = {
-  //     Title: "User1",
-  //     Email: "user@contoso.com",
-  //     Jaid: "3243432",
-  //     Date: "16/3/2020",
-  //     Time: "12:05",
-  //     Region: "Baytest",
-  //     SubRegion: "Franklin",
-  //     OrderType: "Parole",
-  //     Subject: "Test subject",
-  //     Option: "test option value",
-  //     Comment: "this is a test comment for testing purposes.",
-  //     VisitRequired: "No",
-  //     ResolveTime: "12:50",
-  //     StaffRequired: "0",
-  //     StaffTime: "5"
-  //   };
-
-    // let requestdatastr = JSON.stringify(submitValues);
-    // requestdatastr = requestdatastr.substring(1, requestdatastr .length-1);
-    // console.log(requestdatastr);
-
-    // let requestlistItem: string = JSON.stringify({
-    //   '__metadata': {'type': this.props.context.getListItemType(listname)}
-    //   });
-
-    // requestlistItem = requestlistItem.substring(1, requestlistItem .length-1);
-    // requestlistItem = '{' + requestlistItem + ',' + requestdatastr + '}';
-    // console.log(requestlistItem);
-
-  // }
+  // Set the color styling for the submit button (just styling)
+  public colorSetReviewSubmit = ():any => {
+    return this.SubmitOn() ? styles.reviewSubmitOff : styles.reviewSubmitOn;
+  }
 
   public render(): React.ReactElement<ICcsProps> {
-    // console.log(this.props.context);
+    
+    const submitHandler = async () => {
+      if(this.props.environment == "local") {
+        console.log("Local Submit");
+        this.setState({
+          offenderJAID: "",
+          dateValue: "",
+          dateValue2: null,
+          timeValue: null,
+          regionValue: null,
+          subRegionValue: null,
+          orderType: null,
+          subjectValue: null,
+          optionValue: null,
+          offenderNotes: "",
+          visitRequired: "No",
+          resolveTime: "",
+          staffRequired: "No",
+          extraStaff: "",
+          staffTime: "",
+          toggleValue: false
+        });
+      } else {                   
+          await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
+            Title: this.props.userData._displayName,
+            Email: this.props.userData._email,
+            Jaid: this.state.offenderJAID,
+            Date: this.state.dateValue,
+            Time: this.state.timeValue,
+            Region: this.state.regionValue,
+            SubRegion: this.state.subRegionValue,
+            OrderType: this.state.orderType,
+            Subject: this.state.subjectValue,
+            Option: this.state.optionValue,
+            Comment: this.state.offenderNotes,
+            VisitRequired: this.state.visitRequired,
+            ResolveTime: this.state.resolveTime,
+            StaffRequired: this.state.staffRequired,
+            ExtraStaff: this.state.extraStaff,
+            StaffTime: this.state.staffTime
+          });
 
-    // console.log(this.props.regionsOnline);
+          this.setState({
+            offenderJAID: "",
+            dateValue: "",
+            dateValue2: null,
+            timeValue: null,
+            regionValue: null,
+            subRegionValue: null,
+            orderType: null,
+            subjectValue: null,
+            optionValue: null,
+            offenderNotes: "",
+            visitRequired: "No",
+            resolveTime: "",
+            staffRequired: "No",
+            extraStaff: "",
+            staffTime: "",
+            toggleValue: false
+          });
+        }
+    };
+
 
     return (
       <div className={ styles.ccs }>
@@ -461,7 +316,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     heading={this.props.headings.heading_regionalLocation}
                     placeholderText={this.props.headings.placeholder_regionalLocation}
                     changeHandler={this._changeRegionHandler}
-                    regionsUnique={this.props.regionsUnique} 
+                    regionsUnique={this.props.regionsUnique}
+                    value={this.state.regionValue} 
                   />
 
                   <SubRegionDropDown
@@ -471,6 +327,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     changeHandler={this._changeSubRegionHandler} 
                     regionsArray={this.props.regionsAll} 
                     regionValue={this.state.regionValue}
+                    value={this.state.subRegionValue} 
                   />
                 </Stack>
                 </div>
@@ -480,7 +337,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   placeholderText={this.props.headings.placeholder_orderType} 
                   changeHandler={this._changeOrderTypeHandler}
                   orderArray={this.props.ordersAll} 
-                  orderType={this.state.orderType}
+                  value={this.state.orderType} 
                 />
 
                 <div style={{ marginTop: '2em', marginBottom: '2em' }}>  
@@ -490,6 +347,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     placeholderText={this.props.headings.placeholder_subject}
                     changeHandler={this._changeSubjectHandler}
                     subjectArray={this.props.subjectsUnique}
+                    value={this.state.subjectValue} 
                   />
 
                   <OptionDropDown
@@ -499,6 +357,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     changeHandler={this._changeOptionHandler} 
                     callSubjectArray={this.props.subjectsAll} 
                     subjectValue={this.state.subjectValue}
+                    value={this.state.optionValue} 
                   />
                 </Stack>
                 </div>
@@ -507,12 +366,13 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   <InputFieldNotes 
                     heading={this.props.headings.heading_comment}
                     changeHandler={this._offenderNotesHandler} 
+                    value={this.state.offenderNotes}
                   />
                   
                   <VisitRequired
-                    heading={this.props.headings.heading_visitRequired} 
-                    visitValue={this.state.visitRequired} 
+                    heading={this.props.headings.heading_visitRequired}  
                     changeHandler={this._changeVisitHandler} 
+                    value={this.state.visitRequired}
                   />
 
                   <div style={{ marginTop: '1em' }} className="ms-Grid-row">
@@ -531,9 +391,9 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   </div> 
 
                   <StaffRequired
-                    heading={this.props.headings.heading_moreStaffBool} 
-                    staffValue={this.state.staffRequired} 
+                    heading={this.props.headings.heading_moreStaffBool}  
                     changeHandler={this._changeStaffHandler} 
+                    value={this.state.staffRequired}
                   />
 
                   { this.state.staffRequired == "Yes" ?    
@@ -560,12 +420,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
                       <CompoundButton 
                         primary 
-                        className={ this.colorSetSubmit() }
+                        className={this.colorSetSubmit()}
                         secondaryText="You can review before saving" 
                         disabled={this.SubmitOn()}
-                        // disabled={false}
-                        // onClick={() => alert('Form submitted')}
-                        onClick={()=>{console.log("Test")}}  
+                        onClick={submitHandler}  
                       >
                         Submit Data
                       </CompoundButton>
@@ -585,12 +443,21 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 </div>
               
               { this.state.toggleValue ? //displays form data (if needed) 
+              <div className={ styles.formDisplayData }> 
                 <ReviewData
-                  { ...this.props.headings } 
+                  { ...this.props.headings }  
                   { ...this.state } 
+                  env={this.props.environment}
                   user={this.props.userData._displayName} 
                   email={this.props.userData._email}
                 />
+                <PrimaryButton 
+                  text="Submit Data"
+                  className={this.colorSetReviewSubmit()}
+                  disabled={this.SubmitOn()}
+                  onClick={submitHandler} 
+                />
+              </div>  
               : null }
 
 {/* */}{/* </div> */}

@@ -1,43 +1,10 @@
 import * as React from 'react';
 import styles from '../Ccs.module.scss';
-import { PrimaryButton } from 'office-ui-fabric-react';
 
 const ReviewData = (props:any) => {
-  // Check if Submit button should be enabled
-  const SubmitOn = ():boolean => {
-    const otherValueSet:boolean = props.optionValue != "Other" 
-                                    ? true 
-                                    : props.optionValue == "Other" && props.optionOtherValue != "" 
-                                      ? true 
-                                      : false;
 
-    const checkJAIDLegth = props.offenderJAID.length <= 9 ? true : false;
-
-    const disableSubmitButton = 
-      props.offenderJAID    &&
-      props.dateValue       &&
-      props.timeValue       &&
-      props.regionValue     && 
-      props.subRegionValue  &&
-      props.orderType       &&
-      props.subjectValue    &&
-      props.optionValue     &&
-      props.resolveTime     &&
-      props.extraStaff      &&
-      props.staffTime       &&
-      checkJAIDLegth        && 
-      otherValueSet ? false : true;  
-    return disableSubmitButton;
-  };
-
-  // Set the color styling for the submit button (just styling)
-  const colorSetSubmit = ():any => {
-    return SubmitOn() ? styles.reviewSubmitOff : styles.reviewSubmitOn;
-  };
-
-  return (
-    <div className={ styles.formDisplayData }>  
-      
+  return (     
+    <React.Fragment>
       <div className={styles.reviewHead} >            
         <h2>{props.heading_dutyDirector}</h2>
         <span>{props.user} ({props.email})</span>
@@ -119,14 +86,7 @@ const ReviewData = (props:any) => {
           </div>
         </React.Fragment>
         : null }
-
-      <PrimaryButton 
-        className={ colorSetSubmit() }
-        text="Submit Data" 
-        onClick={() => alert("Its clicked!")}  
-        disabled={SubmitOn()} 
-      />
-    </div>   
+    </React.Fragment>
   );
 };
 
