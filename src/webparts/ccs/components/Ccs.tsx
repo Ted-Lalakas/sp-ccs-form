@@ -291,7 +291,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   onSelectDate={this._onFormatDate}
                   value={this.state.dateValue2!}
                   allowTextInput={false}
-                  isRequired={true}
                 />
               </Stack>
 
