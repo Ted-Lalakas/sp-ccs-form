@@ -21,9 +21,9 @@ const TimeComponent = (props:any) => {
   const [showTime, setShowTime] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }} >
+    <React.Fragment>
       <PrimaryButton
-        className={ props.timeValue ? styles.timeButton : null }  
+        className={ props.timeValue ? styles.timeButtonSet : styles.timeButtonUnset }  
         onClick={() => setShowTime(!showTime)}
         toggle
         checked={showTime}
@@ -56,7 +56,7 @@ const TimeComponent = (props:any) => {
         />
       </div>
     : null }
-    </div>
+    </React.Fragment>
   );
 };
 

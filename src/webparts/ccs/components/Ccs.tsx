@@ -9,22 +9,20 @@ import "@pnp/sp/items";
 import styles from './Ccs.module.scss';
 import { ICcsProps, ICcsState } from './ICcsProps';
 
-import { Stack, DatePicker } from 'office-ui-fabric-react';
+// Fabric Components
+import { Stack, DatePicker, CompoundButton, PrimaryButton } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import { CompoundButton } from 'office-ui-fabric-react';
-import { PrimaryButton } from 'office-ui-fabric-react';
+import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/ChoiceGroup';
 
-// Custom components
+// Custom Components
 import InputFieldJAID from './formComponents/InputFieldJAID';
 import TimeComponent from './formComponents/TimeComponent';
 import RegionDropDown from './formComponents/RegionSelection/RegionDropDown';
 import SubRegionDropDown from './formComponents/RegionSelection/SubRegionDropDown';
 import OrderType from './formComponents/OrderType';
-import VisitRequired from './formComponents/VisitRequired';
 import SubjectDropDown from './formComponents/IssuesInformation/SubjectDropDown';
 import OptionDropDown from './formComponents/IssuesInformation/OptionDropDown';
-import InputFieldNotes from './formComponents/InputFieldNotes';
-import StaffRequired from './formComponents/StaffRequired';
 import ExtraStaff from './formComponents/ExtraStaff';
 import StaffTime from './formComponents/StaffTime';
 import ReviewData from './formComponents/ReviewData';
@@ -197,10 +195,20 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   }
 
   public render(): React.ReactElement<ICcsProps> {
+
+    const optionsVisitRequired: IChoiceGroupOption[] = [
+      { key: 'Yes', text: 'Yes', iconProps: { iconName: 'Car' } },
+      { key: 'No', text: 'No', iconProps: { iconName: 'Telemarketer' } }
+    ];
+
+    const optionsStaffRequired: IChoiceGroupOption[] = [
+      { key: 'Yes', text: 'Yes', iconProps: { iconName: 'Group' } },
+      { key: 'No', text: 'No', iconProps: { iconName: 'BlockContact' } }
+    ];
     
     const submitHandler = async () => {
       if(this.props.environment == "local") {
-        console.log("Local Submit");
+        console.log("Local Submit: ");
         this.setState({
           offenderJAID: "",
           dateValue: "",
@@ -260,7 +268,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
         }
     };
 
-
     return (
       <div className={ styles.ccs }>
         <div className={ styles.container }>
@@ -294,22 +301,20 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 />
               </Stack>
 
-                <div style={{ marginTop: '1em' }} className="ms-Grid-row">
-                  <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg4">
+                <div style={{ marginTop: '2em' }} >
                     <TimeComponent 
                       timeValue={this.state.timeValue} 
                       changeHandler={this._changeTimeHandler} 
                       heading={this.props.headings.heading_timeofCall}
                       />
-                  </div>
                   { this.state.timeValue ?
-                  <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg8">
+                  <div className={styles.timeSetHeaderWrap}>
                     <h3 className={styles.timeFieldLabel}>Time set: {this.state.timeValue}</h3>
                   </div>
                   : null }
                 </div>      
 
-                <div style={{ marginTop: '3em', marginBottom: '2em' }}>  
+                <div style={{ marginTop: '2em', marginBottom: '2em' }}>  
                 <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }> 
                   <RegionDropDown 
                     heading={this.props.headings.heading_regionalLocation}
@@ -362,37 +367,40 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 </div>
 
                 <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
-                  <InputFieldNotes 
-                    heading={this.props.headings.heading_comment}
-                    changeHandler={this._offenderNotesHandler} 
-                    value={this.state.offenderNotes}
-                  />
-                  
-                  <VisitRequired
-                    heading={this.props.headings.heading_visitRequired}  
-                    changeHandler={this._changeVisitHandler} 
-                    value={this.state.visitRequired}
+                  <TextField
+                    defaultValue={this.state.offenderNotes}
+                    label={this.props.headings.heading_comment}
+                    onChange={(ev, newValue) => this._offenderNotesHandler(newValue)}
+                    styles={{ fieldGroup: { maxWidth: 350 } }}
+                    resizable={true}
+                    multiline rows={6}
                   />
 
-                  <div style={{ marginTop: '1em' }} className="ms-Grid-row">
-                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                  <ChoiceGroup 
+                    selectedKey={this.state.visitRequired} 
+                    label={this.props.headings.heading_visitRequired} 
+                    options={optionsVisitRequired} 
+                    onChange={(ev, option) => this._changeVisitHandler(option.key)} 
+                  />
+
+                  <div style={{ marginTop: '2em', marginBottom: '1em' }} >
                       <TimeComponent 
                         timeValue={this.state.resolveTime}
                         changeHandler={this._changeResolveTimeHandler}
                         heading={this.props.headings.heading_resolveTime}
                         />
-                    </div>
                     { this.state.resolveTime ?
-                    <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                    <div className={styles.timeSetHeaderWrap}>
                       <h3 className={styles.timeFieldLabel}>Time set: {this.state.resolveTime}</h3>
                     </div>
                     : null }
                   </div> 
 
-                  <StaffRequired
-                    heading={this.props.headings.heading_moreStaffBool}  
-                    changeHandler={this._changeStaffHandler} 
-                    value={this.state.staffRequired}
+                  <ChoiceGroup 
+                    selectedKey={this.state.staffRequired} 
+                    label={this.props.headings.heading_moreStaffBool} 
+                    options={optionsStaffRequired} 
+                    onChange={(ev, option) => this._changeStaffHandler(option.key)} 
                   />
 
                   { this.state.staffRequired == "Yes" ?    
