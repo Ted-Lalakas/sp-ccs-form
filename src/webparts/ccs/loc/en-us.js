@@ -7,9 +7,10 @@ define([], function() {
     "GroupReviewForm": "Review Form Data",
     "GroupFormFields": "Form Field Titles and placeholder text",
     "GroupFormFields2": "Form Field Titles and placeholder text",
+    "GroupSubmitSuccess": "Buttons and Success Message",
     "TitleFieldLabel": "Main Title",
     "DescriptionFieldLabel": "Description Field",
-    "DutyDirectorLabel": "Duty Director",
+    "DutyDirectorLabel": "Duty Director Header",
     "JaidFieldLabel": "JAID",
     "RegionalOfficeLocation": "Regional Location",
     "SubRegion": "Managed From",
@@ -23,6 +24,11 @@ define([], function() {
     "ResolvedTimeLabel": "DD Resolve Time",
     "MoreStaffRequiredLabel": "Staff Required",
     "ExtraStaffLabel": "Number of staff",
-    "StaffTimeLabel": "Time Spent by Staff"
+    "StaffTimeLabel": "Time Spent by Staff",
+    "ReviewFormToggle": "Review Form Toggle",
+    "SuccessMessage": "Form has been submitted",
+    "SubmitButton1": "Submit button main",
+    "SubmitButton1Extra": "Submit button extra text",
+    "SubmitButton2": "Submit button in review",
   }
 });

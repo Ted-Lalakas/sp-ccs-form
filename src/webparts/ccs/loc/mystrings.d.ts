@@ -6,6 +6,7 @@ declare interface ICcsWebPartStrings {
   GroupReviewForm: string;
   GroupFormFields: string;
   GroupFormFields2: string;
+  GroupSubmitSuccess: string;
   TitleFieldLabel: string;
   DescriptionFieldLabel: string;
   DutyDirectorLabel: string;
@@ -23,6 +24,10 @@ declare interface ICcsWebPartStrings {
   MoreStaffRequiredLabel: string;
   ExtraStaffLabel: string;
   StaffTimeLabel: string;
+  ReviewFormToggle: string;
+  SubmitButton1: string;
+  SubmitButton1Extra: string;
+  SubmitButton2: string;
 }
 
 declare module 'CcsWebPartStrings' {

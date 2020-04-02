@@ -185,7 +185,10 @@
       }
     
       .reviewToggle {
-        text-align: right;
+        // background-color: darken($ms-color-themeLight, 2%);
+        display: inline-block;
+        // padding: 0.2em 2em 1em 2em;
+        // border: 1px solid darken($ms-color-themeLight, 4%);
       }
     
       .reviewHead {

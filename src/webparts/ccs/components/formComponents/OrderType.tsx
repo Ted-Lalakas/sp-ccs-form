@@ -42,7 +42,7 @@ const OrderType = (props:any) => {
 
       { showTextField && props.value != null ?
       <TextField 
-        placeholder="Other order type"  
+        placeholder={props.placeholderText}  
         styles={{ fieldGroup: { width: 350 } }}
         onChange={(ev, newValue) => props.changeHandler(newValue)}
         resizable={true}

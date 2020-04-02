@@ -92,7 +92,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // Region Drop-down
   public _changeRegionHandler = (value:string) => {
     this.setState({ regionValue: value });
-    this.setState({ subRegionValue: "" });
+    this.setState({ subRegionValue: null });
   }
 
   // Sub-Region Drop-Down
@@ -108,7 +108,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
   // Subject Drop-down
   public _changeSubjectHandler = (value:string) => {
     this.setState({ subjectValue: value });
-    this.setState({ optionValue: "" });
+    this.setState({ optionValue: null });
   }
   
   // Option Drop-down
@@ -448,18 +448,18 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                       <CompoundButton 
                         primary 
                         className={this.colorSetSubmit()}
-                        secondaryText="You can review before saving" 
+                        secondaryText={this.props.headings.SubmitButton1Extra} 
                         disabled={this.SubmitOn()}
                         onClick={submitHandler}  
                       >
-                        Submit Data
+                        {this.props.headings.SubmitButton1}
                       </CompoundButton>
 
                     </div>
                     <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
                       <Toggle 
                         className={ styles.reviewToggle }
-                        label="Review Form Data" 
+                        label={this.props.headings.ReviewFormToggle} 
                         checked={this.state.toggleValue}
                         onText="Show" 
                         offText="Hide" 
@@ -479,7 +479,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                   email={this.props.userData._email}
                 />
                 <PrimaryButton 
-                  text="Submit Data"
+                  text={this.props.headings.SubmitButton2}
                   className={this.colorSetReviewSubmit()}
                   disabled={this.SubmitOn()}
                   onClick={submitHandler} 

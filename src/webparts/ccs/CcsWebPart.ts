@@ -186,8 +186,25 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
             {
               groupName: strings.GroupReviewForm,
               groupFields: [
+                PropertyPaneTextField('ReviewFormToggle', {
+                  label: strings.ReviewFormToggle
+                }),
                 PropertyPaneTextField('heading_dutyDirector', {
                   label: strings.DutyDirectorLabel
+                })
+              ]
+            },
+            {
+              groupName: strings.GroupSubmitSuccess,
+              groupFields: [
+                PropertyPaneTextField('SubmitButton1', {
+                  label: strings.SubmitButton1
+                }),
+                PropertyPaneTextField('SubmitButton1Extra', {
+                  label: strings.SubmitButton1Extra
+                }),
+                PropertyPaneTextField('SubmitButton2', {
+                  label: strings.SubmitButton2
                 })
               ]
             }

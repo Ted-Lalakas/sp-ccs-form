@@ -30,7 +30,7 @@
       "placeholder_dateField": "Click on the field to select a date",
       "heading_timeofCall": "Time of Call",
       "heading_orderType": "Order Type",
-      "placeholder_orderType": "Select an option",
+      "placeholder_orderType": "Other order type",
       "heading_subject": "Call Subject",
       "placeholder_subject": "Select an option",
       "heading_option": "Issue / Activity",
@@ -41,7 +41,11 @@
       "heading_moreStaffBool": "Additional Staff Required",
       "heading_extraStaff": "Number of Staff",
       "heading_staffTime": "Time Spent by Additional Staff",
-      "group2": { "default": "Review Form Data" }
+      "group2": { "default": "Review Form" },
+      "ReviewFormToggle": "Review Form",
+      "SubmitButton1": "Submit Form",
+      "SubmitButton1Extra": "You can review before saving",
+      "SubmitButton2": "Submit Form"
     }
   }]
 }
