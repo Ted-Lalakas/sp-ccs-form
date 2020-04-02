@@ -27,6 +27,14 @@ export default class CcsWebPart extends BaseClientSideWebPart <ICcsWebPartProps>
   private get _isSharePoint(): boolean {
     return (Environment.type === EnvironmentType.SharePoint || Environment.type === EnvironmentType.ClassicSharePoint);
   }
+
+  public async onInit(): Promise<void> {
+    return super.onInit().then(_ => {  
+      sp.setup({
+        spfxContext: this.context
+      });
+    });
+  }
   
   public async render() {
     let regions:any = null;
