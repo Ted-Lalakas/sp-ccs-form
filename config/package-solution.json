@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "ccs-after-hours-activity-form-client-side-solution",
-    "id": "532f285a-cefd-4571-96a5-a9db83d58801",
-    "version": "1.6.0.0",
+    "id": "532f285a-cefd-4571-96a5-a9db83d58802",
+    "version": "1.7.0.0",
     "includeClientSideAssets": true,
     "isDomainIsolated": false
   },
