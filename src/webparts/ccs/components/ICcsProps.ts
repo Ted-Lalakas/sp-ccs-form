@@ -21,11 +21,12 @@ export interface ICcsState {
   orderType: string;
   offenderNotes: string;
   visitRequired: string;
-  toggleValue: boolean;
   subjectValue: string;
   optionValue: string;
   staffRequired: string;
   resolveTime: string;
   extraStaff: string;
   staffTime: string;
+  toggleValue: boolean;
+  successMessage: boolean;
 }

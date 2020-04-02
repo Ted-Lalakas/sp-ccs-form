@@ -52,7 +52,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       staffRequired: "No",
       extraStaff: "",
       staffTime: "",
-      toggleValue: false
+      toggleValue: false,
+      successMessage: false
     };
   }
   // For testing purposes. Can be removed.
@@ -152,6 +153,10 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     this.setState({ toggleValue: !this.state.toggleValue });
   }
 
+  public _successMessageHandler = () => {
+    this.setState({ successMessage: !this.state.successMessage });
+  }
+
   // Check if Submit button should be enabled
   public SubmitOn = ():boolean => {                              
     const checkJAIDLegth = this.state.offenderJAID.length <= 9 && this.state.offenderJAID != "" ? true : false;
@@ -170,19 +175,18 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       staffTime = true;
     }
 
-    // return this.state.offenderJAID    &&
-    //         this.state.dateValue       &&
-    //         this.state.timeValue       &&
-    //         this.state.regionValue     && 
-    //         this.state.subRegionValue  &&
-    //         this.state.orderType       &&
-    //         this.state.subjectValue    &&
-    //         this.state.optionValue     &&
-    //         this.state.resolveTime     &&
-    //         staffExtra                 && 
-    //         staffTime                  && 
-    //         checkJAIDLegth ? false : true;
-    return false;
+    return this.state.offenderJAID    &&
+            this.state.dateValue       &&
+            this.state.timeValue       &&
+            this.state.regionValue     && 
+            this.state.subRegionValue  &&
+            this.state.orderType       &&
+            this.state.subjectValue    &&
+            this.state.optionValue     &&
+            this.state.resolveTime     &&
+            staffExtra                 && 
+            staffTime                  && 
+            checkJAIDLegth ? false : true;
   }
 
   // Set the color styling for the submit button (just styling)
@@ -226,7 +230,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
           staffRequired: "No",
           extraStaff: "",
           staffTime: "",
-          toggleValue: false
+          toggleValue: false,
+          successMessage: true
         });
       } else {                   
           await sp.web.lists.getByTitle("ccsFormSubmit").items.add({
@@ -264,13 +269,28 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
             staffRequired: "No",
             extraStaff: "",
             staffTime: "",
-            toggleValue: false
+            toggleValue: false,
+            successMessage: true
           });
         }
     };
 
+    const showModalBackground = [styles.modalBackground, this.state.successMessage ? styles.modalMessageShow : styles.modalMessageHide];
+    const showModal = [styles.modal, this.state.successMessage ? styles.modalMessageShow : styles.modalMessageHide];
+
     return (
       <div className={ styles.ccs }>
+        <React.Fragment>
+          <div className={showModalBackground.join(' ')}/>
+          <div className={showModal.join(' ')}>
+            <p>Form has been submitted</p>
+            <PrimaryButton 
+              text="Close"
+              onClick={this._successMessageHandler} 
+            />                
+          </div> 
+        </React.Fragment>
+
         <div className={ styles.container }>
           <div className={ styles.row }>
     {/* */} <div className={ styles.column }>
@@ -283,7 +303,6 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
         <div className={ styles.container }>
           <div className={ styles.row2 }>
     {/* */} <div className={ styles.column }>
-
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
                 <InputFieldJAID 
                   heading={this.props.headings.heading_jaid}
