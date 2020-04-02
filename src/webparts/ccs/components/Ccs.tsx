@@ -170,18 +170,19 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       staffTime = true;
     }
 
-    return this.state.offenderJAID    &&
-            this.state.dateValue       &&
-            this.state.timeValue       &&
-            this.state.regionValue     && 
-            this.state.subRegionValue  &&
-            this.state.orderType       &&
-            this.state.subjectValue    &&
-            this.state.optionValue     &&
-            this.state.resolveTime     &&
-            staffExtra                 && 
-            staffTime                  && 
-            checkJAIDLegth ? false : true;
+    // return this.state.offenderJAID    &&
+    //         this.state.dateValue       &&
+    //         this.state.timeValue       &&
+    //         this.state.regionValue     && 
+    //         this.state.subRegionValue  &&
+    //         this.state.orderType       &&
+    //         this.state.subjectValue    &&
+    //         this.state.optionValue     &&
+    //         this.state.resolveTime     &&
+    //         staffExtra                 && 
+    //         staffTime                  && 
+    //         checkJAIDLegth ? false : true;
+    return false;
   }
 
   // Set the color styling for the submit button (just styling)
@@ -208,7 +209,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
     
     const submitHandler = async () => {
       if(this.props.environment == "local") {
-        console.log("Local Submit: ");
+        console.log("Local Submit: Worked");
         this.setState({
           offenderJAID: "",
           dateValue: "",
@@ -272,16 +273,16 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       <div className={ styles.ccs }>
         <div className={ styles.container }>
           <div className={ styles.row }>
-{/* */} {/* <div className={ styles.column }> */}
+    {/* */} <div className={ styles.column }>
               <span className={ styles.title }>{escape(this.props.headings.titleValue)}</span>
               <p className={ styles.description }>{escape(this.props.headings.description)}</p>
-{/* */}{/* </div> */}
+    {/* */}</div>
           </div>
         </div>
 
         <div className={ styles.container }>
           <div className={ styles.row2 }>
-{/* */} {/* <div className={ styles.column }> */}
+    {/* */} <div className={ styles.column }>
 
               <Stack tokens={{ childrenGap: 15 }} className={ styles.stackWrapper }>
                 <InputFieldJAID 
@@ -301,7 +302,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                 />
               </Stack>
 
-                <div style={{ marginTop: '2em' }} >
+                <div style={{ position: 'relative', marginTop: '2em' }} >
                     <TimeComponent 
                       timeValue={this.state.timeValue} 
                       changeHandler={this._changeTimeHandler} 
@@ -383,7 +384,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
                     onChange={(ev, option) => this._changeVisitHandler(option.key)} 
                   />
 
-                  <div style={{ marginTop: '2em', marginBottom: '1em' }} >
+                  <div style={{ position: 'relative', marginTop: '2em', marginBottom: '1em' }} >
                       <TimeComponent 
                         timeValue={this.state.resolveTime}
                         changeHandler={this._changeResolveTimeHandler}
@@ -467,7 +468,7 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
               </div>  
               : null }
 
-{/* */}{/* </div> */}
+    {/* */}</div>
           </div>
         </div>
 
