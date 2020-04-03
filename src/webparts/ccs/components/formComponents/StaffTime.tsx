@@ -21,7 +21,7 @@ const StaffTime = (props:any) => {
         <Slider
           max={60}
           value={inputValue}
-          onChange={(value: number) => props.changeHandler(value)}
+          onChange={(value: number) => props.changeHandler(value.toString())}
           showValue={true}
         />
       </div>

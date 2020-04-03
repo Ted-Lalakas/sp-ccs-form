@@ -21,7 +21,7 @@ const ExtraStaff = (props:any) => {
         <Slider
           max={30}
           value={inputValue}
-          onChange={(value: number) => props.changeHandler(value)}
+          onChange={(value: number) => props.changeHandler(value.toString())}
           showValue={true}
         />
       </div>

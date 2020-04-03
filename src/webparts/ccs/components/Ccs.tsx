@@ -50,8 +50,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
       visitRequired: "No",
       resolveTime: "",
       staffRequired: "No",
-      extraStaff: "",
-      staffTime: "",
+      extraStaff: null,
+      staffTime: null,
       toggleValue: false,
       successMessage: false
     };
@@ -228,8 +228,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
           visitRequired: "No",
           resolveTime: "",
           staffRequired: "No",
-          extraStaff: "",
-          staffTime: "",
+          extraStaff: null,
+          staffTime: null,
           toggleValue: false,
           successMessage: true
         });
@@ -267,8 +267,8 @@ export default class Ccs extends React.Component<ICcsProps, ICcsState> {
             visitRequired: "No",
             resolveTime: "",
             staffRequired: "No",
-            extraStaff: "",
-            staffTime: "",
+            extraStaff: null,
+            staffTime: null,
             toggleValue: false,
             successMessage: true
           });
