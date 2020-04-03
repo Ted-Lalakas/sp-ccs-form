@@ -3,14 +3,17 @@ import { useState } from 'react';
 import { Stack } from 'office-ui-fabric-react';
 import { Dropdown, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import styles from '../Ccs.module.scss';
 
 const OrderType = (props:any) => {
   // uses Hook state to save a boolean value. Used to show/hide the text field
   const [showTextField, setTextField] = useState(false);
 
   const dropdownStyles: Partial<IDropdownStyles> = {
-    dropdown: { maxWidth: 350 }
+    dropdown: { maxWidth: 350 },
   };
+
+  // textfield: { fontSize: "14px" }
 
   const formatterArr: IDropdownOption[] = [];
   props.orderArray.forEach( val => {
@@ -42,6 +45,7 @@ const OrderType = (props:any) => {
 
       { showTextField && props.value != null ?
       <TextField 
+        className={styles.orderTypeText}
         placeholder={props.placeholderText}  
         styles={{ fieldGroup: { maxWidth: 350 } }}
         onChange={(ev, newValue) => props.changeHandler(newValue)}

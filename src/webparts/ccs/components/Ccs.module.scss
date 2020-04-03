@@ -229,15 +229,14 @@
         padding: 1.5em;
       }
     
-      .timeButtonUnset {
-        padding: 1.5em;
-    
-      }
+      .timeButtonUnset { padding: 1.5em; }
     
       .labelTitle {
         color: #000;
         padding: 0.4em 0;
       }
+
+      .orderTypeText textarea { @include ms-font-m; }
     }
   }
 }
